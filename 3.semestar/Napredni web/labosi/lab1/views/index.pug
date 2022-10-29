@@ -1,0 +1,27 @@
+html 
+    head 
+        title Lab1 
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css")
+        style 
+            include ../public/css/map.css
+    body
+        div(id="map" class="map-div")
+        div(class="latidute-longitude-div")
+            p(id="latitude paragraph")
+            p(id="longitude paragraph")
+        if !user.isAuthenticated
+            a(href=url + "/login") Prijava
+        else 
+            a(href=url + "/logout") Odjava
+        script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js")
+        if !user.isAuthenticated
+            script 
+                include ../public/js/map.js 
+        else
+            script 
+                include ../public/js/registeredUser.js
+
+        div
+            p(id="infoClickDiv") Kliknite na nekog korisnika
+        
