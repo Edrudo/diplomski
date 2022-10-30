@@ -2,26 +2,90 @@ html
     head 
         title Lab1 
         meta(name="viewport", content="width=device-width, initial-scale=1")
-        link(rel="stylesheet", href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css")
-        style 
+        style
             include ../public/css/map.css
+        if !data.user.isAuthenticated
+            a(href=data.url + "/login") Prijava
+        else
+            a(href=data.url + "/logout") Odjava
     body
-        div(id="map" class="map-div")
-        div(class="latidute-longitude-div")
-            p(id="latitude paragraph")
-            p(id="longitude paragraph")
-        if !user.isAuthenticated
-            a(href=url + "/login") Prijava
-        else 
-            a(href=url + "/logout") Odjava
-        script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js")
-        if !user.isAuthenticated
-            script 
-                include ../public/js/map.js 
+        p Table
+            table(class="table")
+                thead
+                    tr
+                        th Team
+                        th Points
+                        th Goal difference
+                tbody
+                    each v, k in data.table
+                        tr
+                            td #{k}
+                            td #{v.points}
+                            td #{v.diff}
+        p Matches
+            table(class="table")
+                thead
+                    tr
+                        th Team1
+                        th Team2
+                        th Result
+                tbody
+                    each v in data.results
+                        if (v.matchNumber - 1) % 6 === 0
+                            td #{((v.matchNumber - 1) / 6) + 1} gameweek
+                        tr
+                            td #{v.team1}
+                            td #{v.team2}
+                            td #{v.scoreTeam1 + " : " + v.scoreTeam2}
+                            if data.user.isAuthenticated && data.user.name === "admin@lab1.com"
+                                td
+                                    form(action='/changeResult', method='POST')
+                                        p
+                                            | #{v.team1}
+                                            input(type='number', name='team1Score', value=v.scoreTeam1)
+                                            |          #{v.team2}
+                                            input(type='number', name='team2Score', value=v.scoreTeam2)
+                                            input(type='number', name='matchNumber', value=v.matchNumber hidden)
+                                            |
+                                            input(type='submit', value='Submit')
+
+                            if v.matchNumber % 6 === 0 && data.user.isAuthenticated && data.user.name !== "admin@lab1.com"
+                                for comment, index in data.comments[(v.matchNumber / 6) - 1]
+                                    tr
+                                        td
+                                            if comment.user === data.user.name
+                                                form(action='/editComment', method='POST')
+                                                    p   #{comment.timestamp} #{comment.user}:
+                                                        input(type= "text", name='commentText', value=(comment.text))
+                                                        input(type='number', name='gameweekIndex', value=((v.matchNumber / 6) - 1) hidden)
+                                                        input(type='number', name='commentIndex', value=index hidden)
+                                                        input(type='submit', value='Edit comment')
+                                                form(action='/deleteComment', method='POST')
+                                                        input(type='number', name='gameweekIndex', value=((v.matchNumber / 6) - 1) hidden)
+                                                        input(type='number', name='commentIndex', value=index hidden)
+                                                        input(type='submit', value='Delete comment')
+                                            else
+                                                p   #{comment.timestamp} #{comment.user}: #{comment.text}
+                                form(action='/addComment', method='POST')
+                                    tr
+                                        td
+                                            p
+                                                input(type='text', name='commentText', value="")
+                                                input(type='number', name='gameweekIndex', value=((v.matchNumber / 6) - 1) hidden)
+                                                input(type='submit', value='Submit comment')
+                        if v.matchNumber % 6 === 0 && data.user.name === "admin@lab1.com"
+                            for comment, index in data.comments[(v.matchNumber / 6) - 1]
+                                tr
+                                    td
+                                        form(action='/deleteComment', method='POST')
+                                            p   #{comment.timestamp} #{comment.user}: #{comment.text}
+                                            input(type='number', name='gameweekIndex', value=((v.matchNumber / 6) - 1) hidden)
+                                            input(type='number', name='commentIndex', value=index hidden)
+                                            input(type='submit', value='Delete comment')
+        if !data.user.isAuthenticated
+            script
+                include ../public/js/map.js
         else
             script 
                 include ../public/js/registeredUser.js
 
-        div
-            p(id="infoClickDiv") Kliknite na nekog korisnika
-        

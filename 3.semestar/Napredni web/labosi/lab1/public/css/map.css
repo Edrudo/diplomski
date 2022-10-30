@@ -6,3 +6,15 @@
     border: none;
     min-width: 30px;
 }
+
+.table{
+    width: 100%;
+    cellspacing: 0;
+    cellpadding: 0;
+    border: 0;
+    bgcolor: #F2F2F2;
+}
+
+br{
+    height: 10px;
+}

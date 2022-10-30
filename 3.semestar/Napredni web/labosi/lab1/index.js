@@ -3,6 +3,7 @@ const { auth, requiresAuth } = require('express-openid-connect');
 var bodyParser = require('body-parser');
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 const dotenv = require('dotenv')
 dotenv.config()
 var https = require('https')
@@ -38,6 +39,18 @@ const { parse } = require("csv-parse");
 let results = []
 let table = new Map()
 
+function timeNow() {
+  const date = new Date();
+
+  return date.getDate() + "." + date.getMonth() + "." + date.getFullYear() + "."
+}
+
+let comments = [[{user: "pero.peric@gmail.com", timestamp: timeNow(), text:"Ovo je bilo super kolo"}],
+                [{user: "ivo.ivic@icloud.com", timestamp: timeNow(), text:"Ovo je bilo super kolo"}],
+                [], [],[],[],[],[],[],[],[],[],
+]
+
+
 fs.createReadStream("./results")
 .pipe(parse({delimiter: ",", from_line: 2}))
 .on("data", function (row) {
@@ -56,6 +69,8 @@ fs.createReadStream("./results")
   if(result.scoreTeam1 === ""){
     team1Points = 0
     team2Points = 0
+    scoreTeam1 = 0
+    scoreTeam2 = 0
   }else if (scoreTeam1 > scoreTeam2){
     team1Points = 3;
     team2Points = 0;
@@ -68,22 +83,22 @@ fs.createReadStream("./results")
   }
 
   if(table.get(result.team1)){
-      table.set(result.team1, table.get(result.team1) + team1Points)
+      table.set(result.team1, {points: table.get(result.team1).points + team1Points, diff: table.get(result.team1).diff + scoreTeam1-scoreTeam2})
   }else{
-    table.set(result.team1, team1Points)
+    table.set(result.team1, {points: team1Points, diff: scoreTeam1-scoreTeam2})
   }
 
   if(table.get(result.team2)){
-      table.set(result.team2, table.get(result.team2) + team2Points)
+      table.set(result.team2, {points: table.get(result.team2).points + team2Points, diff: table.get(result.team2).diff + scoreTeam2-scoreTeam1})
   }else{
-    table.set(result.team2, team2Points)
+    table.set(result.team2, {points: team2Points, diff: scoreTeam2-scoreTeam1})
   }
 })
 .on("error", function (error) {
   console.log(error.message);
 })
 .on("end", function () {
-  console.log(table);
+  console.log("finished");
 });
 
 
@@ -100,7 +115,15 @@ app.get('/', function (req, res) {
   }else{
     url = address + ":" + port
   }
-  res.render('index', {user:req.user, url:url})
+  res.render('index', {
+    data:{
+      user: req.user,
+      url: url,
+      results: results,
+      table: Object.fromEntries(table),
+      comments: comments,
+    }
+  });
 })
 
 app.get('/registeredUserLocation', function (req, res) {
@@ -139,6 +162,107 @@ app.post('/registeredUserLocation', function (req, res) {
       registeredArray[minimum] = {name:req.oidc.user.name, timestamp:Date.now(), longitude:req.body.longitude, latitude:req.body.latitude}
     }
   }
+})
+
+app.post('/changeResult', function (req, res) {
+  if(req.oidc.user.name === "admin@lab1.com"){
+    const team1Score = req.body.team1Score
+    const team2Score = req.body.team2Score
+    const matchNumber = parseInt(req.body.matchNumber)
+
+    results.forEach((result, i) => {
+      if(result.matchNumber == matchNumber){
+        results[i] = {
+          team1: result.team1,
+          team2: result.team2,
+          scoreTeam1: team1Score,
+          scoreTeam2: team2Score,
+          matchNumber: matchNumber
+        }
+      }
+    })
+
+    table = new Map()
+    results.forEach((result) => {
+      let team1Points, team2Points
+      let scoreTeam1 = parseInt(result.scoreTeam1)
+      let scoreTeam2 = parseInt(result.scoreTeam2)
+
+      if(result.scoreTeam1 === ""){
+        team1Points = 0
+        team2Points = 0
+        scoreTeam1 = 0
+        scoreTeam2 = 0
+      }else if (scoreTeam1 > scoreTeam2){
+        team1Points = 3;
+        team2Points = 0;
+      }else if (scoreTeam1 === scoreTeam2) {
+        team1Points = 1;
+        team2Points = 1;
+      }else{
+        team1Points = 0;
+        team2Points = 3;
+      }
+
+      if(table.get(result.team1)){
+        table.set(result.team1, {points: table.get(result.team1).points + team1Points, diff: table.get(result.team1).diff + scoreTeam1-scoreTeam2})
+      }else{
+        table.set(result.team1, {points: team1Points, diff: scoreTeam1-scoreTeam2})
+      }
+
+      if(table.get(result.team2)){
+        table.set(result.team2, {points: table.get(result.team2).points + team2Points, diff: table.get(result.team2).diff + scoreTeam2-scoreTeam1})
+      }else{
+        table.set(result.team2, {points: team2Points, diff: scoreTeam2-scoreTeam1})
+      }
+    })
+  }
+  res.redirect('/');
+})
+
+app.post('/addComment', function (req, res) {
+  const commentText = req.body.commentText
+  const gameweekIndex = req.body.gameweekIndex
+
+  if(gameweekIndex < 12) {
+    comments[gameweekIndex].push({
+      user: req.oidc.user.name,
+      timestamp: timeNow(),
+      text:commentText,
+    })
+  }
+  res.redirect('/');
+})
+
+app.post('/editComment', function (req, res) {
+  const commentText = req.body.commentText
+  const gameweekIndex = req.body.gameweekIndex
+  const commentIndex = req.body.commentIndex
+
+  if(gameweekIndex < 12) {
+    comments[gameweekIndex][commentIndex] = {
+      user: req.oidc.user.name,
+      timestamp: timeNow(),
+      text:commentText,
+    }
+  }
+  res.redirect('/');
+})
+
+app.post('/deleteComment', function (req, res) {
+  const gameweekIndex = req.body.gameweekIndex
+  const commentIndex = req.body.commentIndex
+
+  let newArray = []
+  for (let i = 0; i < comments[gameweekIndex].length; i++){
+    if (i != commentIndex) {
+      newArray.push(comments[gameweekIndex][i])
+    }
+  }
+
+  comments[gameweekIndex] = newArray
+
+  res.redirect('/');
 })
 
 if(process.env.PORT){
