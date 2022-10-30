@@ -7,6 +7,7 @@ html
         if !data.user.isAuthenticated
             a(href=data.url + "/login") Prijava
         else
+            h3 #{data.user.name}
             a(href=data.url + "/logout") Odjava
     body
         h1 Table
