@@ -9,7 +9,7 @@ html
         else
             a(href=data.url + "/logout") Odjava
     body
-        p Table
+        h1 Table
             table(class="table")
                 thead
                     tr
@@ -19,10 +19,10 @@ html
                 tbody
                     each v, k in data.table
                         tr
-                            td #{k}
-                            td #{v.points}
-                            td #{v.diff}
-        p Matches
+                            td(class="td-1") #{k}
+                            td(class="td-1") #{v.points}
+                            td(class="td-1") #{v.diff}
+        h1 Matches
             table(class="table")
                 thead
                     tr
@@ -32,7 +32,8 @@ html
                 tbody
                     each v in data.results
                         if (v.matchNumber - 1) % 6 === 0
-                            td #{((v.matchNumber - 1) / 6) + 1} gameweek
+                            td(class="gameweek-header")
+                                h3 #{((v.matchNumber - 1) / 6) + 1} gameweek
                         tr
                             td #{v.team1}
                             td #{v.team2}

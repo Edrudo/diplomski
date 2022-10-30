@@ -120,7 +120,21 @@ app.get('/', function (req, res) {
       user: req.user,
       url: url,
       results: results,
-      table: Object.fromEntries(table),
+      table: Object.fromEntries(Array.from(table.entries()).sort((a, b) => {
+        let pointsTeam1 = a[1].points
+        let pointsTeam2 = b[1].points
+        let diffTeam1= a[1].diff
+        let diffTeam2 = b[1].diff
+
+        if(pointsTeam1 > pointsTeam2){
+          return -1
+        }else if(pointsTeam1 === pointsTeam2){
+          if(diffTeam1 >= diffTeam2){
+            return -1
+          }
+        }
+        return 1
+      })),
       comments: comments,
     }
   });
