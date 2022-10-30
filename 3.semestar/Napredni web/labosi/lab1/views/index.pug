@@ -83,8 +83,3 @@ html
                                             input(type='number', name='gameweekIndex', value=((v.matchNumber / 6) - 1) hidden)
                                             input(type='number', name='commentIndex', value=index hidden)
                                             input(type='submit', value='Delete comment')
-        if !data.user.isAuthenticated
-        else
-            script 
-                include ../public/js/registeredUser.js
-
