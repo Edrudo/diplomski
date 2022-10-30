@@ -8,7 +8,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 var https = require('https')
 
-const address = process.env.HOST || 'https://localhost';
+const address = process.env.RENDER_EXTERNAL_URL || 'https://localhost';
 const port = process.env.PORT || 5000;
 
 //app.use(express.static('public'));
@@ -19,7 +19,7 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: process.env.SECRET,
-  baseURL: process.env.HOST || `https://localhost:${port}`,
+  baseURL: process.env.RENDER_EXTERNAL_URL || `https://localhost:${port}`,
   clientID: process.env.CLIENT_ID,
   issuerBaseURL: 'https://dev-qtmnfsxrqexie5bo.us.auth0.com',
   clientSecret: process.env.CLIENT_SECRET
@@ -111,7 +111,7 @@ app.get('/', function (req, res) {
   }
   let url
   if(process.env.PORT){
-    url = process.env.HOST
+    url = process.env.RENDER_EXTERNAL_URL
   }else{
     url = address + ":" + port
   }
@@ -124,44 +124,6 @@ app.get('/', function (req, res) {
       comments: comments,
     }
   });
-})
-
-app.get('/registeredUserLocation', function (req, res) {
-  req.user = {
-    isAuthenticated : req.oidc.isAuthenticated()
-  };
-  res. setHeader('Content-Type', 'application/json')
-  res.end(JSON.stringify(registeredArray));
-})
-
-app.post('/registeredUserLocation', function (req, res) {
-  var exists = false
-  var index
-  for(var i = 0; i < registeredArray.length; i++) {
-    
-    if(registeredArray[i].name === req.oidc.user.name){
-      index = i
-      exists = true
-    }
-  }
-  
-  if(exists){
-    registeredArray[index] = {name:req.oidc.user.name, timestamp:Date.now(), longitude:req.body.longitude, latitude:req.body.latitude}
-  }else{
-    if(registeredArray.length < 5){
-      registeredArray.push({name:req.oidc.user.name, timestamp:Date.now(), longitude:req.body.longitude, latitude:req.body.latitude})
-    }else{
-      var minimum = 0
-  
-      for(var i = 1; i < registeredArray.length; i++){
-        if(registeredArray[i].timestamp < registeredArray[minimum].timestamp){
-          minimum = i
-        }
-      } 
-  
-      registeredArray[minimum] = {name:req.oidc.user.name, timestamp:Date.now(), longitude:req.body.longitude, latitude:req.body.latitude}
-    }
-  }
 })
 
 app.post('/changeResult', function (req, res) {
