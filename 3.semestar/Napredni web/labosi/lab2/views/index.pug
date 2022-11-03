@@ -1,0 +1,86 @@
+html 
+    head 
+        title Lab1 
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        style
+            include ../public/css/map.css
+        if !data.user.isAuthenticated
+            a(href=data.url + "/login") Prijava
+        else
+            h3 #{data.user.name}
+            a(href=data.url + "/logout") Odjava
+    body
+        form(action='/securityChange', method='POST' class="controls")
+            p Omogucen Xss
+            input(
+                type='checkbox'
+                name='xssEnabled'
+                checked=data.XssChecked
+            )
+            input(type='submit', value='Confirm')
+
+        h1 Table
+            table(class="table")
+                thead
+                    tr
+                        th Team
+                        th Points
+                        th Goal difference
+                tbody
+                    each v, k in data.table
+                        tr
+                            td(class="td-1") #{k}
+                            td(class="td-1") #{v.points}
+                            td(class="td-1") #{v.diff}
+        h1 Matches
+            table(class="table")
+                thead
+                    tr
+                        th Team1
+                        th Team2
+                        th Result
+                tbody
+                    each v in data.results
+                        if (v.matchNumber - 1) % 6 === 0
+                            td(class="gameweek-header")
+                                h3 #{((v.matchNumber - 1) / 6) + 1} gameweek
+                        tr
+                            td #{v.team1}
+                            td #{v.team2}
+                            td #{v.scoreTeam1 + " : " + v.scoreTeam2}
+                            if data.user.isAuthenticated && data.user.name === "admin"
+                                td
+                                    form(action='/changeResult', method='POST')
+                                        p
+                                            | #{v.team1}
+                                            input(type='number', name='team1Score', value=v.scoreTeam1)
+                                            |          #{v.team2}
+                                            input(type='number', name='team2Score', value=v.scoreTeam2)
+                                            input(type='number', name='matchNumber', value=v.matchNumber hidden)
+                                            |
+                                            input(type='submit', value='Submit')
+
+                            if v.matchNumber % 6 === 0 && data.user.isAuthenticated && data.user.name !== "admin"
+                                for comment, index in data.comments[(v.matchNumber / 6) - 1]
+                                    tr
+                                        td
+                                            if comment.user === data.user.name
+                                                #{comment.text}
+                                            else
+                                                #{comment.text}
+                                form(action='/addComment', method='POST')
+                                    tr
+                                        td
+                                            p
+                                                input(type='text', name='commentText', value="")
+                                                input(type='number', name='gameweekIndex', value=((v.matchNumber / 6) - 1) hidden)
+                                                input(type='submit', value='Submit comment')
+                        if v.matchNumber % 6 === 0 && data.user.name === "admin"
+                            for comment, index in data.comments[(v.matchNumber / 6) - 1]
+                                tr
+                                    td
+                                        form(action='/deleteComment', method='POST')
+                                            p   #{comment.timestamp} #{comment.user}: #{comment.text}
+                                            input(type='number', name='gameweekIndex', value=((v.matchNumber / 6) - 1) hidden)
+                                            input(type='number', name='commentIndex', value=index hidden)
+                                            input(type='submit', value='Delete comment')

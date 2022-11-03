@@ -1,0 +1,67 @@
+preskoci,Date,Time,Field,Team A,Team B,Team A Score,Team B Score,Group,Match
+,,Field 1,VPS,AC Oulu,1,2,Group A,1
+,,Field 1,SJK,FC Haka,3,4,Group A,2
+,,Field 1,KuPS,FC Honka,2,4,Group A,3
+,,Field 1,Ilves,FC Inter,2,5,Group A,4
+,,Field 1,IFK Mariehamn,FC Lahti,2,5,Group A,5
+,,Field 1,HJK,HIFK,1,5,Group A,6
+,,Field 1,FC Haka,VPS,0,0,Group A,7
+,,Field 1,FC Honka,AC Oulu,0,0,Group A,8
+,,Field 1,FC Inter,SJK,0,9,Group A,9
+,,Field 1,FC Lahti,KuPS,6,8,Group A,10
+,,Field 1,HIFK,Ilves,5,6,Group A,11
+,,Field 1,HJK,IFK Mariehamn,3,5,Group A,12
+,,Field 1,VPS,FC Honka,5,3,Group A,13
+,,Field 1,FC Haka,FC Inter,3,2,Group A,14
+,,Field 1,AC Oulu,FC Lahti,6,5,Group A,15
+,,Field 1,SJK,HIFK,4,3,Group A,16
+,,Field 1,KuPS,HJK,3,4,Group A,17
+,,Field 1,Ilves,IFK Mariehamn,5,6,Group A,18
+,,Field 1,FC Inter,VPS,,,Group A,19
+,,Field 1,FC Lahti,FC Honka,,,Group A,20
+,,Field 1,HIFK,FC Haka,,,Group A,21
+,,Field 1,AC Oulu,HJK,,,Group A,22
+,,Field 1,IFK Mariehamn,SJK,,,Group A,23
+,,Field 1,Ilves,KuPS,,,Group A,24
+,,Field 1,VPS,FC Lahti,,,Group A,25
+,,Field 1,FC Inter,HIFK,,,Group A,26
+,,Field 1,FC Honka,HJK,,,Group A,27
+,,Field 1,FC Haka,IFK Mariehamn,,,Group A,28
+,,Field 1,AC Oulu,Ilves,,,Group A,29
+,,Field 1,SJK,KuPS,,,Group A,30
+,,Field 1,HIFK,VPS,,,Group A,31
+,,Field 1,HJK,FC Lahti,,,Group A,32
+,,Field 1,IFK Mariehamn,FC Inter,,,Group A,33
+,,Field 1,FC Honka,Ilves,,,Group A,34
+,,Field 1,KuPS,FC Haka,,,Group A,35
+,,Field 1,SJK,AC Oulu,,,Group A,36
+,,Field 1,VPS,HJK,,,Group A,37
+,,Field 1,HIFK,IFK Mariehamn,,,Group A,38
+,,Field 1,FC Lahti,Ilves,,,Group A,39
+,,Field 1,FC Inter,KuPS,,,Group A,40
+,,Field 1,FC Honka,SJK,,,Group A,41
+,,Field 1,FC Haka,AC Oulu,,,Group A,42
+,,Field 1,IFK Mariehamn,VPS,,,Group A,43
+,,Field 1,Ilves,HJK,,,Group A,44
+,,Field 1,KuPS,HIFK,,,Group A,45
+,,Field 1,FC Lahti,SJK,,,Group A,46
+,,Field 1,AC Oulu,FC Inter,,,Group A,47
+,,Field 1,FC Haka,FC Honka,,,Group A,48
+,,Field 1,VPS,Ilves,,,Group A,49
+,,Field 1,IFK Mariehamn,KuPS,,,Group A,50
+,,Field 1,HJK,SJK,,,Group A,51
+,,Field 1,HIFK,AC Oulu,,,Group A,52
+,,Field 1,FC Lahti,FC Haka,,,Group A,53
+,,Field 1,FC Inter,FC Honka,,,Group A,54
+,,Field 1,KuPS,VPS,,,Group A,55
+,,Field 1,SJK,Ilves,,,Group A,56
+,,Field 1,AC Oulu,IFK Mariehamn,,,Group A,57
+,,Field 1,HJK,FC Haka,,,Group A,58
+,,Field 1,FC Honka,HIFK,,,Group A,59
+,,Field 1,FC Inter,FC Lahti,,,Group A,60
+,,Field 1,VPS,SJK,,,Group A,61
+,,Field 1,KuPS,AC Oulu,,,Group A,62
+,,Field 1,Ilves,FC Haka,,,Group A,63
+,,Field 1,IFK Mariehamn,FC Honka,,,Group A,64
+,,Field 1,HJK,FC Inter,,,Group A,65
+,,Field 1,HIFK,FC Lahti,,,Group A,66

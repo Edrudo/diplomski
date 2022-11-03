@@ -1,0 +1,50 @@
+.map-div{
+    height: 700px;
+}
+
+.text-below-marker {
+    border: none;
+    min-width: 30px;
+}
+
+.table{
+    width: 100%;
+    cellspacing: 0;
+    cellpadding: 0;
+    border: 0;
+    bgcolor: #F2F2F2;
+}
+
+br{
+    height: 10px;
+}
+td{
+    text-align: center;
+}
+form{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+td:nth-child(1) {
+    background: rgba(0,2,255,0.57);
+}
+td:nth-child(4) {
+    background: rgba(33,255,0,0.71);
+}
+td:nth-child(2) {
+    background: rgba(255,15,37,0.71);
+}
+*{
+    font-size: 20px;
+}
+a{
+    font-size: 30px;
+}
+
+.controls{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
