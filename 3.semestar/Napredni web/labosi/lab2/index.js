@@ -1,6 +1,7 @@
 const express = require('express');
 const { auth, requiresAuth } = require('express-openid-connect');
 var bodyParser = require('body-parser');
+var url = require("url");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -103,6 +104,7 @@ fs.createReadStream("./results")
 
 const cookieName = "MyApp Cookie";
 let xssEnabled = true;
+let badAuth = true
 
 app.get('/', function (req, res) {
   req.user = {
@@ -152,7 +154,48 @@ app.get('/', function (req, res) {
         return 1
       })),
       comments: comments,
-      XssChecked: xssEnabled
+      XssChecked: xssEnabled,
+      badAuth: badAuth,
+    }
+  });
+})
+
+app.get('/admin', function (req, res) {
+  req.user = {
+    isAuthenticated : req.oidc.isAuthenticated()
+  };
+  if (!badAuth || !req.user.isAuthenticated) {
+    res.redirect('/');
+  }
+  let url
+  if(process.env.PORT){
+    url = process.env.RENDER_EXTERNAL_URL
+  }else{
+    url = address + ":" + port
+  }
+  res.render('admin', {
+    data:{
+      user: req.user,
+      url: url,
+      results: results,
+      table: Object.fromEntries(Array.from(table.entries()).sort((a, b) => {
+        let pointsTeam1 = a[1].points
+        let pointsTeam2 = b[1].points
+        let diffTeam1= a[1].diff
+        let diffTeam2 = b[1].diff
+
+        if(pointsTeam1 > pointsTeam2){
+          return -1
+        }else if(pointsTeam1 === pointsTeam2){
+          if(diffTeam1 >= diffTeam2){
+            return -1
+          }
+        }
+        return 1
+      })),
+      comments: comments,
+      XssChecked: xssEnabled,
+      badAuth: badAuth,
     }
   });
 })
@@ -229,6 +272,7 @@ app.post('/addComment', function (req, res) {
 
 app.post('/securityChange', function (req, res) {
   xssEnabled = req.body.xssEnabled
+  badAuth = req.body.badAuth
   res.redirect('/');
 })
 
@@ -260,7 +304,7 @@ app.post('/deleteComment', function (req, res) {
 
   comments[gameweekIndex] = newArray
 
-  res.redirect('/');
+  badAuth ? res.redirect("admin") : res.redirect("/");
 })
 
 if(process.env.PORT){

@@ -1,6 +1,6 @@
-html 
-    head 
-        title Lab1 
+html
+    head
+        title Lab1
         meta(name="viewport", content="width=device-width, initial-scale=1")
         style
             include ../public/css/map.css
@@ -10,21 +10,6 @@ html
             h3 #{data.user.name}
             a(href=data.url + "/logout") Odjava
     body
-        form(action='/securityChange', method='POST' class="controls")
-            p Omogucen Xss
-            input(
-                type='checkbox'
-                name='xssEnabled'
-                checked=data.XssChecked
-            )
-            p Losa autentifikacija
-            input(
-                type='checkbox'
-                name='badAuth'
-                checked=data.badAuth
-            )
-            input(type='submit', value='Confirm')
-
         h1 Table
             table(class="table")
                 thead
@@ -54,7 +39,7 @@ html
                             td #{v.team1}
                             td #{v.team2}
                             td #{v.scoreTeam1 + " : " + v.scoreTeam2}
-                            if data.user.isAuthenticated && data.user.name === "admin"
+                            if data.user.isAuthenticated
                                 td
                                     form(action='/changeResult', method='POST')
                                         p
@@ -66,7 +51,7 @@ html
                                             |
                                             input(type='submit', value='Submit')
 
-                            if v.matchNumber % 6 === 0 && data.user.isAuthenticated && data.user.name !== "admin"
+                            if v.matchNumber % 6 === 0 && data.user.isAuthenticated
                                 for comment, index in data.comments[(v.matchNumber / 6) - 1]
                                     tr
                                         td
@@ -74,14 +59,7 @@ html
                                                 #{comment.text}
                                             else
                                                 #{comment.text}
-                                form(action='/addComment', method='POST')
-                                    tr
-                                        td
-                                            p
-                                                input(type='text', name='commentText', value="")
-                                                input(type='number', name='gameweekIndex', value=((v.matchNumber / 6) - 1) hidden)
-                                                input(type='submit', value='Submit comment')
-                        if v.matchNumber % 6 === 0 && data.user.name === "admin"
+                        if v.matchNumber % 6 === 0
                             for comment, index in data.comments[(v.matchNumber / 6) - 1]
                                 tr
                                     td
