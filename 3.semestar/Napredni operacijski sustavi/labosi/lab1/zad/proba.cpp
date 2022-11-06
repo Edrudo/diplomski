@@ -1,50 +1,172 @@
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/msg.h> 
-#include <string.h>
-#include <pthread.h>
-#include <stdlib.h>
+#include <sys/types.h> 
 #include <unistd.h>
-#include <stdio.h>
 #include <iostream>
-#include <sys/wait.h>
+#include <cstring>
 #include <sys/shm.h>
-#include <signal.h>
 using namespace std;
 
-#include <stdio.h>
-#include <string.h>
-#define MAXREAD 20/* najveća duljina poruke*/
-int main(void)
-{
+const int BROJ_PUSACA = 3;
+const int PAPIR = 0;
+const int DUHAN = 1;
+const int SIBICE = 2;
 
-int pfd[2];
-char buf[MAXREAD] = "";
-char message[] = "Kroz cijev!";/* poruka*/
-if (pipe(pfd) == -1)/* stvaranje cjevovoda*/
+char PROIZVODI[3][10] = {"papir", "duhan", "sibice"};
 
-exit(1);
+struct mesg_buffer {
+    long mesg_type;
+    char mesg_text[2];
+} message;
+  
+// argumenti: broj pusaca, red trgovca, 
+void dretvaPusac(int pusacIndex, int* redovi, int stol_id) {
+    int mojRed = pusacIndex;
+    int sljedeci = mojRed + 1;
+    int trgovac = 3;
+    int proizvod1;
+    int proizvod2;
+    int *stol;
 
-switch (fork()) {
+    mesg_buffer message = {1, "n"};
 
-case -1: /* dijete nije kreirano*/
+    while(true){
+        // cekaj znacku
+        mesg_buffer message5; 
+        msgrcv(redovi[mojRed], &message5, sizeof(message5), 0, 0);
 
-exit(1);
+        // uzmi sastojke i provjeri trebaju li mi
+        cout << "Pusac " << pusacIndex << " provjerava sastojke" << endl;
 
-case 0:/* dijete čita */
+        stol = (int*) shmat(stol_id, NULL, 0);
 
-close(pfd[1]);/* zato zatvara kraj za pisanje*/
-(void) read(pfd[0], buf, MAXREAD);
-puts(buf);
-exit(0);
+        proizvod1 = stol[0];
+        proizvod2 = stol[1];
+        cout << "Moj proizvod: " << PROIZVODI[pusacIndex] << ", trgovac: " << PROIZVODI[proizvod1] << " i " << PROIZVODI[proizvod2] << " usporedba: " << (proizvod1 != pusacIndex) << " : " << (proizvod2 != pusacIndex) << endl;
+        shmdt((void *) stol);
+        sleep(1);
 
-default:/* roditelj piše */
 
-close(pfd[0]);/* zato zatvara kraj za čitanje*/
-        //(void) write(pfd[1], message, strlen(message) + 1);
-wait(NULL);/* roditelj čeka da dijete završi*/
+        // udi u KO ako su tvoji sastojci
+        if(proizvod1 != pusacIndex && proizvod2 != pusacIndex){
+            cout << "Pusac " << pusacIndex<< " uzima sastojke i mota cigaru" << endl;
+            sleep(1); //smota, zapali, pusi
+            cout << "Pusac " << pusacIndex << " je popusio cigaru" << endl;
 
-}
-exit(0);/* zatvara sve deskriptore */
+            // salji znacku trgovcu
+            cout << "Pusac " << pusacIndex << " salje zancku trgovcu" << endl;
+            sleep(1);
+            msgsnd(redovi[trgovac], &message, sizeof(message), 0);
+        }else{
+        // salji znacku dalje
+            cout << "Pusac " << pusacIndex << " salje zancku dalje pusacu" << sljedeci << endl;
+            sleep(1);
+            msgsnd(redovi[sljedeci], &message, sizeof(message), 0);
+        }
+    }
+    cout << "Pusac " << pusacIndex << " zavrsio" << endl;
+};
 
+ 
+void dretvaTrgovac(int* redovi, int stol_id) {
+    int mojRed = 3;
+    int sljedeci = 0;
+    int proizvod1;
+    int proizvod2;
+    int *stol
+
+    srand(getpid() * time(NULL));
+    mesg_buffer message = {1, "n"};
+
+    while(true){
+        sleep(1);
+
+        // generiraj proizvode
+        proizvod1 = rand() % 3;
+        proizvod2 = rand() % 3;
+        while(proizvod1 == proizvod2){
+            proizvod2 = rand() % 3;
+        }
+
+        cout << "Trgovac postavlja: " << PROIZVODI[proizvod1] << " i " << PROIZVODI[proizvod2] << " na stol" << endl;
+
+        stol = (int*) shmat(stol_id, NULL, 0);
+
+        stol[0] = proizvod1;
+        stol[1] = proizvod2;
+        sleep(1); // stavi na stol
+
+        shmdt((void *) stol);
+        
+        // salji znacku dalje
+        msgsnd(redovi[sljedeci], &message, sizeof(message), 0);
+
+        // cekaj znacku
+        mesg_buffer message5; 
+        msgrcv(redovi[mojRed], &message5, sizeof(message5), 0, 0);
+    }
+
+
+};
+
+int main(){
+    int key1;
+    int key2;
+    int key3;
+    int key4;
+
+    int redTrgovac;
+    int redPusac1;
+    int redPusac2;
+    int redPusac3;
+
+    int stol_id;
+
+    int pid;
+    key1 = getuid();
+    key2 = key1+1;
+    key3 = key1+2;
+    key3 = key1+3;
+
+    int sharedMemKey = ftok("shmfile",65);
+    stol_id = shmget(sharedMemKey, sizeof(int)*2, 0666|IPC_CREAT);
+
+    // brisi red poruka
+    msgctl(key1, IPC_RMID, NULL);
+    msgctl(key2, IPC_RMID, NULL);
+    msgctl(key3, IPC_RMID, NULL);
+    msgctl(key4, IPC_RMID, NULL);
+    
+    redTrgovac = msgget(key1, 0666 | IPC_CREAT);
+    redPusac1 = msgget(key2, 0666 | IPC_CREAT);
+    redPusac2 = msgget(key3, 0666 | IPC_CREAT);
+    redPusac3 = msgget(key4, 0666 | IPC_CREAT);
+
+    int redovi[4] = { redPusac1, redPusac2, redPusac3, redTrgovac };
+
+
+    for(int i = 0; i < BROJ_PUSACA; i++){
+        switch(pid = fork()){
+            case -1:    cout << "Ne mogu stvoriti " << i << ". proces" << endl;
+                        exit(1);
+            case 0:     dretvaPusac(i, redovi, stol_id);
+                        exit (0);
+        }
+    }
+
+    dretvaTrgovac(redovi, stol_id);
+
+    // ovo dalje se vjerojatno nikad nece izvrsiti
+    for(int i = 0; i < 4; i++){
+        wait(NULL);
+    }
+
+    // brisi red poruka
+    msgctl(key1, IPC_RMID, NULL);
+    msgctl(key2, IPC_RMID, NULL);
+    msgctl(key3, IPC_RMID, NULL);
+    msgctl(key4, IPC_RMID, NULL);
+
+    return 0;
 }

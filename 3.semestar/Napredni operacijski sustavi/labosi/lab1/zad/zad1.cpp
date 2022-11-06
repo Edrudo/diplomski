@@ -5,77 +5,106 @@
 #include <unistd.h>
 #include <iostream>
 #include <cstring>
+#include <sys/shm.h>
 using namespace std;
 
-const int CHILDREN_NUMBER = 8;
-const int DRIVE_OVER = 10;
+const int BROJ_PUSACA = 3;
+const int PAPIR = 0;
+const int DUHAN = 1;
+const int SIBICE = 2;
+
+char PROIZVODI[3][10] = {"papir", "duhan", "sibice"};
 
 struct mesg_buffer {
     long mesg_type;
     char mesg_text[2];
 } message;
   
+// argumenti: broj pusaca, red trgovca, 
+void dretvaPusac(int pusacIndex, int* redovi, int stol_id) {
+    int mojRed = pusacIndex;
+    int sljedeci = mojRed + 1;
+    int trgovac = 3;
+    int proizvod1;
+    int proizvod2;
+    int *stol;
 
-void dretvaPosjetitelj(int i, int msgidV, int msgidP, int msgidE, int pid) {
-    srand(getpid() * time(NULL));
-    for(int j = 0; j < 3; j++){
-        // sleeping time
-        int sleep = rand() % 1900 + 100;
-        usleep(sleep* 1000); 
-        //cout << "Proces " << i << " spava " << sleep << endl;
+    mesg_buffer message = {1, "n"};
 
+    while(true){
         // cekaj znacku
         mesg_buffer message5; 
-        msgrcv(msgidP, &message5, sizeof(message5), 0, 0);
+        msgrcv(redovi[mojRed], &message5, sizeof(message5), 0, 0);
 
-        // sjedni i dojavi vrtuljku
-        cout << "Sjeo posjetitelj " << i << endl;
-        mesg_buffer message2={1, "n"};
-        msgsnd(msgidV, &message2, sizeof(message2), 0);
+        // uzmi sastojke i provjeri trebaju li mi
+        cout << "Pusac " << pusacIndex << " provjerava sastojke" << endl;
+
+        stol = (int*) shmat(stol_id, NULL, 0);
+
+        proizvod1 = stol[0];
+        proizvod2 = stol[1];
+        cout << "Moj proizvod: " << PROIZVODI[pusacIndex] << ", trgovac: " << PROIZVODI[proizvod1] << " i " << PROIZVODI[proizvod2] << " usporedba: " << (proizvod1 != pusacIndex) << " : " << (proizvod2 != pusacIndex) << endl;
+        shmdt((void *) stol);
+        sleep(1);
 
 
-        // cekaj kraj voznje
-        mesg_buffer message6;
-        msgrcv(msgidE, &message6, sizeof(message6), 0, 0);
-        cout << "Sisao posjetitelj " << i << endl;
+        // udi u KO ako su tvoji sastojci
+        if(proizvod1 != pusacIndex && proizvod2 != pusacIndex){
+            cout << "Pusac " << pusacIndex<< " uzima sastojke i mota cigaru" << endl;
+            sleep(1); //smota, zapali, pusi
+            cout << "Pusac " << pusacIndex << " je popusio cigaru" << endl;
 
-        mesg_buffer message4 = {1, "3"};
-        msgsnd(msgidP, &message4, sizeof(message4), 0); // slanje znacke dalje u red
+            // salji znacku trgovcu
+            cout << "Pusac " << pusacIndex << " salje zancku trgovcu" << endl;
+            sleep(1);
+            msgsnd(redovi[trgovac], &message, sizeof(message), 0);
+        }else{
+        // salji znacku dalje
+            cout << "Pusac " << pusacIndex << " salje zancku dalje pusacu" << sljedeci << endl;
+            sleep(1);
+            msgsnd(redovi[sljedeci], &message, sizeof(message), 0);
+        }
     }
-    cout << "Posjetitelj " << i << " zavrsio" << endl;
+    cout << "Pusac " << pusacIndex << " zavrsio" << endl;
 };
 
  
-void dretvaVrtuljak(int msgidV, int msgidP, int msgidE) {
+void dretvaTrgovac(int* redovi, int stol_id) {
+    int mojRed = 3;
+    int sljedeci = 0;
+    int proizvod1;
+    int proizvod2;
+    int *stol
+
     srand(getpid() * time(NULL));
-    mesg_buffer message = {1, "3"};
-    // slanje znacke u red
-    for(int i = 0; i < 4; i++){
-        //cout << "Proces vrtuljak salje poruku u red " << msgidP << endl;
-        msgsnd(msgidP, &message, sizeof(message), 0);
-    }
+    mesg_buffer message = {1, "n"};
 
-    for(int i = 0; i < 6; i++){ // dok ima posjetitelja
-        //cekaj 4 posjetitelja
-        for(int i = 0; i < 4; i++){
-            mesg_buffer message1;
-            msgrcv(msgidV, &message1, sizeof(message1), 0, 0);
-            //cout << "Vrtuljak primio poruku za sjest" << endl;
+    while(true){
+        sleep(1);
+
+        // generiraj proizvode
+        proizvod1 = rand() % 3;
+        proizvod2 = rand() % 3;
+        while(proizvod1 == proizvod2){
+            proizvod2 = rand() % 3;
         }
 
-        cout << "Pokrenuo vrtuljak" << endl;
+        cout << "Trgovac postavlja: " << PROIZVODI[proizvod1] << " i " << PROIZVODI[proizvod2] << " na stol" << endl;
 
-        //spavanje
-        int sleep = (rand() % 2000) + 1000;
-        usleep(sleep * 1000);
+        stol = (int*) shmat(stol_id, NULL, 0);
 
-        cout << "Vrtuljak zaustavljen" << endl;
+        stol[0] = proizvod1;
+        stol[1] = proizvod2;
+        sleep(1); // stavi na stol
 
-        message.mesg_type = 1; // 10 oznacava kraj voznje
-        for(int i = 0; i < 4; i++){
-            //cout << "Proces " << i << "salje poruku u red " << msgidE << endl;
-            msgsnd(msgidE, &message, sizeof(message), 0);
-        }
+        shmdt((void *) stol);
+        
+        // salji znacku dalje
+        msgsnd(redovi[sljedeci], &message, sizeof(message), 0);
+
+        // cekaj znacku
+        mesg_buffer message5; 
+        msgrcv(redovi[mojRed], &message5, sizeof(message5), 0, 0);
     }
 
 
@@ -85,35 +114,59 @@ int main(){
     int key1;
     int key2;
     int key3;
-    int msgid1;
-    int msgid2;
-    int msgid3;
+    int key4;
+
+    int redTrgovac;
+    int redPusac1;
+    int redPusac2;
+    int redPusac3;
+
+    int stol_id;
+
     int pid;
     key1 = getuid();
     key2 = key1+1;
     key3 = key1+2;
+    key3 = key1+3;
+
+    int sharedMemKey = ftok("shmfile",65);
+    stol_id = shmget(sharedMemKey, sizeof(int)*2, 0666|IPC_CREAT);
 
     // brisi red poruka
     msgctl(key1, IPC_RMID, NULL);
     msgctl(key2, IPC_RMID, NULL);
     msgctl(key3, IPC_RMID, NULL);
+    msgctl(key4, IPC_RMID, NULL);
     
-    msgid1 = msgget(key1, 0666 | IPC_CREAT); // ulaz na vrtuljak
-    msgid2 = msgget(key2, 0666 | IPC_CREAT); // znacka
-    msgid3 = msgget(key3, 0666 | IPC_CREAT); // izlaz s vrtuljka
+    redTrgovac = msgget(key1, 0666 | IPC_CREAT);
+    redPusac1 = msgget(key2, 0666 | IPC_CREAT);
+    redPusac2 = msgget(key3, 0666 | IPC_CREAT);
+    redPusac3 = msgget(key4, 0666 | IPC_CREAT);
 
-    cout << "msgidV: " << msgid1 << ", msgidP: " << msgid2 << ", msgidE: " << msgid3 << endl;
-    
-    for(int i = 1; i <= CHILDREN_NUMBER; i++){
+    int redovi[4] = { redPusac1, redPusac2, redPusac3, redTrgovac };
+
+
+    for(int i = 0; i < BROJ_PUSACA; i++){
         switch(pid = fork()){
             case -1:    cout << "Ne mogu stvoriti " << i << ". proces" << endl;
                         exit(1);
-            case 0:     dretvaPosjetitelj(i, msgid1, msgid2, msgid3, pid);
+            case 0:     dretvaPusac(i, redovi, stol_id);
                         exit (0);
         }
     }
 
+    dretvaTrgovac(redovi, stol_id);
 
-    dretvaVrtuljak(msgid1, msgid2, msgid3);
+    // ovo dalje se vjerojatno nikad nece izvrsiti
+    for(int i = 0; i < 4; i++){
+        wait(NULL);
+    }
+
+    // brisi red poruka
+    msgctl(key1, IPC_RMID, NULL);
+    msgctl(key2, IPC_RMID, NULL);
+    msgctl(key3, IPC_RMID, NULL);
+    msgctl(key4, IPC_RMID, NULL);
+
     return 0;
 }
