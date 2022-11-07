@@ -11,7 +11,7 @@
 using namespace std;
 
 #define SHM_KEY 0x1234
-#define MAXREAD 50 // najveća duljina poruke
+#define MESSAGE_SIZE 50 // najveća duljina poruke
 
 struct shmseg {
    int pid;
@@ -44,7 +44,7 @@ void child(int myIndex, int *pipes){
     // posalji svoj pid roditelju
     string temp_str=to_string(pid);
     char const *message = temp_str.c_str();
-    (void) write(pipes[2 * N + 1], message, strlen(message) + 1);
+    (void) write(pipes[2 * N + 1], message, MESSAGE_SIZE);
 
 }
 
@@ -111,11 +111,11 @@ int main(int argc, char *argv[]){
 
     // get all pids from children
     for(int i = 0; i < N; i++){
-        char buf[MAXREAD] = "";
-        (void) read(pfds[N * 2], buf, MAXREAD);
+        char buf[MESSAGE_SIZE] = "";
+        (void) read(pfds[N * 2], buf, MESSAGE_SIZE);
         cout << "Buffer je procitao " << buf << endl;
         int temp = strtol(buf, NULL, 10);
-        //cout << temp << endl;
+        sleep(1);
     }
 
     storeInDb(data);
