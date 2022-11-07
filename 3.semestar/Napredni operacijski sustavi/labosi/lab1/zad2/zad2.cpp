@@ -11,7 +11,9 @@
 using namespace std;
 
 #define SHM_KEY 0x1234
-#define MESSAGE_SIZE 50 // najveća duljina poruke
+#define MESSAGE_SIZE 50 // najveca duljina poruke
+#define REQUEST "0"
+#define RESPONSE "1"
 
 struct shmseg {
    int pid;
@@ -26,8 +28,36 @@ void storeInDb(shmseg *data){
     memcpy(SHM_POINTER, data, sizeof(shmseg) * N);
 }
 
+char* createMyRequest(int i, int clock){
+    string p=to_string(i);
+    string c=to_string(clock);
+    char *message;
+    strcpy(message, (p + REQUEST + c).c_str());
+    return message;
+}
+
+char* createMyResponse(int i, int clock){
+    string p=to_string(i);
+    string c=to_string(clock);
+    char *message;
+    strcpy(message, (p + RESPONSE + c).c_str());
+    return message;
+}
+
+void sendMessage(int *pfd, string message){
+    char const *m = message.c_str();
+    (void) write(pfd[1], m, MESSAGE_SIZE);
+}
+
+string readMessage(int *pfd){
+    char buf[MESSAGE_SIZE] = "";
+    (void) read(pfd[0], buf, MESSAGE_SIZE);
+    return string(buf);
+}
+
 void child(int myIndex, int *pipes){
     int pid = getpid();
+    int localClock = 0;
     cout << "Stvoren proces dijete " << pid << endl;
 
     // zatvaram pisanje u svoj cijevovod
@@ -42,9 +72,19 @@ void child(int myIndex, int *pipes){
     }
 
     // posalji svoj pid roditelju
-    string temp_str=to_string(pid);
-    char const *message = temp_str.c_str();
-    (void) write(pipes[2 * N + 1], message, MESSAGE_SIZE);
+    sendMessage(pipes + 2 * N, to_string(pid));
+
+    // inicijalno spavanje
+    sleep(rand()%3);
+
+    // zatrazi ulaz u KO
+    string request = createMyRequest(myIndex, localClock);
+    for(int i = 0; i < N + 1; i++){
+        if(!(i == 2 * myIndex)){
+            sendMessage(pipes + 2 * N, request);
+        }
+    }
+
 
 }
 
@@ -111,19 +151,12 @@ int main(int argc, char *argv[]){
 
     // get all pids from children
     for(int i = 0; i < N; i++){
-        char buf[MESSAGE_SIZE] = "";
-        (void) read(pfds[N * 2], buf, MESSAGE_SIZE);
-        cout << "Buffer je procitao " << buf << endl;
-        int temp = strtol(buf, NULL, 10);
-        sleep(1);
+        string message = readMessage(pfds + N * 2);
+        int temp = stoi(message, NULL, 10);
+        data[i].pid = temp;
     }
 
     storeInDb(data);
-
-
-    for(int i = 0; i < N; i++){
-        cout << shmp[i].pid << endl;
-    }
 
     return 0;
 }
