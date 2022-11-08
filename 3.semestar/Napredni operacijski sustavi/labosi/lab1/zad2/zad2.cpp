@@ -21,27 +21,24 @@ struct shmseg {
    int ko_counter;
 };
 
-int N;
+int N = 5;
 shmseg *SHM_POINTER;
 
 void storeInDb(shmseg *data){
     memcpy(SHM_POINTER, data, sizeof(shmseg) * N);
 }
 
-char* createMyRequest(int i, int clock){
+string createMyRequest(int i, int clock){
     string p=to_string(i);
     string c=to_string(clock);
     char *message;
-    strcpy(message, (p + REQUEST + c).c_str());
-    return message;
+    return p + REQUEST + c;
 }
 
-char* createMyResponse(int i, int clock){
+string createMyResponse(int i, int clock){
     string p=to_string(i);
     string c=to_string(clock);
-    char *message;
-    strcpy(message, (p + RESPONSE + c).c_str());
-    return message;
+    return p + RESPONSE + c;
 }
 
 void sendMessage(int *pfd, string message){
@@ -61,12 +58,12 @@ void child(int myIndex, int *pipes){
     cout << "Stvoren proces dijete " << pid << endl;
 
     // zatvaram pisanje u svoj cijevovod
-    int myPipe = 2 * myIndex;
-    close(pipes[myPipe + 1]);
+    int *myPipe = pipes + 2 * myIndex;
+    close(myPipe[1]);
 
     // zatvaranje citanja za sve druge cjevovode
     for(int i = 0; i < N + 1; i++){
-        if(!(i == 2 * myIndex)){
+        if(!(i == myIndex)){
             close(pipes[i]);
         }
     }
@@ -79,12 +76,30 @@ void child(int myIndex, int *pipes){
 
     // zatrazi ulaz u KO
     string request = createMyRequest(myIndex, localClock);
-    for(int i = 0; i < N + 1; i++){
-        if(!(i == 2 * myIndex)){
-            sendMessage(pipes + 2 * N, request);
+    for(int i = 0; i < N; i++){
+        cout << "Proces" <<  myIndex << " salje poruku procesu" << i << endl;
+        if(i != myIndex){
+            sendMessage(pipes + 2 * i, request);
         }
     }
+    
+    // cekaj poruke i obraduj ih, zelis uci u KO
+    int responseCounter = 0;
+    while(responseCounter < N){
+        string message = readMessage(myPipe);
+        cout <<  message << endl;
+        responseCounter++;
+        /* int i = message[0];
+        int mType = message[1];
+        message.erase(0, 1);
+        int messageClock = stoi(message);
 
+        cout << i << " " << mType << " " << messageClock << endl; */
+    }
+
+    // udi u KO
+
+    // paralelno spavaj random sekundi i obraduj poruke
 
 }
 
@@ -157,6 +172,11 @@ int main(int argc, char *argv[]){
     }
 
     storeInDb(data);
+
+    for(int i = 0; i < N; i++){
+        wait(NULL);
+        cout << "Zavrseno" << endl;
+    }
 
     return 0;
 }
