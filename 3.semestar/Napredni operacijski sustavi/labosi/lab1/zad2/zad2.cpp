@@ -12,13 +12,27 @@ using namespace std;
 
 #define SHM_KEY 0x1234
 #define MESSAGE_SIZE 50 // najveca duljina poruke
-#define REQUEST "0"
-#define RESPONSE "1"
+#define REQUEST '0'
+#define RESPONSE '1'
+#define READ 0
+#define WRITE 1
+#define MESSAGE_ID 0
+#define MESSAGE_TYPE 1
+#define MESSAGE_CLOCK 2
 
 struct shmseg {
    int pid;
    int logic_clock;
    int ko_counter;
+};
+
+struct myMessage {
+    int id;
+    char m_type;
+    int logic_clock;
+    myMessage(int id, char m_type, int logic_clock) : 
+        id(id), m_type(m_type), logic_clock(logic_clock) {}
+    myMessage() :  id(-1) {}
 };
 
 int N = 5;
@@ -28,28 +42,37 @@ void storeInDb(shmseg *data){
     memcpy(SHM_POINTER, data, sizeof(shmseg) * N);
 }
 
-string createMyRequest(int i, int clock){
-    string p=to_string(i);
+string createMyRequest(int id, int clock){
+    string index=to_string(id);
     string c=to_string(clock);
     char *message;
-    return p + REQUEST + c;
+    return index + REQUEST + c;
 }
 
-string createMyResponse(int i, int clock){
-    string p=to_string(i);
-    string c=to_string(clock);
+string createMyResponse(int pid){
+    string p=to_string(pid);
+    string c=string("0");
     return p + RESPONSE + c;
 }
 
 void sendMessage(int *pfd, string message){
     char const *m = message.c_str();
-    (void) write(pfd[1], m, MESSAGE_SIZE);
+    int rez = write(pfd[WRITE], m, MESSAGE_SIZE);
 }
 
 string readMessage(int *pfd){
     char buf[MESSAGE_SIZE] = "";
-    (void) read(pfd[0], buf, MESSAGE_SIZE);
+    (void) read(pfd[READ], buf, MESSAGE_SIZE);
     return string(buf);
+}
+
+myMessage toMyMessage(string message){
+    int pid = message[MESSAGE_ID] - '0';
+    char m_type = message[MESSAGE_TYPE];
+    message.erase(0, 1);
+    int messageClock = stoi(message);
+
+    return myMessage(pid, m_type, messageClock);
 }
 
 void child(int myIndex, int *pipes){
@@ -59,12 +82,12 @@ void child(int myIndex, int *pipes){
 
     // zatvaram pisanje u svoj cijevovod
     int *myPipe = pipes + 2 * myIndex;
-    close(myPipe[1]);
+    close(myPipe[WRITE]);
 
     // zatvaranje citanja za sve druge cjevovode
     for(int i = 0; i < N + 1; i++){
         if(!(i == myIndex)){
-            close(pipes[i]);
+            close(pipes[2*N + READ]);
         }
     }
 
@@ -77,29 +100,51 @@ void child(int myIndex, int *pipes){
     // zatrazi ulaz u KO
     string request = createMyRequest(myIndex, localClock);
     for(int i = 0; i < N; i++){
-        cout << "Proces" <<  myIndex << " salje poruku procesu" << i << endl;
         if(i != myIndex){
+            cout << "Proces" <<  myIndex << " salje zahtev procesu" << i << " message: " << request << endl;
             sendMessage(pipes + 2 * i, request);
         }
     }
+
+    myMessage pendingRequests[N];
     
     // cekaj poruke i obraduj ih, zelis uci u KO
     int responseCounter = 0;
     while(responseCounter < N){
-        string message = readMessage(myPipe);
-        cout <<  message << endl;
-        responseCounter++;
-        /* int i = message[0];
-        int mType = message[1];
-        message.erase(0, 1);
-        int messageClock = stoi(message);
+        string m = readMessage(myPipe);
+        myMessage message = toMyMessage(m);
 
-        cout << i << " " << mType << " " << messageClock << endl; */
+        // uskladi logicki sat
+        if(localClock< message.logic_clock){
+            localClock= message.logic_clock;
+        }
+        localClock++;
+
+        if(message.m_type == REQUEST){
+            //cout << "Proces" << myIndex << " primio je zahtjev od " << message.id << endl;
+
+            if(localClock > message.logic_clock || (localClock == message.logic_clock && myIndex > message.id)){
+                // posalji odgovor
+                cout << "Proces" <<  myIndex << " salje odgovor procesu" << message.id << " satovi: " << localClock << " " << message.logic_clock << endl;
+                sendMessage(pipes + 2 * message.id, createMyResponse(pid));
+                continue;
+            }else{
+                pendingRequests[message.id] = message;
+            }
+        }else if(message.m_type == RESPONSE){
+            cout << "Proces" << myIndex << " primio je odgovor od " << message.id << endl;
+            responseCounter++;
+        }
     }
 
     // udi u KO
+    cout << "Proces" << myIndex << " je usao u KO" << endl;
 
     // paralelno spavaj random sekundi i obraduj poruke
+    /*
+        uspostava globalnog sata:
+        c=max(moj lokalni sat, primljeni lokalni sat) + 1
+    */
 
 }
 
@@ -156,17 +201,22 @@ int main(int argc, char *argv[]){
                         exit(1);
             case 0:     child(i, pfds);
                         exit (0);
-            default:    close(pfds[i*2]); // zatvaranje citanja za sve druge cijevovode
         }
     }
 
-    close(pfds[2*N + 1]); // zatvaranje pisanja za moj cijevovod
+    // zatvaranje citanja za sve druge cijevovode
+    for(int i = 0; i < N; i++){
+        close(pfds[i*2 + READ]); 
+    }
+
+    int *mainPipe = pfds + 2 * N;
+    close(mainPipe[WRITE]);
 
     sleep(1); // a little bit of waiting for tension
 
     // get all pids from children
     for(int i = 0; i < N; i++){
-        string message = readMessage(pfds + N * 2);
+        string message = readMessage(pfds + N * 2 + READ);
         int temp = stoi(message, NULL, 10);
         data[i].pid = temp;
     }
