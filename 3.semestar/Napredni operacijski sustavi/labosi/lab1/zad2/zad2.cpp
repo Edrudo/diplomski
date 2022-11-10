@@ -11,7 +11,7 @@
 using namespace std;
 
 #define SHM_KEY 0x1234
-#define MESSAGE_SIZE 50 // najveca duljina poruke
+#define MESSAGE_SIZE 10 // najveca duljina poruke
 #define REQUEST '0'
 #define RESPONSE '1'
 #define READ 0
@@ -22,7 +22,7 @@ using namespace std;
 
 struct shmseg {
    int pid;
-   int logic_clock;
+   int localClock;
    int ko_counter;
 };
 
@@ -49,10 +49,11 @@ string createMyRequest(int id, int clock){
     return index + REQUEST + c;
 }
 
-string createMyResponse(int pid){
-    string p=to_string(pid);
-    string c=string("0");
-    return p + RESPONSE + c;
+string createMyResponse(int id, int clock){
+    string index=to_string(id);
+    string c=to_string(clock);
+    char *message;
+    return index + RESPONSE+ c;
 }
 
 void sendMessage(int *pfd, string message){
@@ -77,6 +78,7 @@ myMessage toMyMessage(string message){
 
 void child(int myIndex, int *pipes){
     int pid = getpid();
+    srand(pid);
     int localClock = 0;
     cout << "Stvoren proces dijete " << pid << endl;
 
@@ -97,56 +99,70 @@ void child(int myIndex, int *pipes){
     // inicijalno spavanje
     sleep(rand()%3);
 
-    // zatrazi ulaz u KO
-    string request = createMyRequest(myIndex, localClock);
-    for(int i = 0; i < N; i++){
-        if(i != myIndex){
-            cout << "Proces" <<  myIndex << " salje zahtev procesu" << i << " message: " << request << endl;
-            sendMessage(pipes + 2 * i, request);
-        }
-    }
+    int counter = 0;
 
-    myMessage pendingRequests[N];
-    
-    // cekaj poruke i obraduj ih, zelis uci u KO
-    int responseCounter = 0;
-    while(responseCounter < N){
-        string m = readMessage(myPipe);
-        myMessage message = toMyMessage(m);
-
-        // uskladi logicki sat
-        if(localClock< message.logic_clock){
-            localClock= message.logic_clock;
-        }
-        localClock++;
-
-        if(message.m_type == REQUEST){
-            //cout << "Proces" << myIndex << " primio je zahtjev od " << message.id << endl;
-
-            if(localClock > message.logic_clock || (localClock == message.logic_clock && myIndex > message.id)){
-                // posalji odgovor
-                cout << "Proces" <<  myIndex << " salje odgovor procesu" << message.id << " satovi: " << localClock << " " << message.logic_clock << endl;
-                sendMessage(pipes + 2 * message.id, createMyResponse(pid));
-                continue;
-            }else{
-                pendingRequests[message.id] = message;
+    while(true) {
+        // zatrazi ulaz u KO
+        string request = createMyRequest(myIndex, localClock);
+        for(int i = 0; i < N; i++){
+            if(i != myIndex){
+                //cout << "Proces" <<  myIndex << " salje zahtev procesu" << i << " message: " << request << endl;
+                sendMessage(pipes + 2 * i, request);
             }
-        }else if(message.m_type == RESPONSE){
-            cout << "Proces" << myIndex << " primio je odgovor od " << message.id << endl;
-            responseCounter++;
         }
+
+        myMessage pendingRequests[N];
+    
+        // cekaj poruke i obraduj ih, zelis uci u KO
+        int responseCounter = 0;
+        while(responseCounter < N - 1){
+            string m = readMessage(myPipe);
+            myMessage message = toMyMessage(m);
+
+            if(message.m_type == REQUEST){
+                //cout << "Proces" << myIndex << " primio je zahtjev od " << message.id << endl;
+
+                if(localClock > message.logic_clock || (localClock == message.logic_clock && myIndex > message.id)){
+                    // posalji odgovor
+                    //cout << "Proces" <<  myIndex << " salje odgovor procesu" << message.id << " satovi: " << localClock << " " << message.logic_clock << endl;
+                    sendMessage(pipes + 2 * message.id, createMyResponse(myIndex, localClock));
+                    continue;
+                }else{
+                    pendingRequests[message.id] = message;
+                }
+            }else if(message.m_type == RESPONSE){
+                responseCounter++;
+                //cout << "Proces" << myIndex << " primio je odgovor od " << message.id << " counter je " << responseCounter << endl;
+            }
+
+            // uskladi logicki sat
+            if(localClock < message.logic_clock){
+                localClock= message.logic_clock;
+            }
+            localClock++;
+        }
+
+        // udi u KO
+        cout << "Proces" << myIndex << " je usao u KO po " << ++counter << " puta" << endl;
+        string dbDump = string("|   ");
+        for(int i = 0; i < N; i++){
+            if(myIndex == i){
+                SHM_POINTER[i].localClock = localClock;
+                SHM_POINTER[i].ko_counter++;
+            }
+            dbDump += to_string(SHM_POINTER[i].pid) + " " + to_string(SHM_POINTER[i].localClock) + " " + to_string(SHM_POINTER[i].ko_counter) + "   |    ";
+        }
+        cout << dbDump << endl;
+        sleep(1);
+        // odgovori svima koji cekaju
+        for(int i = 0; i < N; i++){
+            if(i != myIndex && pendingRequests[i].id != -1){
+                sendMessage(pipes + 2 * pendingRequests[i].id, createMyResponse(myIndex, localClock));
+            }
+        }
+        sleep(rand() % 4);
     }
-
-    // udi u KO
-    cout << "Proces" << myIndex << " je usao u KO" << endl;
-
-    // paralelno spavaj random sekundi i obraduj poruke
-    /*
-        uspostava globalnog sata:
-        c=max(moj lokalni sat, primljeni lokalni sat) + 1
-    */
-
-}
+} 
 
 int main(int argc, char *argv[]){
     if(argc < 2){
