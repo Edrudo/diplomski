@@ -42,23 +42,33 @@ void storeInDb(shmseg *data){
     memcpy(SHM_POINTER, data, sizeof(shmseg) * N);
 }
 
+void updateAndPrintDb(int index, int localClock){
+    string dbDump = string("|   ");
+    for(int i = 0; i < N; i++){
+        if(index == i){
+            SHM_POINTER[i].localClock = localClock;
+            SHM_POINTER[i].ko_counter++;
+        }
+        dbDump += to_string(SHM_POINTER[i].pid) + " " + to_string(SHM_POINTER[i].localClock) + " " + to_string(SHM_POINTER[i].ko_counter) + "   |    ";
+    }
+    cout << dbDump << endl;
+}
+
 string createMyRequest(int id, int clock){
     string index=to_string(id);
     string c=to_string(clock);
-    char *message;
     return index + REQUEST + c;
 }
 
 string createMyResponse(int id, int clock){
     string index=to_string(id);
     string c=to_string(clock);
-    char *message;
     return index + RESPONSE+ c;
 }
 
 void sendMessage(int *pfd, string message){
     char const *m = message.c_str();
-    int rez = write(pfd[WRITE], m, MESSAGE_SIZE);
+    (void) write(pfd[WRITE], m, MESSAGE_SIZE);
 }
 
 string readMessage(int *pfd){
@@ -72,7 +82,7 @@ myMessage toMyMessage(string message){
     char m_type = message[MESSAGE_TYPE];
     message.erase(0, 1);
     int messageClock = stoi(message);
-
+    cout << "Iz poruke " << message << " dobio sam strukturu " << myMessage(pid, m_type, messageClock) << endl;
     return myMessage(pid, m_type, messageClock);
 }
 
@@ -88,7 +98,7 @@ void child(int myIndex, int *pipes){
 
     // zatvaranje citanja za sve druge cjevovode
     for(int i = 0; i < N + 1; i++){
-        if(!(i == myIndex)){
+        if(i != myIndex){
             close(pipes[2*N + READ]);
         }
     }
@@ -108,6 +118,7 @@ void child(int myIndex, int *pipes){
             if(i != myIndex){
                 //cout << "Proces" <<  myIndex << " salje zahtev procesu" << i << " message: " << request << endl;
                 sendMessage(pipes + 2 * i, request);
+                //cout << "Proces" << myIndex << " poslao je poruku " << request << endl;
             }
         }
 
@@ -117,6 +128,7 @@ void child(int myIndex, int *pipes){
         int responseCounter = 0;
         while(responseCounter < N - 1){
             string m = readMessage(myPipe);
+            //cout << "Proces" << myIndex << " primio je poruku " << m << endl;
             myMessage message = toMyMessage(m);
 
             if(message.m_type == REQUEST){
@@ -126,6 +138,7 @@ void child(int myIndex, int *pipes){
                     // posalji odgovor
                     //cout << "Proces" <<  myIndex << " salje odgovor procesu" << message.id << " satovi: " << localClock << " " << message.logic_clock << endl;
                     sendMessage(pipes + 2 * message.id, createMyResponse(myIndex, localClock));
+                    //cout << "Proces" << myIndex << " poslao je poruku " << createMyResponse(myIndex, localClock) << endl;
                     continue;
                 }else{
                     pendingRequests[message.id] = message;
@@ -143,21 +156,14 @@ void child(int myIndex, int *pipes){
         }
 
         // udi u KO
-        cout << "Proces" << myIndex << " je usao u KO po " << ++counter << " puta" << endl;
-        string dbDump = string("|   ");
-        for(int i = 0; i < N; i++){
-            if(myIndex == i){
-                SHM_POINTER[i].localClock = localClock;
-                SHM_POINTER[i].ko_counter++;
-            }
-            dbDump += to_string(SHM_POINTER[i].pid) + " " + to_string(SHM_POINTER[i].localClock) + " " + to_string(SHM_POINTER[i].ko_counter) + "   |    ";
-        }
-        cout << dbDump << endl;
-        sleep(1);
+        //cout << "Proces" << myIndex << " je usao u KO po " << ++counter << " puta" << endl;
+        //updateAndPrintDb(myIndex, localClock);
+        sleep(2);
         // odgovori svima koji cekaju
         for(int i = 0; i < N; i++){
             if(i != myIndex && pendingRequests[i].id != -1){
                 sendMessage(pipes + 2 * pendingRequests[i].id, createMyResponse(myIndex, localClock));
+                //cout << "Proces" << myIndex << " poslao je poruku " << createMyResponse(myIndex, localClock) << endl;
             }
         }
         sleep(rand() % 4);
