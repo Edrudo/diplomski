@@ -40,79 +40,64 @@ public class CoinToss extends ScriptTransaction {
 
     @Override
     public Script createLockingScript() {
-        // TODO: Create Locking script
-        long sixteen_bytes = 2 ^ (16 * 8) + 1;
         long sixteen = 16;
 
-        ScriptBuilder sb = new ScriptBuilder();
+        return new ScriptBuilder()
 
-        sb.op(OP_2DUP); // sig Rb Ra Rb Ra
+        .op(OP_2DUP)
+        .op(OP_HASH160)
+        .data(Utils.sha256hash160(aliceNonce))
+        .op(OP_EQUALVERIFY)
 
-        sb.op(OP_HASH160); // sig Rb Ra Rb C'a
-        sb.data(Utils.sha256hash160(aliceNonce)); // sig Rb Ra Rb C'a Ca
-        sb.op(OP_EQUALVERIFY); // fail OR sig Rb Ra Rb
+        .op(OP_HASH160)
+        .data(Utils.sha256hash160(bobNonce))
+        .op(OP_EQUALVERIFY)
 
-        sb.op(OP_HASH160); // sig Rb Ra C'b
-        sb.data(Utils.sha256hash160(bobNonce)); // sig Rb Ra C'b Cb
-        sb.op(OP_EQUALVERIFY); // fail OR sig Rb Ra
+        // Ra and Rb match Ca and Cb
 
-        // ensured that Ra and Rb match Ca and Cb, respectively
+        .op(OP_SIZE)
+        .op(OP_NIP)
+        .number(sixteen)
+        .op(OP_SUB)
 
-        //sb.op(OP_SWAP); // sig Ra Rb
-        sb.op(OP_SIZE); // sig Rb Ra lenA
-        sb.op(OP_NIP); // sig Rb lenA
-        sb.number(sixteen); // sig Rb lenA 16
-        sb.op(OP_SUB); // sig Rb Na
+        .op(OP_SWAP)
+        .op(OP_SIZE)
+        .number(sixteen)
+        .op(OP_SUB)
+        .op(OP_NIP)
 
-        sb.op(OP_SWAP); // sig Na Rb
-        sb.op(OP_SIZE); // sig Na Rb lenB
-        sb.number(sixteen); // sig Na Rb lenB 16
-        sb.op(OP_SUB); // sig Na Rb Nb
-        sb.op(OP_NIP); // sig Na Nb
+        // calculated Na and Nb from Ra and Rb
 
-        // calculated Na and Nb from Ra and Rb, respectively
+        .op(OP_DUP)
+        .smallNum(0)
 
-        sb.op(OP_DUP);
-        sb.smallNum(0);
+        .op(OP_EQUAL)
+        .op(OP_IF)
 
-        sb.op(OP_EQUAL);
-        sb.op(OP_IF);
-
-        sb.op(OP_EQUAL);
-        // determined the winner Alice=1=Tails, Bob=0=Heads
-        sb.op(OP_0NOTEQUAL); // sig True if Alice, sig False if Bob
-        sb.op(OP_IF);
-        sb.data(aliceKey.getPubKey()); // sig bobKey
-        sb.op(OP_ELSE);
-        sb.data(bobKey.getPubKey()); // sig aliceKey
-        sb.op(OP_ENDIF);
+        .op(OP_EQUAL)
+        .op(OP_0NOTEQUAL)
+        .op(OP_IF)
+        .data(aliceKey.getPubKey())
+        .op(OP_ELSE)
+        .data(bobKey.getPubKey())
+        .op(OP_ENDIF)
 
 
-        sb.op(OP_ELSE);
-        sb.op(OP_EQUAL);
-        // determined the winner Alice=1=Tails, Bob=0=Heads
-        sb.op(OP_0NOTEQUAL); // sig True if Alice, sig False if Bob
-        sb.op(OP_IF);
-        sb.data(bobKey.getPubKey()); // sig bobKey
-        sb.op(OP_ELSE);
-        sb.data(bobKey.getPubKey()); // sig aliceKey
-        sb.op(OP_ENDIF);
+        .op(OP_ELSE)
+        .op(OP_EQUAL)
+        .op(OP_0NOTEQUAL)
+        .op(OP_IF)
+        .data(bobKey.getPubKey())
+        .op(OP_ELSE)
+        .data(bobKey.getPubKey())
+        .op(OP_ENDIF)
 
-//        sb.op(OP_EQUAL);
-//        sb.op(OP_0NOTEQUAL); // sig True if Alice, sig False if Bob
-//        sb.op(OP_IF);
-//        sb.data(bobKey.getPubKey()); // sig bobKey
-//        sb.op(OP_ELSE);
-//        sb.data(aliceKey.getPubKey()); // sig aliceKey
-//        sb.op(OP_ENDIF);
+        .op(OP_ENDIF)
+        // determined the winner, check the signature of the winner
 
-        sb.op(OP_ENDIF);
+        .op(OP_CHECKSIG)
 
-
-        sb.op(OP_CHECKSIG);
-
-        return sb.build();
-        //throw new UnsupportedOperationException();
+        .build();
     }
 
     @Override
