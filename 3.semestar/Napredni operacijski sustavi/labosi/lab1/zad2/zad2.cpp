@@ -80,9 +80,9 @@ string readMessage(int *pfd){
 myMessage toMyMessage(string message){
     int pid = message[MESSAGE_ID] - '0';
     char m_type = message[MESSAGE_TYPE];
-    message.erase(0, 1);
+    message.erase(0, 2);
     int messageClock = stoi(message);
-    cout << "Iz poruke " << message << " dobio sam strukturu " << myMessage(pid, m_type, messageClock) << endl;
+
     return myMessage(pid, m_type, messageClock);
 }
 
@@ -90,6 +90,7 @@ void child(int myIndex, int *pipes){
     int pid = getpid();
     srand(pid);
     int localClock = 0;
+    int globalClock = 0;
     cout << "Stvoren proces dijete " << pid << endl;
 
     // zatvaram pisanje u svoj cijevovod
@@ -149,16 +150,16 @@ void child(int myIndex, int *pipes){
             }
 
             // uskladi logicki sat
-            if(localClock < message.logic_clock){
+            if(globalClock < message.logic_clock){
                 localClock= message.logic_clock;
             }
-            localClock++;
+            globalClock++;
         }
 
         // udi u KO
-        //cout << "Proces" << myIndex << " je usao u KO po " << ++counter << " puta" << endl;
-        //updateAndPrintDb(myIndex, localClock);
+        cout << "Proces" << myIndex << " je usao u KO po " << ++counter << " puta" << endl;
         sleep(2);
+        //updateAndPrintDb(myIndex, localClock);
         // odgovori svima koji cekaju
         for(int i = 0; i < N; i++){
             if(i != myIndex && pendingRequests[i].id != -1){
@@ -166,6 +167,7 @@ void child(int myIndex, int *pipes){
                 //cout << "Proces" << myIndex << " poslao je poruku " << createMyResponse(myIndex, localClock) << endl;
             }
         }
+        localClock = globalClock;
         sleep(rand() % 4);
     }
 } 
