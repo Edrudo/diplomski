@@ -151,15 +151,15 @@ void child(int myIndex, int *pipes){
 
             // uskladi logicki sat
             if(globalClock < message.logic_clock){
-                localClock= message.logic_clock;
+                globalClock= message.logic_clock;
             }
             globalClock++;
         }
 
         // udi u KO
-        cout << "Proces" << myIndex << " je usao u KO po " << ++counter << " puta" << endl;
+        //cout << "Proces" << myIndex << " je usao u KO po " << ++counter << " puta" << endl << flush;
         sleep(2);
-        //updateAndPrintDb(myIndex, localClock);
+        updateAndPrintDb(myIndex, localClock);
         // odgovori svima koji cekaju
         for(int i = 0; i < N; i++){
             if(i != myIndex && pendingRequests[i].id != -1){
@@ -167,6 +167,8 @@ void child(int myIndex, int *pipes){
                 //cout << "Proces" << myIndex << " poslao je poruku " << createMyResponse(myIndex, localClock) << endl;
             }
         }
+
+        // pitanje: bilo trebao ovdje procitate sve kaj imam u cjevovodu i odgovoriti na to
         localClock = globalClock;
         sleep(rand() % 4);
     }
