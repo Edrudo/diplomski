@@ -117,9 +117,7 @@ void child(int myIndex, int *pipes){
         string request = createMyRequest(myIndex, localClock);
         for(int i = 0; i < N; i++){
             if(i != myIndex){
-                //cout << "Proces" <<  myIndex << " salje zahtev procesu" << i << " message: " << request << endl;
                 sendMessage(pipes + 2 * i, request);
-                //cout << "Proces" << myIndex << " poslao je poruku " << request << endl;
             }
         }
 
@@ -129,24 +127,19 @@ void child(int myIndex, int *pipes){
         int responseCounter = 0;
         while(responseCounter < N - 1){
             string m = readMessage(myPipe);
-            //cout << "Proces" << myIndex << " primio je poruku " << m << endl;
             myMessage message = toMyMessage(m);
 
             if(message.m_type == REQUEST){
-                //cout << "Proces" << myIndex << " primio je zahtjev od " << message.id << endl;
 
                 if(localClock > message.logic_clock || (localClock == message.logic_clock && myIndex > message.id)){
                     // posalji odgovor
-                    //cout << "Proces" <<  myIndex << " salje odgovor procesu" << message.id << " satovi: " << localClock << " " << message.logic_clock << endl;
                     sendMessage(pipes + 2 * message.id, createMyResponse(myIndex, localClock));
-                    //cout << "Proces" << myIndex << " poslao je poruku " << createMyResponse(myIndex, localClock) << endl;
                     continue;
                 }else{
                     pendingRequests[message.id] = message;
                 }
             }else if(message.m_type == RESPONSE){
                 responseCounter++;
-                //cout << "Proces" << myIndex << " primio je odgovor od " << message.id << " counter je " << responseCounter << endl;
             }
 
             // uskladi logicki sat
@@ -157,14 +150,13 @@ void child(int myIndex, int *pipes){
         }
 
         // udi u KO
-        //cout << "Proces" << myIndex << " je usao u KO po " << ++counter << " puta" << endl << flush;
         sleep(2);
-        updateAndPrintDb(myIndex, localClock);
+        updateAndPrintDb(myIndex, globalClock);
+
         // odgovori svima koji cekaju
         for(int i = 0; i < N; i++){
             if(i != myIndex && pendingRequests[i].id != -1){
                 sendMessage(pipes + 2 * pendingRequests[i].id, createMyResponse(myIndex, localClock));
-                //cout << "Proces" << myIndex << " poslao je poruku " << createMyResponse(myIndex, localClock) << endl;
             }
         }
 
