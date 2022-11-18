@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://localhost:3000/bulk-page/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style rc-util-key="@ant-design-icons">
+.anticon {
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.anticon > * {
+  line-height: 1;
+}
+
+.anticon svg {
+  display: inline-block;
+}
+
+.anticon::before {
+  display: none;
+}
+
+.anticon .anticon-icon {
+  display: block;
+}
+
+.anticon[tabindex] {
+  cursor: pointer;
+}
+
+.anticon-spin::before,
+.anticon-spin {
+  display: inline-block;
+  -webkit-animation: loadingCircle 1s infinite linear;
+  animation: loadingCircle 1s infinite linear;
+}
+
+@-webkit-keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+</style><link id="theme-stylesheet" rel="stylesheet" href="./Bulk Page_files/default-light.css">
+      <script type="module" src="./Bulk Page_files/client"></script>
+      <script type="module">
+import RefreshRuntime from "/bulk-page/@react-refresh"
+RefreshRuntime.injectIntoGlobalHook(window)
+window.$RefreshReg$ = () => {}
+window.$RefreshSig$ = () => (type) => type
+window.__vite_plugin_react_preamble_installed__ = true
+</script>
+
+        
+        <link rel="icon" href="http://localhost:3000/bulk-page/favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#000000">
+        <title>Bulk Page</title>
+        <script type="text/javascript">
+            window.global = window.globalThis = window;
+        </script>
+    <style data-nano-css-dev=""></style><style data-nano-css-dev-tests=""></style><style></style><style type="text/css">/*  imported from Audit.module.css  */
+
+.Audit-module__container___2uY2D {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.Audit-module__pagination___3RBq8 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--padding-xs) 0;
+    border-top: 1px solid var(--border-color-split);
+    padding-left: 1em;
+}
+
+.Audit-module__table___2QHw8 {
+    height: 100%;
+    overflow-y: auto;
+    border-top: 1px solid var(--border-color-split);
+}
+
+.Audit-module__button___p5zwe {
+    margin-right: 1em;
+}
+
+.Audit-module__table___2QHw8 .ant-table-cell {
+    padding: 0;
+}
+
+.Audit-module__table___2QHw8 .ant-tabs {
+    overflow: visible;
+}
+
+.Audit-module__table___2QHw8 .ant-table-expanded-row > .ant-table-cell {
+    background-color: var(--component-background);
+    padding-bottom: 20px;
+    padding-left: 12px;
+}
+
+.Audit-module__table___2QHw8 .ant-table-fixed-column .ant-table-expanded-row > .ant-table-cell {
+    padding-left: 0;
+}
+
+.Audit-module__table___2QHw8 .ant-tabs .Audit-module__table___2QHw8 .ant-spin-container .ant-table {
+    margin: 0;
+}
+
+.Audit-module__table___2QHw8 .ant-table-tbody > tr .ant-table-wrapper:only-child .ant-table-tbody > tr:last-child > td {
+    border-bottom: 1px solid var(--border-color-split);
+}
+
+.Audit-module__table___2QHw8 .ant-tabs-content {
+    width: fit-content;
+    overflow-x: auto;
+    overflow-y: visible;
+}
+
+.Audit-module__table___2QHw8 .ant-table th {
+    padding: 3px;
+}
+
+.Audit-module__table___2QHw8 .ant-table-expand-icon-col {
+    width: 32px;
+}
+
+.Audit-module__table___2QHw8 .ant-table-row-expand-icon {
+    margin: 0 8px;
+}
+
+.Audit-module__table___2QHw8 .ant-table-container {
+    border-top: none !important;
+} 
+
+.Audit-module__table___2QHw8 .ant-table-ping-right .ant-table-container::after,
+.Audit-module__table___2QHw8 .ant-table-ping-left .ant-table-container::before {
+    box-shadow: none;
+    display: none; 
+}
+
+.Audit-module__top___3n8lt {
+    padding-top: var(--padding-xs);
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+}
+
+.Audit-module__title___1Akfn {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+/*  imported from Auth.module.css  */
+
+.Auth-module__cognitoAuthRow___gJN9e {
+    height: calc(100vh - 48px);
+    flex-direction: column;
+}
+
+.Auth-module__center___uAo4- {
+    margin-top: auto;
+    margin-bottom: auto;
+    align-self: center;
+}
+
+.Auth-module__textCenter___30fOm {
+    text-align: center;
+    margin-top: 12px;
+}
+
+.Auth-module__spinner___24Djx {
+    font-size: 72px;
+}
+/*  imported from FooterBuilder.module.css  */
+
+.FooterBuilder-module__section___1uI3G {
+  margin-bottom: calc(var(--padding-lg) * 2);
+}
+
+.FooterBuilder-module__section___1uI3G.FooterBuilder-module__sectionSmall___2daiL {
+  margin-bottom: var(--padding-lg);
+}
+
+.FooterBuilder-module__section___1uI3G:first-child {
+  margin-top: var(--padding-sm);
+}
+
+.FooterBuilder-module__section___1uI3G:last-child {
+  margin-bottom: var(--padding-lg);
+}
+
+.FooterBuilder-module__section___1uI3G > .FooterBuilder-module__row___1WnhX:last-child {
+  margin-bottom: 0;
+}
+
+.FooterBuilder-module__section___1uI3G .ant-form-item-explain {
+  display: none;
+}
+
+.FooterBuilder-module__dropdown___3pj2y {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.FooterBuilder-module__dropdown___3pj2y:not(.ant-select-open) {
+  color: var(--placeholder-color);
+}
+
+.FooterBuilder-module__selectRow___2RfRc .ant-form-item-control-input-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.FooterBuilder-module__selectTriple___3x9Tm {
+  flex: unset;
+  width: calc((100% - 2 * var(--padding-md)) / 3) !important;
+}
+
+.FooterBuilder-module__selectDouble___2NdBh {
+  flex: unset;
+  width: calc((100% - var(--padding-md)) / 2) !important;
+}
+
+.FooterBuilder-module__divider___3LL-f {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--padding-lg);
+}
+
+.FooterBuilder-module__dividerLeft___1hh4P {
+  display: flex;
+  flex: 1;
+  border-bottom: 1px solid var(--border-color-base);
+}
+
+.FooterBuilder-module__dividerTitle___2-TSg {
+  margin: 0 var(--padding-lg);
+  color: var(--primary-color);
+}
+
+.FooterBuilder-module__dividerRight___i4DVg {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.FooterBuilder-module__dividerButton___2rJ1X {
+  padding-right: 0;
+}
+
+.FooterBuilder-module__dividerLine___75ly4 {
+  flex: 1;
+  border-bottom: 1px solid var(--border-color-base);
+}
+/*  imported from Label.module.css  */
+
+.Label-module__name___3Vqtz {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+  margin-right: var(--padding-xs);
+}
+/*  imported from Modal.module.css  */
+
+.Modal-module__content___10pSm {
+  padding: var(--padding-xs) var(--padding-lg) var(--padding-sm) var(--padding-lg);
+}
+
+.Modal-module__section___cd953 {
+  margin-bottom: calc(var(--padding-lg) * 2);
+}
+
+.Modal-module__section___cd953.Modal-module__border___lLRws {
+  padding-bottom: calc(var(--padding-lg) * 2);
+  border-bottom: 1px solid var(--border-color-split);
+}
+
+.Modal-module__section___cd953.Modal-module__sectionSmall___1sZr8 {
+  margin-bottom: var(--padding-lg);
+}
+
+.Modal-module__section___cd953.Modal-module__sectionSmall___1sZr8.Modal-module__border___lLRws {
+  padding-bottom: var(--padding-lg);
+  border-bottom: 1px solid var(--border-color-split);
+}
+
+.Modal-module__section___cd953:first-child {
+  margin-top: var(--padding-sm);
+}
+
+.Modal-module__section___cd953:last-child {
+  margin-bottom: var(--padding-lg);
+}
+
+.Modal-module__section___cd953 > .Modal-module__row___2qC-L:last-child {
+  margin-bottom: 0;
+}
+
+.Modal-module__section___cd953 .ant-form-item-explain {
+  display: none;
+}
+
+.Modal-module__row___2qC-L {
+  display: flex;
+  margin-bottom: var(--padding-md);
+}
+
+.Modal-module__noMargin___GxBaK {
+  margin-bottom: 0;
+}
+
+.Modal-module__formItem___1TYRd {
+  width: 100%;
+  flex-wrap: nowrap;
+  margin-bottom: 0;
+}
+
+.Modal-module__extra___3msuR {
+  display: flex;
+  width: 40px;
+}
+
+.Modal-module__label___2-Wbe {
+  min-width: 120px;
+  width: 120px;
+  text-align: left;
+}
+
+.Modal-module__label___2-Wbe > label {
+  color: var(--text-color-secondary);
+  font-weight: 600;
+  text-align: left;
+}
+
+.Modal-module__wrapper___E1IRP {
+  max-width: calc(100% - 120px);
+}
+
+.Modal-module__wrapperMarginLeft___3PV1h {
+  margin-left: 120px;
+}
+/*  imported from Navbar.module.css  */
+
+.Navbar-module__navBar___3ZpZB {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	height: 48px;
+	background-color: var(--header-bg-color);
+}
+
+.Navbar-module__navBarLogo___33Qf8 {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 48px;
+	width: 220px;
+	overflow: hidden;
+}
+
+.Navbar-module__navBarMenu___3Jwhh {
+	padding-left: 220px;
+	background-color: transparent;
+	line-height: 46px !important;
+	border-bottom: none;
+}
+
+.Navbar-module__navBarMenuItem___1MqLH {
+	color: var(--header-text-color) !important;
+}
+
+.Navbar-module__navBarMenuLink___e-3mv {
+	margin-top: 1px;
+	margin-bottom: -1px;
+	color: var(--header-text-color) !important;
+}
+
+.Navbar-module__navBarMenu___3Jwhh li.ant-menu-item-selected,
+.Navbar-module__navBarMenu___3Jwhh li.ant-menu-item-active {
+	border-bottom: 2px solid var(--header-text-color) !important;
+	background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.Navbar-module__navBarChildren___3ZkEj {
+	width: 100%;
+}
+/*  imported from NotificationsCounter.module.css  */
+
+.NotificationsCounter-module__notifications___3veyz {
+  display: flex;
+  align-items: center;
+  line-height: 46px;
+  margin-right: var(--padding-sm);
+}
+
+.NotificationsCounter-module__button___oi0dM {
+  margin-right: var(--padding-sm);
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--header-text-color);
+}
+
+.NotificationsCounter-module__button___oi0dM:hover, .NotificationsCounter-module__button___oi0dM:focus {
+  border-color: var(--primary-5);
+  background-color: var(--primary-5);
+  color: var(--header-text-color);
+}
+
+.NotificationsCounter-module__link___2K-49 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  margin-top: -2px;
+  border-radius: var(--border-radius);
+  color: var(--header-text-color) !important;
+  transition: background 0.3s ease;
+}
+
+.NotificationsCounter-module__link___2K-49:hover {
+  background-color: var(--primary-5);
+}
+
+.NotificationsCounter-module__tag___28MVs {
+  position: absolute;
+  top: -4px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 12px;
+  height: 12px;
+}
+
+.NotificationsCounter-module__counter___3fIqX {
+  padding: 4px;
+  border-radius: 6px;
+  background-color: var(--highlight-color);
+  color: var(--header-text-color);
+  font-size: 10px;
+  line-height: 10px;
+}
+
+.NotificationsCounter-module__warning___1U8k3 {
+  width: 12px;
+  color: var(--warning-color);
+  font-size: 12px;
+}
+/*  imported from UserMenu.module.css  */
+
+.UserMenu-module__userMenu___pY-gZ {
+  background-color: transparent;
+	line-height: 46px !important;
+	padding-right: 16px;
+	float: right;
+	color: var(--header-text-color) !important;
+	border-bottom: none;
+}
+
+.UserMenu-module__userMenu___pY-gZ .ant-menu-submenu-title {
+  color: var(--header-text-color) !important;
+}
+
+.UserMenu-module__userMenu___pY-gZ li.ant-menu-submenu-open {
+  border-bottom: 2px solid var(--header-text-color) !important;
+}
+
+.UserMenu-module__userMenuItem___1ywOv .ant-menu-title-content {
+  display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.UserMenu-module__userMenuLabel___2Q-38 {
+  display: inline-block;
+	max-width: 150px;
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.UserMenu-module__userMenuItemVersion___1PZZI:not(.UserMenu-module__clickable___3mSOT):hover {
+  cursor: default;
+  color: var(--text-color) !important;
+}
+
+.UserMenu-module__userMenuAction___231_- {
+  display: table;
+	text-align: right;
+}
+
+.UserMenu-module__userMenuIcon___s3GA2 {
+  display: table-cell;
+}
+/*  imported from SortableList.module.css  */
+
+.SortableList-module__sortableListItemDragged___YKbOM {
+  background-color: var(--disabled-bg);
+  color: var(--disabled-color);
+}
+
+.SortableList-module__sortableListItemSelected___1sVBr {
+  background-color: var(--item-selected-bg);
+}
+
+.SortableList-module__sortableListItem___2kLvk {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color-base);
+  padding: var(--padding-md);
+}
+
+@keyframes SortableList-module__highlight-moved___2oWeF {
+  0% { background-color: var(--item-selected-bg); }
+  100% { background-color: var(--component-background); }
+}
+
+.SortableList-module__sortableListDraggingEnded___2JOfB {
+  animation-name: SortableList-module__highlight-moved___2oWeF;
+  animation-duration: 1s;
+}
+
+.SortableList-module__sortableListActionsRow___PUAJj {
+  margin-bottom: var(--padding-sm);
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.SortableList-module__sortableListAction___2k2uN {
+  margin-right: var(--padding-sm);
+}
+
+.SortableList-module__sortableListContainer___1IcQ3 {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+}
+
+.SortableList-module__modalSortableListContainer___10Vu5 .ant-modal-body {
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding-lg);
+  padding-top: var(--padding-sm);
+  overflow: hidden;
+}
+
+.SortableList-module__sortableListHeader___2kyax {
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+  font-weight: 500;
+  text-align: left;
+  background: var(--background-color-base);
+  border-bottom: 1px solid var(--border-color-base);
+  transition: background 0.3s ease;
+  padding: var(--padding-md);
+}
+
+.SortableList-module__sortableListItemsContainer___2Zq5h {
+  overflow: auto;
+}
+
+.SortableList-module__sortableListItemDragging___11oin {
+  background: var(--background-color-base);
+}
+/*  imported from Spinner.module.css  */
+
+.Spinner-module__container___3se1Y {
+  height: calc(100vh - 48px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Spinner-module__text___3gTxG {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.Spinner-module__spinner___1GtEl {
+  font-size: 72px;
+}
+/*  imported from DragSortingTable.module.css  */
+
+.DragSortingTable-module__dragSortingTable___3rCAa tr.drop-over-downward td {
+  border-bottom: 2px dashed var(--primary-color);
+}
+
+.DragSortingTable-module__dragSortingTable___3rCAa tr.drop-over-upward td {
+  border-top: 2px dashed var(--primary-color);
+}
+/*  imported from VirtualTable.module.css  */
+.VirtualTable-module__virtualTable___q7hXv .ant-table-bordered .ant-table-container {
+  border-radius: 0;
+  border-left: none;
+}
+
+/* Necessary to allow usage with AutoSizer */
+.VirtualTable-module__virtualTable___q7hXv.ant-table-wrapper {
+  max-width: unset;
+}
+
+/* Setting fixed header heights */
+
+.VirtualTable-module__virtualTable___q7hXv.VirtualTable-module__small___9fZ-Z .ant-table.ant-table-bordered thead > tr > th {
+  white-space: nowrap;
+  height: 32px;
+}
+
+.VirtualTable-module__virtualTable___q7hXv.VirtualTable-module__middle___2nN6E .ant-table.ant-table-bordered thead > tr > th {
+  white-space: nowrap;
+  height: 48px;
+}
+
+.VirtualTable-module__virtualTable___q7hXv.VirtualTable-module__large___tGhdY .ant-table.ant-table-bordered thead > tr > th {
+  white-space: nowrap;
+  height: 64px;
+}
+
+.VirtualTable-module__virtualTableCell___1iSA6 {
+  border-bottom: 1px solid var(--border-color-split);
+  border-right: 1px solid var(--border-color-split);
+  display: flex;
+  align-items: center;
+}
+
+.VirtualTable-module__alignLeft___1MqP2 {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.VirtualTable-module__alignRight___1h8xs {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.VirtualTable-module__alignCenter___1lbuE {
+  justify-content: center;
+  text-align: center;
+}
+
+.VirtualTable-module__alternate___1TnHH {
+  background-color: var(--background-color-light);
+}
+
+.VirtualTable-module__virtualTableCell___1iSA6.VirtualTable-module__virtualTableCellFirst___2y7Mk {
+  border-left: 1px solid var(--border-color-split);
+}
+
+.VirtualTable-module__virtualTable___q7hXv .ant-table.ant-table-bordered thead > tr > th:last-child {
+  border-right: 1px solid var(--border-color-split) !important;
+  border-top-right-radius: 0 !important;
+}
+
+.VirtualTable-module__virtualTable___q7hXv .ant-table.ant-table-bordered thead > tr > th:first-child {
+  border-top-left-radius: 0 !important;
+  border-left: 1px solid var(--border-color-split) !important;
+}
+/*  imported from Differ.module.css  */
+
+.Differ-module__created___2aZhU {
+    background-color: var(--audit-cell-created-color);
+}
+
+.Differ-module__modified___3fT-W {
+    background-color: var(--audit-cell-modified-color);
+} 
+
+.Differ-module__removed___Xl6SK {
+    background-color: var(--audit-cell-removed-color);
+}
+
+.Differ-module__differCell___3DXYs {
+    line-height: 26px;
+    padding: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    flex: 1;
+}
+
+.Differ-module__differCell___3DXYs::after {
+    white-space: pre;
+    content: " ";
+}
+</style><style type="text/css">header {
+  align-items: center;
+}
+
+#root {
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: grey;
+}</style><style type="text/css">._select-all-dropdown_i4j67_1 {
+  width: 180px;
+}
+._select-all-dropdown_i4j67_1 .ant-select-selection-overflow {
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+._select-all-button_i4j67_9 {
+  margin-left: 4px;
+}</style><style type="text/css">._target-icon_nxu80_1 svg {
+  border-radius: 50%;
+}
+
+._target-icon_nxu80_1._other_nxu80_5._dark_nxu80_5 path {
+  fill: white;
+}</style><style type="text/css">._info-message_f59r9_1 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  border: 1px solid red;
+  border-radius: 0.5em;
+  padding: 8px 16px;
+  font-weight: 600;
+  color: red;
+}
+
+._content-wrapper_f59r9_14 {
+  height: 75vh;
+  position: relative;
+  width: 100%;
+}
+._content-wrapper_f59r9_14 ._control-buttons_f59r9_19 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+._clickable_f59r9_30 {
+  cursor: pointer !important;
+}
+
+._clickable_f59r9_30:hover {
+  color: var(--item-hover-color);
+}
+
+._selection-table-container_f59r9_38 {
+  min-height: 80%;
+  width: 100%;
+}
+._selection-table-container_f59r9_38 ._selection-table_f59r9_38 {
+  font-weight: 600;
+}
+._selection-table-container_f59r9_38 ._selection-table_f59r9_38 ._cell_f59r9_45 {
+  padding: 8px;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+._selection-table-container_f59r9_38 ._selection-table_f59r9_38 ._match-phase-inplay_f59r9_51 {
+  color: var(--red-7);
+}
+._selection-table-container_f59r9_38 ._selection-table_f59r9_38 ._match-phase-pregame_f59r9_54 {
+  color: var(--blue-7);
+}
+._selection-table-container_f59r9_38 ._selection-table_f59r9_38 ._status-active_f59r9_57 {
+  color: #1890FF;
+}
+._selection-table-container_f59r9_38 ._selection-table_f59r9_38 ._status-won_f59r9_60 {
+  color: #389E0D;
+}
+._selection-table-container_f59r9_38 ._selection-table_f59r9_38 ._status-lost_f59r9_63 {
+  color: #D4380D;
+}
+._selection-table-container_f59r9_38 ._selection-table_f59r9_38 ._status-refunded_f59r9_66 {
+  color: #AD6800;
+}
+
+._filters_f59r9_70 {
+  display: flex;
+  margin: 20px 0;
+}
+._filters_f59r9_70 ._filter-container_f59r9_74 {
+  width: 300px;
+}
+._filters_f59r9_70 ._filter-container_f59r9_74 ._filter_f59r9_70 {
+  width: 280px;
+}
+
+._coefficient-cell_f59r9_81 {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+._coefficient-cell_f59r9_81 ._icons_f59r9_87 {
+  display: flex;
+  gap: 8px;
+}
+._coefficient-cell_f59r9_81 ._icons_f59r9_87 ._negotiated-icon_f59r9_91 {
+  color: #D4380D;
+}
+._coefficient-cell_f59r9_81 ._icons_f59r9_87 ._overridden-icon_f59r9_94 {
+  color: #AD6800;
+}
+._coefficient-cell_f59r9_81 ._icons_f59r9_87 ._inactive-icon_f59r9_97 {
+  color: gray;
+}
+
+._selection-override-form_f59r9_101 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+._selection-override-form_f59r9_101 ._form-item_f59r9_108 {
+  width: 30%;
+}
+._selection-override-form_f59r9_101 ._void-factor-value-input_f59r9_111 {
+  width: 100%;
+}
+
+._final-step_f59r9_115 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+._final-step_f59r9_115 ._retry-button-with-table_f59r9_123 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+  height: 40vh;
+  gap: 16px;
+}</style><style type="text/css">@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+._app_ybk3e_2 {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+body {
+  font-family: "Open Sans", sans-serif;
+}
+._error-fallback_ybk3e_13 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}</style><style type="text/css">._range-input_16b1x_1 {
+  display: flex;
+  width: 100%;
+  gap: 5px;
+  color: white;
+}
+
+._number-input_16b1x_8 {
+  width: 100px;
+}
+
+._text-input_16b1x_12 {
+  width: 150px;
+}
+
+._event-input_16b1x_16 {
+  display: flex;
+  width: 100%;
+  gap: 5px;
+  color: white;
+}
+
+._multi-select_16b1x_23 {
+  width: 180px;
+}
+._multi-select_16b1x_23 .ant-select-selection-overflow {
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+._select-all-option_16b1x_31 {
+  color: var(--primary-8);
+}
+
+._logic-operator-button_16b1x_35 {
+  margin-left: 4px;
+  width: 40px;
+}
+
+._filter-section_16b1x_40 {
+  width: 100%;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+._filter-section_16b1x_40 ._filters_16b1x_46 {
+  display: flex;
+  justify-content: space-between;
+}
+._filter-section_16b1x_40 ._filters_16b1x_46 ._filter-group_16b1x_50 {
+  padding: 0 16px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 12px;
+  border-right: 1px solid var(--border-color-base);
+}
+._filter-section_16b1x_40 ._filters_16b1x_46 ._filter-group_16b1x_50 ._filter-row_16b1x_60 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+._filter-section_16b1x_40 ._filters_16b1x_46 ._filter-group_16b1x_50:first-child {
+  padding-left: 0;
+}
+._filter-section_16b1x_40 ._filters_16b1x_46 ._filter-group_16b1x_50:last-child {
+  border: unset;
+  padding-right: 0;
+}
+._filter-section_16b1x_40 ._filters_16b1x_46 ._filter-group_16b1x_50 ._filter_16b1x_40 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  width: fit-content;
+}
+._filter-section_16b1x_40 ._filters_16b1x_46 ._filter-group_16b1x_50 ._filter_16b1x_40 ._label-with-pin_16b1x_79 {
+  margin-bottom: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+._filter-section_16b1x_40 ._filters_16b1x_46 ._filter-group_16b1x_50 ._filter_16b1x_40 ._label-with-pin_16b1x_79 ._pin-icon_16b1x_87 {
+  margin-right: 5px;
+}
+._filter-section_16b1x_40 ._filters_16b1x_46 ._filter-group_16b1x_50 ._filter_16b1x_40._pinned_16b1x_90 ._pin-icon_16b1x_87 {
+  color: var(--highlight-color);
+}
+._filter-section_16b1x_40 ._filters_16b1x_46 ._filter-group_16b1x_50 ._filter_16b1x_40:not(._pinned_16b1x_90) ._label-with-pin_16b1x_79:hover ._pin-icon_16b1x_87 {
+  color: var(--highlight-color);
+}
+._filter-section_16b1x_40 ._filter-actions_16b1x_96 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 16px;
+}
+
+._filter-section_16b1x_40._light-theme_16b1x_103 {
+  background-color: var(--primary-8);
+}
+._filter-section_16b1x_40._light-theme_16b1x_103 ._label-with-pin_16b1x_79 {
+  color: var(--body-background);
+}
+
+._filter-section_16b1x_40._pinned-mode_16b1x_110 ._filters_16b1x_46 {
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+._filter-section_16b1x_40._pinned-mode_16b1x_110 ._filters_16b1x_46 ._filter-group_16b1x_50 {
+  border: unset;
+  display: contents;
+}
+._filter-section_16b1x_40._pinned-mode_16b1x_110 ._filters_16b1x_46 ._filter-group_16b1x_50 ._filter-row_16b1x_60 {
+  display: contents;
+}
+._filter-section_16b1x_40._pinned-mode_16b1x_110 ._filters_16b1x_46 ._filter_16b1x_40:not(._pinned_16b1x_90) {
+  display: none;
+}
+._filter-section_16b1x_40._pinned-mode_16b1x_110 ._filters_16b1x_46 ._filter_16b1x_40 {
+  flex-direction: row;
+  width: fit-content;
+}
+._filter-section_16b1x_40._pinned-mode_16b1x_110 ._filters_16b1x_46 ._filter_16b1x_40 ._label-with-pin_16b1x_79 {
+  margin-bottom: 0;
+}
+._filter-section_16b1x_40._pinned-mode_16b1x_110 ._filters_16b1x_46 ._filter_16b1x_40 ._label-with-pin_16b1x_79::after {
+  content: ":";
+}
+._filter-section_16b1x_40._pinned-mode_16b1x_110 ._filter-actions_16b1x_96 {
+  margin-left: auto;
+  flex-direction: row-reverse;
+}</style><style type="text/css">._header-content_16r98_1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+  margin-left: -50px;
+}
+._header-content_16r98_1 ._header-button_16r98_8 {
+  box-shadow: none;
+  border: none;
+}
+._header-content_16r98_1 ._header-select_16r98_12 {
+  width: 220px;
+  margin-right: 5px;
+}
+._header-content_16r98_1 ._target-select_16r98_16 {
+  width: 320px;
+}
+._header-content_16r98_1 ._header-content-items_16r98_19 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+._header-content_16r98_1 ._header-content-items_16r98_19 ._older-tickets-switch_16r98_24 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: 15px;
+}
+._header-content_16r98_1 ._header-content-items_16r98_19 ._older-tickets-switch_16r98_24 > ._label_16r98_30 {
+  color: white;
+  line-height: normal;
+}
+._header-content_16r98_1 ._header-content-items_16r98_19 ._older-tickets-switch_16r98_24 > ._switch_16r98_34._light_16r98_34 {
+  background-color: var(--gray-6);
+}
+._header-content_16r98_1 ._header-content-items_16r98_19 ._older-tickets-switch_16r98_24 > ._switch_16r98_34._light_16r98_34._checked_16r98_37 {
+  background-color: var(--primary-8);
+}
+
+._new-preset-button_16r98_41 {
+  margin-left: 4px;
+}
+
+._preset-actions_16r98_45 {
+  display: flex;
+  gap: 3px;
+  font-size: 13px;
+  margin: -1px 0 0 -3px;
+}
+._preset-actions_16r98_45 ._save-changes-icon_16r98_51 {
+  color: red;
+  margin-left: -16px;
+}
+._preset-actions_16r98_45 ._save-changes-icon_16r98_51:hover {
+  color: var(--primary-7);
+}
+
+._preset-select-option_16r98_59 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+._delete-preset-icon_16r98_67 {
+  color: darkgrey;
+}
+._delete-preset-icon_16r98_67:hover {
+  color: red;
+}
+
+._tickets-actions-button-container_16r98_74 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+._tickets-actions-button-container_16r98_74 ._ticket-actions-menu_16r98_79 {
+  position: absolute;
+}</style><style type="text/css">._ticket-table-container_i74xt_1 {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+._ticket-table-container_i74xt_1 ._load-more-button_i74xt_6 {
+  z-index: 100;
+  margin-top: -32px;
+  display: flex;
+  justify-content: center;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-weight: 600;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 .ant-table.ant-table-small {
+  font-size: 12px;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._cell_i74xt_21 {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  padding: 5px;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._cell_i74xt_21._pregame-and-inplay-cell_i74xt_28 {
+  padding: 0;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._cell_i74xt_21._pregame-and-inplay-cell_i74xt_28 ._divider_i74xt_31 {
+  margin: 0;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._cell_i74xt_21._selection-name-and-coefficient-cell_i74xt_34 ._divider_i74xt_31 {
+  border-color: var(--gray-7);
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._overflowable_i74xt_37 {
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._clickable_i74xt_42 {
+  cursor: pointer !important;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._copyable_i74xt_45 {
+  cursor: copy;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._centered_i74xt_48 {
+  justify-content: center;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._align-left_i74xt_51 {
+  justify-content: flex-start;
+  text-align: start;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._align-right_i74xt_55 {
+  justify-content: flex-end;
+  text-align: end;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._clickable_i74xt_42:hover, ._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1._copyable_i74xt_45:hover {
+  color: var(--item-hover-color);
+  border: 1px var(--item-hover-color) solid;
+  text-decoration: underline;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._low-value_i74xt_64 {
+  color: var(--green-7);
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._medium-value_i74xt_67 {
+  color: var(--blue-7);
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._high-value_i74xt_70 {
+  color: var(--red-7);
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._negotiable-number_i74xt_73 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 5px;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._negotiable-number_i74xt_73 ._outdated_i74xt_80 {
+  font-size: 12px;
+  color: gray;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._negotiable-number_i74xt_73 ._negotiated-icon_i74xt_84 {
+  font-size: large;
+  color: gray;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._negotiable-number_i74xt_73 ._negotiated-icon_i74xt_84._active_i74xt_88 {
+  color: red;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._selection-count-1_i74xt_91 {
+  color: var(--red-7);
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._selection-count-2_i74xt_94 {
+  color: var(--blue-7);
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._selection-count-over-2_i74xt_97 {
+  color: var(--green-7);
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-0-01_i74xt_100 {
+  background-color: #CF1322;
+  color: white;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-0-1_i74xt_104 {
+  background-color: #FF4D4F;
+  color: white;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-0-25_i74xt_108 {
+  background-color: #FAAD14;
+  color: #333;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-0-5_i74xt_112 {
+  background-color: #FFC53D;
+  color: #333;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-0-75_i74xt_116 {
+  background-color: #FFD666;
+  color: #333;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-1-01_i74xt_120 {
+  background-color: #B7EB8F;
+  color: #333;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-2_i74xt_124 {
+  background-color: #95DE64;
+  color: #333;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-3_i74xt_128 {
+  background-color: #95DE64;
+  color: #333;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-5_i74xt_132 {
+  background-color: #73D13D;
+  color: #333;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-10_i74xt_136 {
+  background-color: #52C41A;
+  color: #333;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-20_i74xt_140 {
+  background-color: #389E0D;
+  color: white;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-50_i74xt_144 {
+  background-color: #237804;
+  color: white;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._stake-factor-100_i74xt_148 {
+  background-color: #237804;
+  color: #FADB14;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._limit-high_i74xt_152 {
+  background-color: #FFADD2;
+  color: #333;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._limit-very-high_i74xt_156 {
+  background-color: #F759AB;
+  color: white;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._market-type-inplay_i74xt_160 {
+  color: var(--red-7);
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._market-type-pregame_i74xt_163 {
+  color: var(--blue-7);
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._market-type-mix_i74xt_166 {
+  color: var(--purple-7);
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._status-active_i74xt_169 {
+  color: #1890FF;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._status-won_i74xt_172 {
+  color: #389E0D;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._status-lost_i74xt_175 {
+  color: #D4380D;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._status-refunded_i74xt_178 {
+  color: #AD6800;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._pregame-and-inplay-cell_i74xt_28 {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._pregame-and-inplay-cell_i74xt_28 ._divider_i74xt_31 {
+  height: 100%;
+  margin: 0;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._selection-cell_i74xt_194 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._selection-cell_i74xt_194 ._divider_i74xt_31 {
+  border-color: var(--gray-7);
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._save-for-later-pin_i74xt_204:hover {
+  border: none !important;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._save-for-later-pin_i74xt_204._checked_i74xt_207 {
+  color: var(--highlight-color) !important;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._save-for-later-pin_i74xt_204._unchecked_i74xt_210 {
+  color: unset !important;
+}
+._ticket-table-container_i74xt_1 ._ticket-table_i74xt_1 ._save-for-later-pin_i74xt_204._unchecked_i74xt_210:hover {
+  color: var(--highlight-color) !important;
+}
+
+._popover-table_i74xt_217 {
+  display: grid;
+  grid-row-gap: 5px;
+  grid-column-gap: 10px;
+}
+._popover-table_i74xt_217 ._grid-row-wrapper_i74xt_222 {
+  display: contents;
+}
+._popover-table_i74xt_217 ._grid-row-wrapper_i74xt_222._header-row_i74xt_225 {
+  font-weight: bold;
+}
+._popover-table_i74xt_217._limit-table_i74xt_228 {
+  grid-template-columns: repeat(2, auto);
+}
+._popover-table_i74xt_217._selection-table_i74xt_231 {
+  grid-template-columns: repeat(8, auto);
+}
+._popover-table_i74xt_217._selection-table_i74xt_231 ._inplay_i74xt_234 {
+  color: var(--yellow-6);
+}
+._popover-table_i74xt_217._selection-table_i74xt_231._mix-ticket_i74xt_237 {
+  grid-template-columns: repeat(10, auto);
+}
+
+._popover-content_i74xt_241 {
+  color: white;
+}
+
+._checkbox-menu-arrow_i74xt_245 {
+  display: flex;
+  align-items: center;
+  margin: 2px 0 0 2px;
+}</style><style type="text/css">._tickets-actions-drawer_8l5hv_1 {
+  --drawer-width: 40%;
+  margin-left: calc((100% - var(--drawer-width)) / 2);
+  width: var(--drawer-width);
+  height: 700px;
+}
+._tickets-actions-drawer_8l5hv_1 ._title_8l5hv_7 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color-base);
+  border-radius: 3px 3px 0 0;
+}
+._tickets-actions-drawer_8l5hv_1 ._title_8l5hv_7 ._title-item_8l5hv_15 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+._tickets-actions-drawer_8l5hv_1 ._title_8l5hv_7 ._title-clickable-item_8l5hv_22 {
+  cursor: pointer;
+}
+._tickets-actions-drawer_8l5hv_1 ._title_8l5hv_7 ._title-clickable-item_8l5hv_22:hover {
+  color: var(--item-hover-color);
+  text-decoration: underline;
+}
+._tickets-actions-drawer_8l5hv_1 ._title-light_8l5hv_29 {
+  background-color: var(--primary-7);
+  color: var(--body-background);
+  border-bottom: none;
+}
+._tickets-actions-drawer_8l5hv_1 ._content_8l5hv_34 ._selections_8l5hv_34 {
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  max-height: 120px;
+  overflow-x: auto;
+}
+._tickets-actions-drawer_8l5hv_1 ._content_8l5hv_34 ._selections_8l5hv_34._mix-ticket_8l5hv_40 {
+  grid-template-columns: repeat(7, auto);
+}
+._tickets-actions-drawer_8l5hv_1 ._content_8l5hv_34 ._selections_8l5hv_34 ._selection_8l5hv_34 {
+  display: contents;
+  cursor: pointer;
+  font-weight: bold;
+}
+._tickets-actions-drawer_8l5hv_1 ._content_8l5hv_34 ._selections_8l5hv_34 ._selection_8l5hv_34 ._selection-item_8l5hv_48 {
+  height: 40px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+}
+._tickets-actions-drawer_8l5hv_1 ._content-light_8l5hv_54 {
+  background-color: var(--primary-9);
+  color: var(--body-background);
+}
+._tickets-actions-drawer_8l5hv_1 ._content-light_8l5hv_54 ._selections_8l5hv_34 {
+  background-color: var(--primary-8);
+}
+._tickets-actions-drawer_8l5hv_1 ._content-light_8l5hv_54 ._selections_8l5hv_34 ._selection_8l5hv_34 > ._selection-item_8l5hv_48 {
+  border-top: 1px solid var(--primary-9);
+}
+._tickets-actions-drawer_8l5hv_1 ._content-light_8l5hv_54 ._selections_8l5hv_34 ._selection_8l5hv_34:hover > ._selection-item_8l5hv_48 {
+  background-color: var(--primary-7);
+}
+._tickets-actions-drawer_8l5hv_1 ._content-dark_8l5hv_67 ._selections_8l5hv_34 ._selection_8l5hv_34 > ._selection-item_8l5hv_48 {
+  border-bottom: 1px solid var(--border-color-base);
+}
+._tickets-actions-drawer_8l5hv_1 ._content-dark_8l5hv_67 ._selections_8l5hv_34 ._selection_8l5hv_34:hover > ._selection-item_8l5hv_48 {
+  background-color: var(--primary-2);
+}
+._tickets-actions-drawer_8l5hv_1 ._tickets-actions-header-container_8l5hv_73 {
+  padding: 5px;
+}
+._tickets-actions-drawer_8l5hv_1 ._tickets-actions-container_8l5hv_76 {
+  display: flex;
+  justify-content: flex-start;
+  justify-items: center;
+  flex-direction: column;
+  row-gap: 20px;
+  padding: 20px;
+}
+._tickets-actions-drawer_8l5hv_1 ._tickets-actions-confirm-button-container_8l5hv_84 {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+._tickets-actions-drawer_8l5hv_1 ._tickets-actions-buttons-container_8l5hv_89 {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 10px;
+}
+
+._ant-drawer-right_8l5hv_95._ant-drawer-open_8l5hv_95 {
+  width: auto !important;
+}</style><style id="detectElementResize" type="text/css">@keyframes resizeanim { from { opacity: 0; } to { opacity: 0; } } .resize-triggers { animation: 1ms resizeanim; visibility: hidden; opacity: 0; } .resize-triggers, .resize-triggers > div, .contract-trigger:before { content: " "; display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; z-index: -1; } .resize-triggers > div { background: #eee; overflow: auto; } .contract-trigger:before { width: 200%; height: 200%; }</style></head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"><div class="_app_ybk3e_2"><header class="ant-layout-header Navbar-module__navBar___3ZpZB"><a href="http://localhost:3000/" class="Navbar-module__navBarLogo___33Qf8"><svg width="474" height="48" viewBox="0 0 474 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26.5219 19.5541C26.4244 18.4144 25.9225 17.6164 24.384 17.3812C22.9157 17.1546 22.2183 17.6287 22.097 18.3844C21.9576 19.2541 22.5393 19.6785 24.0558 20.1463C24.6989 20.3465 25.3428 20.5448 25.9875 20.7414C29.8066 21.9076 31.025 23.4765 30.6759 26.148C30.292 29.1319 27.5586 31.1616 22.6313 30.4152C17.7298 29.6619 15.2611 27.2736 16.1947 23.5347C17.7394 23.8042 19.2854 24.0632 20.8326 24.3118C20.5215 25.4816 20.9948 26.5037 23.2736 26.8536C25.0244 27.1197 25.8449 26.6962 25.9742 25.8019C26.0873 25.0212 25.6428 24.5604 24.3184 24.1504C23.6833 23.953 23.0489 23.7539 22.4153 23.5531C18.5637 22.3355 17.0321 20.5217 17.5149 17.7619C17.9788 15.1295 20.375 13.0997 25.002 13.816C29.3784 14.4822 31.4331 16.7228 31.0567 20.1632C29.5441 19.9702 28.0325 19.7672 26.5219 19.5541Z" fill="white"></path><path d="M32.2202 24.8984C32.6271 21.7084 33.034 18.5186 33.4409 15.3286C34.9539 15.5216 36.468 15.7044 37.9828 15.8769C37.6269 19.0028 37.2708 22.1289 36.9148 25.2549C36.7008 27.1205 37.4364 28.1411 39.1685 28.3262C40.9008 28.5097 41.8343 27.6669 42.0178 25.7981C42.3278 22.6672 42.6379 19.5364 42.9479 16.4055C44.4646 16.5556 45.982 16.6956 47.5001 16.8254C47.2263 20.0295 46.9525 23.2336 46.6787 26.4376C46.3209 30.7542 43.5523 33.0091 38.7242 32.5001C33.8969 31.9811 31.661 29.1934 32.2202 24.8984Z" fill="white"></path><path d="M48.3185 33.0646C48.7429 27.7088 49.1672 22.3532 49.5916 16.9975C51.9936 17.1878 54.3971 17.3526 56.8017 17.4917C60.5624 17.7085 63.063 19.9523 62.935 23.4771C62.8081 26.974 60.0507 29.0606 56.1453 28.8361C55.2314 28.7832 54.3177 28.7268 53.4042 28.6667C53.3003 30.2481 53.1964 31.8292 53.0925 33.4106C51.5006 33.306 49.9093 33.1907 48.3185 33.0646ZM53.6566 24.8254C54.3858 24.8733 55.1151 24.919 55.8444 24.9623C57.2487 25.0452 58.0242 24.3645 58.0825 23.2532C58.1395 22.1641 57.449 21.3867 55.991 21.3004C55.2929 21.2588 54.5948 21.2149 53.8969 21.1692C53.8168 22.3878 53.7367 23.6068 53.6566 24.8254Z" fill="white"></path><path d="M63.9906 33.9588C64.1783 28.5896 64.3661 23.2204 64.5539 17.8512C68.4898 17.9888 72.4274 18.058 76.3651 18.0587C76.3649 19.3729 76.3646 20.687 76.3644 22.0011C73.9209 22.0006 71.4775 21.9742 69.0344 21.9217C69.019 22.6404 69.0035 23.3591 68.988 24.0778C71.0749 24.1228 73.1621 24.1487 75.2493 24.1558C75.245 25.4313 75.2406 26.7068 75.2363 27.9823C73.126 27.9752 71.0157 27.9489 68.9057 27.9034C68.8896 28.6531 68.8735 29.4028 68.8574 30.1525C71.3911 30.2068 73.9253 30.234 76.4595 30.2338C76.4596 31.5479 76.4597 32.8621 76.4599 34.1762C72.3028 34.1766 68.1457 34.1041 63.9906 33.9588Z" fill="white"></path><path d="M92.9327 29.7078C92.9955 31.0436 93.0576 32.3796 93.1204 33.7154C92.7357 33.8498 92.1781 33.9447 91.6416 33.9675C88.667 34.0945 86.2105 33.443 84.4783 29.3768C84.4105 29.2237 84.3428 29.0706 84.2752 28.9175C83.8264 28.9275 83.3775 28.9367 82.9286 28.9451C82.9606 30.6686 82.9925 32.3921 83.0245 34.1157C81.4302 34.1452 79.8359 34.1641 78.2413 34.1722C78.214 28.7998 78.1866 23.4274 78.1592 18.0549C80.6522 18.0422 83.1452 18.0021 85.6374 17.9345C89.4258 17.8312 92.1195 19.598 92.2974 23.2602C92.4138 25.7381 91.1962 27.3545 88.912 28.0172C90.011 29.8348 91.1997 29.833 92.1632 29.7896C92.4527 29.7765 92.7407 29.74 92.9327 29.7078ZM82.7958 21.7804C82.8174 22.9475 82.839 24.1144 82.8607 25.2815C83.7094 25.2658 84.5581 25.2469 85.4065 25.225C86.8112 25.188 87.4783 24.4453 87.4444 23.4029C87.4112 22.3824 86.7047 21.6882 85.2456 21.7262C84.429 21.7472 83.6124 21.7652 82.7958 21.7804Z" fill="white"></path><path d="M94.7334 33.7056C94.4567 28.3402 94.18 22.9749 93.904 17.6095C96.3089 17.4855 98.7132 17.3361 101.116 17.161C104.946 16.8786 107.052 18.3958 107.292 21.0087C107.465 22.9026 106.246 24.2241 104.825 24.7356C106.791 25.086 108.18 26.0739 108.368 28.1066C108.646 31.0818 106.653 32.909 102.824 33.1964C100.128 33.3969 97.4313 33.5667 94.7334 33.7056ZM98.8783 23.7077C99.6449 23.6579 100.411 23.6055 101.177 23.5506C102.315 23.4689 102.837 22.8224 102.764 21.8749C102.691 20.9269 102.083 20.3932 100.956 20.4742C100.197 20.5287 99.4381 20.5805 98.6786 20.6299C98.7449 21.6559 98.812 22.6817 98.8783 23.7077ZM99.2969 30.1412C100.069 30.091 100.841 30.0382 101.614 29.9829C102.942 29.8875 103.572 29.2552 103.493 28.2384C103.414 27.2205 102.7 26.6964 101.385 26.7908C100.62 26.8455 99.8546 26.8978 99.0894 26.9476C99.1586 28.0121 99.2278 29.0767 99.2969 30.1412Z" fill="white"></path><path d="M110.32 32.5588C109.808 27.2107 109.296 21.8626 108.785 16.5145C112.67 16.1428 116.551 15.704 120.425 15.198C120.595 16.501 120.766 17.8042 120.936 19.1071C118.546 19.4192 116.155 19.706 113.762 19.9675C113.839 20.6822 113.918 21.3968 113.996 22.1115C116.074 21.8844 118.15 21.6384 120.225 21.3736C120.387 22.6388 120.548 23.904 120.709 25.1692C118.612 25.4369 116.513 25.6857 114.412 25.9152C114.493 26.6606 114.574 27.4061 114.656 28.1514C117.179 27.8757 119.7 27.5727 122.218 27.2422C122.388 28.5452 122.559 29.8481 122.731 31.1511C118.6 31.6932 114.463 32.1624 110.32 32.5588ZM128.424 30.3571C127.831 26.3422 127.239 22.3275 126.646 18.3127C125.235 18.521 123.823 18.7205 122.411 18.9112C122.235 17.6089 122.059 16.3066 121.883 15.0043C126.211 14.4201 130.53 13.752 134.838 13C135.064 14.2945 135.29 15.5891 135.516 16.8837C134.086 17.1332 132.656 17.3735 131.224 17.6048C131.871 21.6113 132.519 25.6176 133.165 29.6241C131.586 29.8792 130.006 30.1234 128.424 30.3571Z" fill="white"></path></svg></a><ul class="ant-menu-overflow ant-menu ant-menu-root ant-menu-horizontal ant-menu-light Navbar-module__navBarMenu___3Jwhh" role="menu" tabindex="0" data-menu-list="true"></ul><div aria-hidden="true" style="display: none;"></div><div class="Navbar-module__navBarChildren___3ZkEj"><div class="_header-content_16r98_1"><div class="_header-content-items_16r98_19"><div class="ant-select _header-select_16r98_12 ant-select-single ant-select-show-arrow" data-testid="filter-presets"><div class="ant-select-selector"><span class="ant-select-selection-search"><input type="search" autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-haspopup="listbox" aria-owns="rc_select_0_list" aria-autocomplete="list" aria-controls="rc_select_0_list" aria-activedescendant="rc_select_0_list_0" readonly="" unselectable="on" value="" style="opacity: 0;" id="rc_select_0"></span><span class="ant-select-selection-placeholder">Select filter preset</span></div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="down" class="anticon anticon-down ant-select-suffix"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><button data-testid="button-filters-button" type="button" class="ant-btn ant-btn-primary _header-button_16r98_8"><span role="img" aria-label="filter" class="anticon anticon-filter"><svg viewBox="64 64 896 896" focusable="false" data-icon="filter" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M880.1 154H143.9c-24.5 0-39.8 26.7-27.5 48L349 597.4V838c0 17.7 14.2 32 31.8 32h262.4c17.6 0 31.8-14.3 31.8-32V597.4L907.7 202c12.2-21.3-3.1-48-27.6-48zM603.4 798H420.6V642h182.9v156zm9.6-236.6l-9.5 16.6h-183l-9.5-16.6L212.7 226h598.6L613 561.4z"></path></svg></span><span>Filters</span></button><button type="button" class="ant-btn ant-btn-primary _header-button_16r98_8"><span role="img" aria-label="thunderbolt" class="anticon anticon-thunderbolt"><svg viewBox="64 64 896 896" focusable="false" data-icon="thunderbolt" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M848 359.3H627.7L825.8 109c4.1-5.3.4-13-6.3-13H436c-2.8 0-5.5 1.5-6.9 4L170 547.5c-3.1 5.3.7 12 6.9 12h174.4l-89.4 357.6c-1.9 7.8 7.5 13.3 13.3 7.7L853.5 373c5.2-4.9 1.7-13.7-5.5-13.7zM378.2 732.5l60.3-241H281.1l189.6-327.4h224.6L487 427.4h211L378.2 732.5z"></path></svg></span><span>Override</span></button><div class="tickets-actions-button-container"><button type="button" class="ant-btn ant-btn-primary ant-dropdown-trigger _header-button_16r98_8"><span role="img" aria-label="thunderbolt" class="anticon anticon-thunderbolt"><svg viewBox="64 64 896 896" focusable="false" data-icon="thunderbolt" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M848 359.3H627.7L825.8 109c4.1-5.3.4-13-6.3-13H436c-2.8 0-5.5 1.5-6.9 4L170 547.5c-3.1 5.3.7 12 6.9 12h174.4l-89.4 357.6c-1.9 7.8 7.5 13.3 13.3 7.7L853.5 373c5.2-4.9 1.7-13.7-5.5-13.7zM378.2 732.5l60.3-241H281.1l189.6-327.4h224.6L487 427.4h211L378.2 732.5z"></path></svg></span><span>Tickets Actions</span></button></div><div class="_older-tickets-switch_16r98_24"><span class="Label-module__name___3Vqtz _label_16r98_30">Autoselect Older Tickets:</span><button type="button" role="switch" aria-checked="true" class="ant-switch _switch_16r98_34 _light_16r98_34 _checked_16r98_37 ant-switch-checked"><div class="ant-switch-handle"></div><span class="ant-switch-inner"></span></button></div></div><div class="_header-content-items_16r98_19"><div class="ant-select _header-select_16r98_12 _target-select_16r98_16 ant-select-multiple ant-select-allow-clear ant-select-show-search" data-testid="target-filters"><div class="ant-select-selector"><div class="ant-select-selection-overflow"><div class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix" style="opacity: 1; order: 0;"><div class="ant-select-selection-search" style="width: 0px;"><input type="search" autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-haspopup="listbox" aria-owns="rc_select_1_list" aria-autocomplete="list" aria-controls="rc_select_1_list" aria-activedescendant="rc_select_1_list_0" readonly="" unselectable="on" value="" style="opacity: 0;" id="rc_select_1"><span class="ant-select-selection-search-mirror" aria-hidden="true">&nbsp;</span></div></div></div><span class="ant-select-selection-placeholder">Select Target</span></div></div><button data-testid="table-options-button" type="button" class="ant-btn ant-btn-primary _header-button_16r98_8"><span role="img" aria-label="setting" class="anticon anticon-setting"><svg viewBox="64 64 896 896" focusable="false" data-icon="setting" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M924.8 625.7l-65.5-56c3.1-19 4.7-38.4 4.7-57.8s-1.6-38.8-4.7-57.8l65.5-56a32.03 32.03 0 009.3-35.2l-.9-2.6a443.74 443.74 0 00-79.7-137.9l-1.8-2.1a32.12 32.12 0 00-35.1-9.5l-81.3 28.9c-30-24.6-63.5-44-99.7-57.6l-15.7-85a32.05 32.05 0 00-25.8-25.7l-2.7-.5c-52.1-9.4-106.9-9.4-159 0l-2.7.5a32.05 32.05 0 00-25.8 25.7l-15.8 85.4a351.86 351.86 0 00-99 57.4l-81.9-29.1a32 32 0 00-35.1 9.5l-1.8 2.1a446.02 446.02 0 00-79.7 137.9l-.9 2.6c-4.5 12.5-.8 26.5 9.3 35.2l66.3 56.6c-3.1 18.8-4.6 38-4.6 57.1 0 19.2 1.5 38.4 4.6 57.1L99 625.5a32.03 32.03 0 00-9.3 35.2l.9 2.6c18.1 50.4 44.9 96.9 79.7 137.9l1.8 2.1a32.12 32.12 0 0035.1 9.5l81.9-29.1c29.8 24.5 63.1 43.9 99 57.4l15.8 85.4a32.05 32.05 0 0025.8 25.7l2.7.5a449.4 449.4 0 00159 0l2.7-.5a32.05 32.05 0 0025.8-25.7l15.7-85a350 350 0 0099.7-57.6l81.3 28.9a32 32 0 0035.1-9.5l1.8-2.1c34.8-41.1 61.6-87.5 79.7-137.9l.9-2.6c4.5-12.3.8-26.3-9.3-35zM788.3 465.9c2.5 15.1 3.8 30.6 3.8 46.1s-1.3 31-3.8 46.1l-6.6 40.1 74.7 63.9a370.03 370.03 0 01-42.6 73.6L721 702.8l-31.4 25.8c-23.9 19.6-50.5 35-79.3 45.8l-38.1 14.3-17.9 97a377.5 377.5 0 01-85 0l-17.9-97.2-37.8-14.5c-28.5-10.8-55-26.2-78.7-45.7l-31.4-25.9-93.4 33.2c-17-22.9-31.2-47.6-42.6-73.6l75.5-64.5-6.5-40c-2.4-14.9-3.7-30.3-3.7-45.5 0-15.3 1.2-30.6 3.7-45.5l6.5-40-75.5-64.5c11.3-26.1 25.6-50.7 42.6-73.6l93.4 33.2 31.4-25.9c23.7-19.5 50.2-34.9 78.7-45.7l37.9-14.3 17.9-97.2c28.1-3.2 56.8-3.2 85 0l17.9 97 38.1 14.3c28.7 10.8 55.4 26.2 79.3 45.8l31.4 25.8 92.8-32.9c17 22.9 31.2 47.6 42.6 73.6L781.8 426l6.5 39.9zM512 326c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm79.2 255.2A111.6 111.6 0 01512 614c-29.9 0-58-11.7-79.2-32.8A111.6 111.6 0 01400 502c0-29.9 11.7-58 32.8-79.2C454 401.6 482.1 390 512 390c29.9 0 58 11.6 79.2 32.8A111.6 111.6 0 01624 502c0 29.9-11.7 58-32.8 79.2z"></path></svg></span><span>Table</span></button></div></div></div><div class="NotificationsCounter-module__notifications___3veyz"><a class="NotificationsCounter-module__link___2K-49" href="https://bookie.trading.qa.superbet.com/notifications/" target="_blank" rel="noopener noreferrer"><span role="img" aria-label="bell" class="anticon anticon-bell"><svg viewBox="64 64 896 896" focusable="false" data-icon="bell" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M816 768h-24V428c0-141.1-104.3-257.7-240-277.1V112c0-22.1-17.9-40-40-40s-40 17.9-40 40v38.9c-135.7 19.4-240 136-240 277.1v340h-24c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h216c0 61.8 50.2 112 112 112s112-50.2 112-112h216c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM512 888c-26.5 0-48-21.5-48-48h96c0 26.5-21.5 48-48 48zM304 768V428c0-55.6 21.6-107.8 60.9-147.1S456.4 220 512 220c55.6 0 107.8 21.6 147.1 60.9S720 372.4 720 428v340H304z"></path></svg></span></a></div><ul class="ant-menu-overflow ant-menu ant-menu-root ant-menu-horizontal ant-menu-light UserMenu-module__userMenu___pY-gZ" role="menu" tabindex="0" data-menu-list="true"><li class="ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal" role="none" style="opacity: 1; order: 0;"><div role="menuitem" class="ant-menu-submenu-title" tabindex="-1" aria-expanded="false" aria-haspopup="true" data-menu-id="rc-menu-uuid-13323-2-user-submenu" aria-controls="rc-menu-uuid-13323-2-user-submenu-popup"><span role="img" aria-label="user" class="anticon anticon-user ant-menu-item-icon"><svg viewBox="64 64 896 896" focusable="false" data-icon="user" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"></path></svg></span><span class="user">eduard.duras</span><i class="ant-menu-submenu-arrow"></i></div></li><li class="ant-menu-overflow-item ant-menu-overflow-item-rest ant-menu-submenu ant-menu-submenu-horizontal ant-menu-submenu-disabled" aria-hidden="true" role="none" style="opacity: 0; height: 0px; overflow-y: hidden; order: 2147483647; pointer-events: none; position: absolute;"><div role="menuitem" class="ant-menu-submenu-title" aria-expanded="false" aria-haspopup="true" aria-disabled="true" data-menu-id="rc-menu-uuid-13323-2-rc-menu-more" aria-controls="rc-menu-uuid-13323-2-rc-menu-more-popup"><span role="img" aria-label="ellipsis" class="anticon anticon-ellipsis"><svg viewBox="64 64 896 896" focusable="false" data-icon="ellipsis" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M176 511a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0z"></path></svg></span><i class="ant-menu-submenu-arrow"></i></div></li></ul><div aria-hidden="true" style="display: none;"></div></header><div class="_filter-section_16b1x_40 _light-theme_16b1x_103"><div class="_filters_16b1x_46"><div class="_filter-group_16b1x_50"><div class="_filter-row_16b1x_60"><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Time</div><div class="_range-input_16b1x_1"><div class="ant-picker ant-picker-small"><div class="ant-picker-input"><input readonly="" placeholder="From" title="" size="21" autocomplete="off" value=""><span class="ant-picker-suffix"><span role="img" aria-label="calendar" class="anticon anticon-calendar"><svg viewBox="64 64 896 896" focusable="false" data-icon="calendar" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32zm-40 656H184V460h656v380zM184 392V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v136H184z"></path></svg></span></span></div></div>-<div class="ant-picker ant-picker-small"><div class="ant-picker-input"><input readonly="" placeholder="To" title="" size="21" autocomplete="off" value=""><span class="ant-picker-suffix"><span role="img" aria-label="calendar" class="anticon anticon-calendar"><svg viewBox="64 64 896 896" focusable="false" data-icon="calendar" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32zm-40 656H184V460h656v380zM184 392V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v136H184z"></path></svg></span></span></div></div></div></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Status</div><div class="ant-select ant-select-sm _multi-select_16b1x_23 ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-show-search"><div class="ant-select-selector"><div class="ant-select-selection-overflow"><div class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix" style="opacity: 1;"><div class="ant-select-selection-search" style="width: 0px;"><input type="search" autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-haspopup="listbox" aria-owns="rc_select_2_list" aria-autocomplete="list" aria-controls="rc_select_2_list" aria-activedescendant="rc_select_2_list_0" readonly="" unselectable="on" value="" style="opacity: 0;" id="rc_select_2"><span class="ant-select-selection-search-mirror" aria-hidden="true">&nbsp;</span></div></div></div><span class="ant-select-selection-placeholder"></span></div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="down" class="anticon anticon-down ant-select-suffix"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div></div></div><div class="_filter-row_16b1x_60"><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Market Type</div><div class="ant-select ant-select-sm _multi-select_16b1x_23 ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-show-search"><div class="ant-select-selector"><div class="ant-select-selection-overflow"><div class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix" style="opacity: 1;"><div class="ant-select-selection-search" style="width: 0px;"><input type="search" autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-haspopup="listbox" aria-owns="rc_select_3_list" aria-autocomplete="list" aria-controls="rc_select_3_list" aria-activedescendant="rc_select_3_list_0" readonly="" unselectable="on" value="" style="opacity: 0;" id="rc_select_3"><span class="ant-select-selection-search-mirror" aria-hidden="true">&nbsp;</span></div></div></div><span class="ant-select-selection-placeholder"></span></div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="down" class="anticon anticon-down ant-select-suffix"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Branch</div><div class="ant-select ant-select-sm _multi-select_16b1x_23 ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-show-search"><div class="ant-select-selector"><div class="ant-select-selection-overflow"><div class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix" style="opacity: 1;"><div class="ant-select-selection-search" style="width: 0px;"><input type="search" autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-haspopup="listbox" aria-owns="rc_select_4_list" aria-autocomplete="list" aria-controls="rc_select_4_list" aria-activedescendant="rc_select_4_list_0" readonly="" unselectable="on" value="" style="opacity: 0;" id="rc_select_4"><span class="ant-select-selection-search-mirror" aria-hidden="true">&nbsp;</span></div></div></div><span class="ant-select-selection-placeholder"></span></div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="down" class="anticon anticon-down ant-select-suffix"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Stake</div><div class="_range-input_16b1x_1"><div class="ant-input-number ant-input-number-sm _number-input_16b1x_8"><div class="ant-input-number-handler-wrap"><span unselectable="on" role="button" aria-label="Increase Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-up"><span role="img" aria-label="up" class="anticon anticon-up ant-input-number-handler-up-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"></path></svg></span></span><span unselectable="on" role="button" aria-label="Decrease Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-down"><span role="img" aria-label="down" class="anticon anticon-down ant-input-number-handler-down-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><div class="ant-input-number-input-wrap"><input autocomplete="off" role="spinbutton" aria-valuemin="0" step="1" placeholder="Min" class="ant-input-number-input" value=""></div></div>-<div class="ant-input-number ant-input-number-sm _number-input_16b1x_8"><div class="ant-input-number-handler-wrap"><span unselectable="on" role="button" aria-label="Increase Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-up"><span role="img" aria-label="up" class="anticon anticon-up ant-input-number-handler-up-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"></path></svg></span></span><span unselectable="on" role="button" aria-label="Decrease Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-down"><span role="img" aria-label="down" class="anticon anticon-down ant-input-number-handler-down-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><div class="ant-input-number-input-wrap"><input autocomplete="off" role="spinbutton" aria-valuemin="0" step="1" placeholder="Max" class="ant-input-number-input" value=""></div></div></div></div></div><div class="_filter-row_16b1x_60"><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Channel</div><div class="ant-select ant-select-sm _multi-select_16b1x_23 ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-show-search"><div class="ant-select-selector"><div class="ant-select-selection-overflow"><div class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix" style="opacity: 1;"><div class="ant-select-selection-search" style="width: 0px;"><input type="search" autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-haspopup="listbox" aria-owns="rc_select_5_list" aria-autocomplete="list" aria-controls="rc_select_5_list" aria-activedescendant="rc_select_5_list_0" readonly="" unselectable="on" value="" style="opacity: 0;" id="rc_select_5"><span class="ant-select-selection-search-mirror" aria-hidden="true">&nbsp;</span></div></div></div><span class="ant-select-selection-placeholder"></span></div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="down" class="anticon anticon-down ant-select-suffix"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Coeff</div><div class="_range-input_16b1x_1"><div class="ant-input-number ant-input-number-sm _number-input_16b1x_8"><div class="ant-input-number-handler-wrap"><span unselectable="on" role="button" aria-label="Increase Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-up"><span role="img" aria-label="up" class="anticon anticon-up ant-input-number-handler-up-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"></path></svg></span></span><span unselectable="on" role="button" aria-label="Decrease Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-down"><span role="img" aria-label="down" class="anticon anticon-down ant-input-number-handler-down-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><div class="ant-input-number-input-wrap"><input autocomplete="off" role="spinbutton" aria-valuemin="0" step="1" placeholder="Min" class="ant-input-number-input" value=""></div></div>-<div class="ant-input-number ant-input-number-sm _number-input_16b1x_8"><div class="ant-input-number-handler-wrap"><span unselectable="on" role="button" aria-label="Increase Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-up"><span role="img" aria-label="up" class="anticon anticon-up ant-input-number-handler-up-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"></path></svg></span></span><span unselectable="on" role="button" aria-label="Decrease Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-down"><span role="img" aria-label="down" class="anticon anticon-down ant-input-number-handler-down-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><div class="ant-input-number-input-wrap"><input autocomplete="off" role="spinbutton" aria-valuemin="0" step="1" placeholder="Max" class="ant-input-number-input" value=""></div></div></div></div></div><div class="_filter-row_16b1x_60"><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Win Reason</div><div class="ant-select ant-select-sm _multi-select_16b1x_23 ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-show-search"><div class="ant-select-selector"><div class="ant-select-selection-overflow"><div class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix" style="opacity: 1;"><div class="ant-select-selection-search" style="width: 0px;"><input type="search" autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-haspopup="listbox" aria-owns="rc_select_6_list" aria-autocomplete="list" aria-controls="rc_select_6_list" aria-activedescendant="rc_select_6_list_0" readonly="" unselectable="on" value="" style="opacity: 0;" id="rc_select_6"><span class="ant-select-selection-search-mirror" aria-hidden="true">&nbsp;</span></div></div></div><span class="ant-select-selection-placeholder"></span></div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="down" class="anticon anticon-down ant-select-suffix"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Reject Reason</div><div class="ant-select ant-select-sm _multi-select_16b1x_23 ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-show-search"><div class="ant-select-selector"><div class="ant-select-selection-overflow"><div class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix" style="opacity: 1;"><div class="ant-select-selection-search" style="width: 0px;"><input type="search" autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-haspopup="listbox" aria-owns="rc_select_7_list" aria-autocomplete="list" aria-controls="rc_select_7_list" aria-activedescendant="rc_select_7_list_0" readonly="" unselectable="on" value="" style="opacity: 0;" id="rc_select_7"><span class="ant-select-selection-search-mirror" aria-hidden="true">&nbsp;</span></div></div></div><span class="ant-select-selection-placeholder"></span></div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="down" class="anticon anticon-down ant-select-suffix"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Intercepted</div><label class="ant-checkbox-wrapper"><span class="ant-checkbox"><input type="checkbox" class="ant-checkbox-input" value="false"><span class="ant-checkbox-inner"></span></span></label></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Negotiated</div><label class="ant-checkbox-wrapper"><span class="ant-checkbox"><input type="checkbox" class="ant-checkbox-input" value="false"><span class="ant-checkbox-inner"></span></span></label></div></div></div><div class="_filter-group_16b1x_50"><div class="_filter-row_16b1x_60"><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Limit %</div><div class="ant-input-number ant-input-number-sm _number-input_16b1x_8"><div class="ant-input-number-handler-wrap"><span unselectable="on" role="button" aria-label="Increase Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-up"><span role="img" aria-label="up" class="anticon anticon-up ant-input-number-handler-up-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"></path></svg></span></span><span unselectable="on" role="button" aria-label="Decrease Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-down"><span role="img" aria-label="down" class="anticon anticon-down ant-input-number-handler-down-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><div class="ant-input-number-input-wrap"><input autocomplete="off" role="spinbutton" aria-valuemin="0" aria-valuemax="100" step="1" class="ant-input-number-input" value=""></div></div></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Customer / ID</div><input class="ant-input ant-input-sm" type="text" value=""></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Segmentation</div><input class="ant-input ant-input-sm _text-input_16b1x_12" type="text" value=""></div></div><div class="_filter-row_16b1x_60"><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>SF</div><div class="_range-input_16b1x_1"><div class="ant-input-number ant-input-number-sm _number-input_16b1x_8"><div class="ant-input-number-handler-wrap"><span unselectable="on" role="button" aria-label="Increase Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-up"><span role="img" aria-label="up" class="anticon anticon-up ant-input-number-handler-up-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"></path></svg></span></span><span unselectable="on" role="button" aria-label="Decrease Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-down"><span role="img" aria-label="down" class="anticon anticon-down ant-input-number-handler-down-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><div class="ant-input-number-input-wrap"><input autocomplete="off" role="spinbutton" aria-valuemin="0" step="1" placeholder="Min" class="ant-input-number-input" value=""></div></div>-<div class="ant-input-number ant-input-number-sm _number-input_16b1x_8"><div class="ant-input-number-handler-wrap"><span unselectable="on" role="button" aria-label="Increase Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-up"><span role="img" aria-label="up" class="anticon anticon-up ant-input-number-handler-up-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"></path></svg></span></span><span unselectable="on" role="button" aria-label="Decrease Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-down"><span role="img" aria-label="down" class="anticon anticon-down ant-input-number-handler-down-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><div class="ant-input-number-input-wrap"><input autocomplete="off" role="spinbutton" aria-valuemin="0" step="1" placeholder="Max" class="ant-input-number-input" value=""></div></div></div></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Note #</div><div class="_range-input_16b1x_1"><div class="ant-input-number ant-input-number-sm _number-input_16b1x_8"><div class="ant-input-number-handler-wrap"><span unselectable="on" role="button" aria-label="Increase Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-up"><span role="img" aria-label="up" class="anticon anticon-up ant-input-number-handler-up-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"></path></svg></span></span><span unselectable="on" role="button" aria-label="Decrease Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-down"><span role="img" aria-label="down" class="anticon anticon-down ant-input-number-handler-down-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><div class="ant-input-number-input-wrap"><input autocomplete="off" role="spinbutton" aria-valuemin="0" step="1" placeholder="Min" class="ant-input-number-input" value=""></div></div>-<div class="ant-input-number ant-input-number-sm _number-input_16b1x_8"><div class="ant-input-number-handler-wrap"><span unselectable="on" role="button" aria-label="Increase Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-up"><span role="img" aria-label="up" class="anticon anticon-up ant-input-number-handler-up-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"></path></svg></span></span><span unselectable="on" role="button" aria-label="Decrease Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-down"><span role="img" aria-label="down" class="anticon anticon-down ant-input-number-handler-down-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><div class="ant-input-number-input-wrap"><input autocomplete="off" role="spinbutton" aria-valuemin="0" step="1" placeholder="Max" class="ant-input-number-input" value=""></div></div></div></div></div><div class="_filter-row_16b1x_60"><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Shop / Code</div><input class="ant-input ant-input-sm _text-input_16b1x_12" type="text" value=""></div></div></div><div class="_filter-group_16b1x_50"><div class="_filter-row_16b1x_60"><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Tournament / ID</div><input class="ant-input ant-input-sm _text-input_16b1x_12" type="text" value=""></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Market</div><input class="ant-input ant-input-sm _text-input_16b1x_12" type="text" value=""></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Sport</div><div class="ant-select ant-select-sm _multi-select_16b1x_23 ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-show-search"><div class="ant-select-selector"><div class="ant-select-selection-overflow"><div class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix" style="opacity: 1;"><div class="ant-select-selection-search" style="width: 0px;"><input type="search" autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-haspopup="listbox" aria-owns="rc_select_8_list" aria-autocomplete="list" aria-controls="rc_select_8_list" aria-activedescendant="rc_select_8_list_0" readonly="" unselectable="on" value="" style="opacity: 0;" id="rc_select_8"><span class="ant-select-selection-search-mirror" aria-hidden="true">&nbsp;</span></div></div></div><span class="ant-select-selection-placeholder"></span></div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="down" class="anticon anticon-down ant-select-suffix"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div></div></div><div class="_filter-row_16b1x_60"><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Sel #</div><div class="_range-input_16b1x_1"><div class="ant-input-number ant-input-number-sm _number-input_16b1x_8"><div class="ant-input-number-handler-wrap"><span unselectable="on" role="button" aria-label="Increase Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-up"><span role="img" aria-label="up" class="anticon anticon-up ant-input-number-handler-up-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"></path></svg></span></span><span unselectable="on" role="button" aria-label="Decrease Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-down"><span role="img" aria-label="down" class="anticon anticon-down ant-input-number-handler-down-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><div class="ant-input-number-input-wrap"><input autocomplete="off" role="spinbutton" aria-valuemin="0" step="1" placeholder="Min" class="ant-input-number-input" value=""></div></div>-<div class="ant-input-number ant-input-number-sm _number-input_16b1x_8"><div class="ant-input-number-handler-wrap"><span unselectable="on" role="button" aria-label="Increase Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-up"><span role="img" aria-label="up" class="anticon anticon-up ant-input-number-handler-up-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"></path></svg></span></span><span unselectable="on" role="button" aria-label="Decrease Value" aria-disabled="false" class="ant-input-number-handler ant-input-number-handler-down"><span role="img" aria-label="down" class="anticon anticon-down ant-input-number-handler-down-inner"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span></div><div class="ant-input-number-input-wrap"><input autocomplete="off" role="spinbutton" aria-valuemin="0" step="1" placeholder="Max" class="ant-input-number-input" value=""></div></div></div></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Event / ID</div><div class="_event-input_16b1x_16"><input class="ant-input ant-input-sm _text-input_16b1x_12" type="text" value=""><button type="button" class="ant-btn ant-btn-primary ant-btn-sm _logic-operator-button_16b1x_35"><span>OR</span></button></div></div><div class="_filter_16b1x_40"><div class="_label-with-pin_16b1x_79" role="presentation"><span role="img" aria-label="pushpin" class="anticon anticon-pushpin _pin-icon_16b1x_87"><svg viewBox="64 64 896 896" focusable="false" data-icon="pushpin" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M878.3 392.1L631.9 145.7c-6.5-6.5-15-9.7-23.5-9.7s-17 3.2-23.5 9.7L423.8 306.9c-12.2-1.4-24.5-2-36.8-2-73.2 0-146.4 24.1-206.5 72.3a33.23 33.23 0 00-2.7 49.4l181.7 181.7-215.4 215.2a15.8 15.8 0 00-4.6 9.8l-3.4 37.2c-.9 9.4 6.6 17.4 15.9 17.4.5 0 1 0 1.5-.1l37.2-3.4c3.7-.3 7.2-2 9.8-4.6l215.4-215.4 181.7 181.7c6.5 6.5 15 9.7 23.5 9.7 9.7 0 19.3-4.2 25.9-12.4 56.3-70.3 79.7-158.3 70.2-243.4l161.1-161.1c12.9-12.8 12.9-33.8 0-46.8zM666.2 549.3l-24.5 24.5 3.8 34.4a259.92 259.92 0 01-30.4 153.9L262 408.8c12.9-7.1 26.3-13.1 40.3-17.9 27.2-9.4 55.7-14.1 84.7-14.1 9.6 0 19.3.5 28.9 1.6l34.4 3.8 24.5-24.5L608.5 224 800 415.5 666.2 549.3z"></path></svg></span>Super Bets</div><label class="ant-checkbox-wrapper"><span class="ant-checkbox"><input type="checkbox" class="ant-checkbox-input" value="false"><span class="ant-checkbox-inner"></span></span></label></div></div></div></div><div class="_filter-actions_16b1x_96"><button type="button" class="ant-btn ant-btn-primary"><span>Search</span></button><button type="button" class="ant-btn ant-btn-default"><span>Clear</span></button></div></div><div class="_ticket-table-container_i74xt_1"><div class="_ticket-table_i74xt_1" style="position: relative;"><div style="overflow: visible; height: 0px; width: 0px;"><div class="ant-table-wrapper VirtualTable-module__virtualTable___q7hXv VirtualTable-module__small___9fZ-Z" style="width: 1776px; height: 1043px;"><div class="ant-spin-nested-loading"><div class="ant-spin-container"><div class="ant-table ant-table-small ant-table-bordered ant-table-empty ant-table-fixed-header"><div class="ant-table-container"><div class="ant-table-header" style="overflow: hidden;"><table style="table-layout: fixed;"><colgroup><col style="width: 110px;"><col style="width: 55px;"><col style="width: 25px;"><col style="width: 77px;"><col style="width: 36px;"><col style="width: 90px;"><col style="width: 70px;"><col style="width: 35px;"><col style="width: 116px;"><col style="width: 80px;"><col style="width: 80px;"><col style="width: 40px;"><col style="width: 193px;"><col style="width: 70px;"><col style="width: 232px;"><col style="width: 193px;"><col style="width: 116px;"><col style="width: 50px;"><col style="width: 55px;"><col style="width: 53px;"></colgroup><thead class="ant-table-thead"><tr><th title="Start Date" class="ant-table-cell ant-table-cell-ellipsis">Start Date</th><th class="ant-table-cell">Time</th><th title="T" class="ant-table-cell ant-table-cell-ellipsis">T</th><th title="Status" class="ant-table-cell ant-table-cell-ellipsis">Status</th><th title="MT" class="ant-table-cell ant-table-cell-ellipsis">MT</th><th title="Code" class="ant-table-cell ant-table-cell-ellipsis">Code</th><th title="Stake" class="ant-table-cell ant-table-cell-ellipsis">Stake</th><th title="Sel" class="ant-table-cell ant-table-cell-ellipsis">Sel</th><th title="Cust / Shop" class="ant-table-cell ant-table-cell-ellipsis">Cust / Shop</th><th title="SF" class="ant-table-cell ant-table-cell-ellipsis">SF</th><th title="SEG" class="ant-table-cell ant-table-cell-ellipsis">SEG</th><th title="BN" class="ant-table-cell ant-table-cell-ellipsis">BN</th><th title="Selection" class="ant-table-cell ant-table-cell-ellipsis">Selection</th><th title="Coeff" class="ant-table-cell ant-table-cell-ellipsis">Coeff</th><th title="Event" class="ant-table-cell ant-table-cell-ellipsis">Event</th><th title="Market" class="ant-table-cell ant-table-cell-ellipsis">Market</th><th title="Results" class="ant-table-cell ant-table-cell-ellipsis">Results</th><th title="Cst%" class="ant-table-cell ant-table-cell-ellipsis">Cst%</th><th title="Cmp%" class="ant-table-cell ant-table-cell-ellipsis">Cmp%</th><th title="Channel" class="ant-table-cell ant-table-cell-ellipsis" style="text-align: center;">Channel</th></tr></thead></table></div><div aria-label="grid" aria-readonly="true" class="ReactVirtualized__Grid" role="grid" tabindex="0" style="box-sizing: border-box; direction: ltr; position: relative; width: 1776px; will-change: transform; overflow: hidden; height: 1010px;"></div></div></div></div></div></div></div><div class="resize-triggers"><div class="expand-trigger"><div style="width: 1777px; height: 1044px;"></div></div><div class="contract-trigger"></div></div></div></div></div></div>
+        <script type="module" src="./Bulk Page_files/index.tsx"></script>
+    
+
+<div style="position: absolute; top: 0px; left: 0px; width: 100%;"><div><div class="ant-dropdown ant-dropdown-placement-bottomLeft  ant-dropdown-hidden" style="min-width: 136px; left: -401px; top: -957px;"><ul class="ant-dropdown-menu ant-dropdown-menu-root ant-dropdown-menu-vertical ant-dropdown-menu-light" role="menu" tabindex="0" data-menu-list="true"><li class="ant-dropdown-menu-item ant-dropdown-menu-item-only-child" role="menuitem" tabindex="-1" data-menu-id="rc-menu-uuid-13323-3-filterInputTicketsActions"><span class="ant-dropdown-menu-title-content">Use Current Filter Parameters</span></li><li class="ant-dropdown-menu-item ant-dropdown-menu-item-only-child" role="menuitem" tabindex="-1" data-menu-id="rc-menu-uuid-13323-3-manualInputTicketsActions"><span class="ant-dropdown-menu-title-content">Manualy Input</span></li></ul><div aria-hidden="true" style="display: none;"></div></div></div></div><div><div tabindex="-1" class="ant-drawer ant-drawer-right no-mask _tickets-actions-drawer_8l5hv_1 no-mask" style="
+    display: none;
+"><div class="ant-drawer-content-wrapper" style="transform: translateX(100%);"><div class="ant-drawer-content"></div></div></div></div><textarea tab-index="-1" aria-hidden="true" style="letter-spacing:normal;line-height:20.4295px;padding-top:3.8px;padding-bottom:3.8px;font-family:&quot;Open Sans&quot;, sans-serif;font-weight:400;font-size:13px;font-variant:tabular-nums;text-rendering:auto;text-transform:none;width:860px;text-indent:0px;padding-left:9px;padding-right:9px;border-width:0.998264px;box-sizing:border-box;word-break:normal;
+  min-height:0 !important;
+  max-height:none !important;
+  height:0 !important;
+  visibility:hidden !important;
+  overflow:hidden !important;
+  position:absolute !important;
+  z-index:-1000 !important;
+  top:0 !important;
+  right:0 !important
+"></textarea></body></html>
