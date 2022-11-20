@@ -1,0 +1,15 @@
+html     
+    head 
+        style 
+            include ../public/css/login.css
+        title Demo login
+    body
+        div(class="login-form")
+            h1 Demo Login
+            form(action="", method="post")
+                label(for="username") Username:
+                input(type="text", name="username", required) 
+                label(for="password") Password:
+                input(type="password", name="password", required) 
+                input(type="submit", value="Login")            
+        

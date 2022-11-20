@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transform demo</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      input {
+        padding: 5px;
+        font-size: 18px;
+        width: 200px;
+      }
+      #crosshair-y {
+        width: 100%;
+        height: 2px;
+        margin-top: -1px;
+        top: 50vh;
+      }
+      #crosshair-x {
+        height: 100%;
+        width: 2px;
+        margin-left: -1px;
+        left: 50vw;
+        z-index: -1;
+      }
+      .crosshair {
+        position: fixed;
+        border: 1px dashed blue;
+      }
+      #ferlogo {
+        top: 50vh;
+        left: 50vw;
+        position: fixed;
+        border: 1px dashed red;
+      }
+      #toolbar {
+        display: flex;
+        justify-content: space-around;
+        font-size: 18px;
+        border: 1px solid black;
+        margin: 30px;
+        padding: 20px;
+        flex-wrap: wrap;
+        background-color: gainsboro;
+      }
+      #imagecontainer {
+          border: 1px dashed brown;
+          width: 75vw;
+          height: 75vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="crosshair-x" class="crosshair"></div>
+    <div id="crosshair-y" class="crosshair"></div>
+    <div id="toolbar">
+      <div>
+        translate(120px, 50%):<input
+          id="translate"
+          type="text"
+          value="translate(0px, 0%)"
+        />
+      </div>
+      <div>
+        scale(2, 0.5):<input id="scale" type="text" value="scale(1, 1)" />
+      </div>
+      <div>
+        rotate(0.5turn):<input id="rotate" type="text" value="rotate(0deg)" />
+      </div>
+      <div>
+        skew(30deg, 20deg):<input
+          id="skew"
+          type="text"
+          value="skew(0deg, 0deg)"
+        />
+      </div>
+      <button id="btnReset" style="margin-left: 3rem">Reset</button>
+    </div>
+    <div id="imagecontainer">
+        <img id="ferlogo" src="FER_logo.png" />
+    </div>
+    <script>
+      function applyTransform() {
+        document.getElementById("ferlogo").style.transform =
+          document.getElementById("translate").value + " " +
+          document.getElementById("scale").value +  " " +
+          document.getElementById("rotate").value +  " " +
+          document.getElementById("skew").value;
+      }
+      document
+        .querySelectorAll("#toolbar input")
+        .forEach((elem) => (elem.onkeyup = applyTransform));
+
+      document.getElementById("btnReset").onclick =  () => {
+        document.getElementById("translate").value = "translate(0px, 0%)";
+        document.getElementById("scale").value = "scale(1, 1)";
+        document.getElementById("rotate").value = "rotate(0deg)";
+        document.getElementById("skew").value = "skew(0deg, 0deg)";
+        applyTransform();
+      };
+    </script>
+  </body>
+</html>

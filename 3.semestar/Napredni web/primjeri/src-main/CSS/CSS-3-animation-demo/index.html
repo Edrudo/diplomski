@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animation demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    #crosshair-y {
+      width: 100%;
+      height: 2px;
+      margin-top: -1px;
+      top: 50vh;
+    }
+
+    #crosshair-x {
+      height: 100%;
+      width: 2px;
+      margin-left: -1px;
+      left: 50vw;
+      z-index: -1;
+    }
+
+    .crosshair {
+      position: fixed;
+      border: 1px dashed blue;
+    }
+
+    #ferlogo {
+      top: 50vh;
+      left: 50vw;
+      position: fixed;
+      border: 1px dashed red;
+    }
+
+    /*  prebacio u onclick, zgodnije je
+      #ferlogo:hover {
+        animation: 3s  forwards logo-path;
+      }       */
+    @keyframes logo-path {
+      0% {
+        background-color: red;
+      }
+
+      10% {
+        transform: rotate(40deg);
+      }
+
+      20% {
+        transform: rotate(80deg);
+      }
+
+      30% {
+        transform: rotate(120deg);
+      }
+
+      40% {
+        transform: scale(2, 2) rotate(160deg);
+        background-color: greenyellow;
+      }
+
+      50% {
+        transform: rotate(180deg);
+      }
+
+      60% {
+        transform: rotate(220deg);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(1.3, 1.3) rotate(90deg);
+        border: 3px solid green;
+        background-color: cornflowerblue;
+      }
+    }
+
+    #banner {
+      width: 50vw;
+      margin: auto;
+      border: 1px solid black;
+      overflow: hidden;
+    }
+
+    #banner h2 {
+      white-space: nowrap;
+      animation-duration: 6s;
+      animation-name: slidetext;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      animation-direction: alternate;
+    }
+
+    @keyframes slidetext {
+      from {
+        margin-left: 100%;
+      }
+
+      to {
+        margin-left: 0%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="crosshair-x" class="crosshair"></div>
+  <div id="crosshair-y" class="crosshair"></div>
+  <div id="banner">
+    <h2>Fakultet elektrotehnike i računarstva</h2>
+  </div>
+  <img id="ferlogo" src="FER_logo.png" />
+  <script>
+    document.getElementById("ferlogo").onclick = function () {
+      this.style.animation = "3s forwards linear logo-path";
+    };
+    /* Za one koji žele znati više, moguće je dodati i listenere:*/
+    const animated = document.getElementById('banner');
+
+    animated.addEventListener('animationstart', () => {
+      console.log('Animation started');
+    });
+    animated.addEventListener('animationiteration', (arg) => {
+      console.log('Animation iteration', arg);
+    });
+    animated.addEventListener('animationend', () => {
+      console.log('Animation ended');
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {        
+        "target": "ES2015",
+        "module": "CommonJS",
+        "outDir": "./dist",
+        "rootDir": "./src",            
+        "declaration": true,
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "strictPropertyInitialization" : true,
+        "noEmitOnError": true
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {        
+        "outDir": "./dist",
+        "rootDir": "./src",    
+        "noEmitOnError": true,            
+        "declaration": true,
+        "noImplicitAny": true,
+        //"strictNullChecks": true
+    }
+}

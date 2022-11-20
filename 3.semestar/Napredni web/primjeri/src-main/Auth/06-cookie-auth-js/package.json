@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "build": "npm run clean && tsc && npm run copy-views && npm run copy-public",
+    "clean": "if exist dist rmdir /s /q dist",
+    "copy-views": "robocopy /mir /NFL /NDL /NJH /NJS /nc /ns /np src/views/ dist/views & exit 0",
+    "copy-public": "robocopy /mir /NFL /NDL /NJH /NJS /nc /ns /np src/public/ dist/public & exit 0",
+    "start": "node dist/06-cookie-auth.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.3",
+    "@types/express": "^4.17.14"
+  }
+}

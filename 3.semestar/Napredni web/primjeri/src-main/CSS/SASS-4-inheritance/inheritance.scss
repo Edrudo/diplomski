@@ -1,0 +1,19 @@
+%button-default {
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+}
+%ridiculous-button {
+  font-size: 66px;
+}
+
+.button-success {
+  @extend %button-default;
+  background-color: green;
+}
+
+.button-danger {
+  @extend %button-default;
+  background-color: red;
+}

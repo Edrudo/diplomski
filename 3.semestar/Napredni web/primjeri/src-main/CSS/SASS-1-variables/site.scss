@@ -1,0 +1,9 @@
+$brand-color: blue;
+$font-heading:   Arial, sans-serif;
+$font-body:    Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+  font: 100% $font-body;
+  color: $primary-color;
+}

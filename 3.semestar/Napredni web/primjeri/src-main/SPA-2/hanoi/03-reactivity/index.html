@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Towers of Hanoi</title>
+    <link rel="stylesheet" href="hanoi.css">
+</head>
+<body>
+    <div id="app">
+
+        <div v-if="isGameOver" class="board card">
+            <h1>Congrats, game over in {{ moves }} moves!</h1>
+            <h2>That is {{ moves !== (Math.pow(2, diskNumber)-1) ? "SUB" : "" }}optimal.</h2> 
+        </div>
+        <div v-else class="board card">
+            <div class="rod" @click="onSelectTo('A')">
+                <div v-for="disk in positionA"
+                    class="disk"
+                    :class="{selectedDisk : disk === selectedDisk, inactiveDisk: selectedDisk != null && disk !== selectedDisk}"
+                    @click="onSelectFrom(disk, 'A')"
+                    :style="rodStyle(disk)">
+                </div>
+            </div>
+            <div class="rod" @click="onSelectTo('B')">
+                <div v-for="disk in positionB" 
+                    class="disk"
+                    :class="{selectedDisk : disk === selectedDisk, inactiveDisk: selectedDisk != null && disk !== selectedDisk}"
+                    @click="onSelectFrom(disk, 'B')"
+                    :style="rodStyle(disk)">
+                </div>
+            </div>
+            <div class="rod" @click="onSelectTo('C')">
+                <div v-for="disk in positionC" 
+                    class="disk" 
+                    :class="{selectedDisk : disk === selectedDisk, inactiveDisk: selectedDisk != null && disk !== selectedDisk}"
+                    @click="onSelectFrom(disk, 'C')"
+                    :style="rodStyle(disk)">
+                </div>
+            </div>
+        </div>
+        <div class="log card">
+            <div v-for="msg in logMessages" >
+                <span class="log--time">{{ msg.ts }}</span>
+                <span class="log--message">{{ msg.text }}</span>
+            </div>
+        </div>
+    </div>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="./hanoi.js"></script>
+</body>
+</html>

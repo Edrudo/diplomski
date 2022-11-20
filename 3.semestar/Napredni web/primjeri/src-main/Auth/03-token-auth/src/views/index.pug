@@ -1,0 +1,7 @@
+html 
+    head 
+        title Bearer token demo
+    body
+        h1 Bearer token demo
+        p Go to  #[a(href="/login") login page] in order to get token and to use it is to get #[a(href="/protected") protected] content.        
+        p You can use the following command to test it <pre>curl --header "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvYiIsImlhdCI6MTYyNjgwMDkxNywiZXhwIjoxNjI2ODA4MTE3fQ.AZiuxWiHMIzxJx1Rzeo37D4IRzEilbgCej7Q2WAQLqY" http://127.0.0.1:4030/protected</pre>    

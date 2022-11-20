@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transition demo</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      #crosshair-y {
+        width: 100%;
+        height: 2px;
+        margin-top: -1px;
+        top: 50vh;
+      }
+      #crosshair-x {
+        height: 100%;
+        width: 2px;
+        margin-left: -1px;
+        left: 50vw;
+        z-index: -1;
+      }
+      .crosshair {
+        position: fixed;
+        border: 1px dashed blue;
+      }
+      #ferlogo {
+        top: 50vh;
+        left: 50vw;
+        position: fixed;
+        border: 1px dashed red;
+        transition: transform 2s cubic-bezier(0.68, -0.6, 0.32, 1.6), background-color 5s;
+      }
+      #ferlogo:hover {
+        transform: translate(-50%, -50%) scale(1.3, 1.3) rotate(90deg);
+        border: 3px solid green;
+        background-color: cornflowerblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="crosshair-x" class="crosshair"></div>
+    <div id="crosshair-y" class="crosshair"></div>
+    <img id="ferlogo" src="FER_logo.png" />    
+  </body>
+</html>
