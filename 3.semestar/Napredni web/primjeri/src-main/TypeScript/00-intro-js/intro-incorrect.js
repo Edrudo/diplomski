@@ -16,7 +16,7 @@ function containsAllSubstrings(haystacks, needles) {
     return needles.every(n => haystacks.some(h => h.toUpperCase().indexOf(n.toUpperCase()) != -1));
 }
 
-function findRecipes(yieldPredicate, ...ingredients) {
+function findRecipies(yieldPredicate, ...ingredients) {
     const recipes = load();
     return recipes.filter(yieldPredicate)
                   .filter(r => containsAllSubstrings(r.ingredients, ingredients));   
