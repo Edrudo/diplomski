@@ -1,3 +1,4 @@
+// @ts-ignore
 import * as data from "./recipes.json"
 function load() {
     const recipes = data.map(function (item, index)  {
