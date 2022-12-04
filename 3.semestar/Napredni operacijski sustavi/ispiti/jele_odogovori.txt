@@ -1,0 +1,247 @@
+Pitanja za vježbu 1
+    1. Kako se iz programa koriste naprave? Zašto baš tako?
+
+          Iz perspektive operacijskog sustava (OS-a) upravljanje napravama obavlja se preko upravljackih sklopova na koje su naprave spojene.
+          Naprave se iz programa koriste kroz usluge operacijskog sustava.
+          OS upravlja napravama: inicijalizira ih, zna kako ih koristiti (preko "upravljaˇckih programa"),
+          dozvoljava njihovo korištenje kroz funkcije koje OS nudi, rješava probleme "paralelnog korištenja" od strane više programa
+
+
+    2. Koje operacije OS nudi (preko sucelja) za korištenje naprava? Koje su osnovne, a koje dodatne?
+
+          Osnovne: otvori, citaj/piši, zatvori. Dodatne operacije omogucuju odabir tražene informacije (pomak),
+          upravljanje s više naprava odjednom (cekanje/provjera da se bar negdje nešto dogodi),
+          stvaranje posebnih datoteka u datotecnom sustavu koje su povezane s napravama, postavljanje posebnih svojstava takvim datotekama te
+          slanje naredbi upravljackom programu naprava.
+
+    3. Što su to asinkrone operacije s napravama?
+
+          Ideja: pokreni operaciju, ali ne cekaj njen kraj. Nekoliko nacina da se ceka/dozna za kraj operacije: cekaj dodatnim pozivom,
+          provjeravaj status, primitak signala.
+
+    4. Navedite nekoliko mogucih podjela naprava ovisno o svojstvima, nacinu spajanja, nacinu komunikacije, smjeru podataka, ...
+
+          fizicke dimenzije, nacine spajanja na/u racunalu, brzina rada, smjer podataka: ulazna, izlazna, ulazno-izlazna,
+          dohvat podataka: znak po znak ili blokovi podatak (npr. sektor, paket), citanje je slijedno ili je moguc dohvat bilo kojeg podatka,
+          sinkrono ili asinkrono (ˇceka se na završetak operacije ili ne), može li se naprava istovremeno koristiti od strane više dretvi ili ne
+
+Pitanja za vježbu 2
+
+    1. Ako zanemarimo nacin spajanja naprave, koji su osnovni nacini upravljanja napravama (posluživanja naprava)?
+          radno cekanje – petlja u kojoj se ceka da naprava bude spremna,
+          prekidi – naprava javlja kad je spremna,
+          izravan pristup spremniku - naprava sama prenosi podatke u radni spremnik,
+
+    2. Opisati osnovna nacela upravljanja radnim cekanjem, prekidima te korištenjem sklopova s izravnim pristupom spremniku (DMA).
+        radno cekanje – petlja u kojoj se ceka da naprava bude spremna
+        prekidi - obrada prekida se programira preko zasebne tablice – IDT (interrupt description table)
+                - Kad se dogodi prekid, uz prekid dolazi i informacija o uzroku – broj prekida → N
+                - Broj prekida se koristi kao indeks za IDT, uzima se N-ti redak i tamo piše koju funkciju
+                  treba pozvati za obradu tog prekida
+                - izvori prekida – prosljedivanje prekida do procesora (prima i prosljeduje “lokalne” prekide procesoru) od strane naprave
+        izravan pristup spremniku - OS izravno koristi pristupni sklop, osim u posebnim slucajevima kao što su datotecni podsustav i mrežni podsustav
+
+    3. U jednostavnom modelu jezgre ulazno-izlazne operacije može se pretpostaviti da naprava obavlja zadane joj naredbe slijedno.
+       Stoga bi procesi koji su tražili takve operacije mogli biti u jedno uredenom redu, cekajuci dovršetke svojih operacija.
+       Koji su problemi ovog modela zbog specificnosti stvarnih sustava? Kako se u stvarnim sustavima rješavaju takvi problemi?
+
+        Problem je sto zahtjev tako može i duže ostati u sustavu, tražiti i složenije operacije nad napravama.
+        Naprave možda ne moraju posluživati zahtjeve po redu prispijeca. Operacija tražena od procesa može zahtijevati više UI operacija, možda i s više naprava.
+
+        Stvarni sustavi: tek kad je zahtjev gotov (odraden do kraja od strane naprave i jezgre), dretva koja je tražila operaciju može nastaviti s radom.
+        Zahtjev tako može i duže ostati u sustavu, tražiti i složenije operacije nad napravama.
+
+        Stvarni sustavi su znacajno složeniji, i u sklopovlju i programskoj potpori. Složenost se u stvarnim sustavima “rješava” podjelom na podsustave i slojeve.
+
+    4. Kako se rješava problem složenosti ostvarenja operacijskog sustava u stvarnim sustavima, npr. Linuxu?
+        Složenost se u stvarnim sustavima “rješava” podjelom na podsustave i slojeve.
+
+Pitanja za vježbu 3
+
+    1. Kako se može pristupiti napravama, tj. njihovim upravljackim sklopovima?
+        Napravama se najcešce može pristupiti korištenjem adresa. Adrese mogu biti prave ili virtualne.
+        Adrese koje se koriste za komunikaciju s napravama su cesto mapirane u adresni prostor upravljackog sklopa - kontrolera na koji je naprava spojena.
+        Ako OS koristi stranicenje onda te adrese treba mapirati u tablici prevodenja.
+
+    2. Zašto su stvarne arhitekture racunala hijerarhijski gradene, s premosnicima izmedu razlicitih dijelova (sabirnica)?
+        Ideja je da se sporije naprave stave na sporije sabirnice, da ne utjecu na performanse brzih naprava
+        (koje bi inace morale cekati duge sabirnicke cikluse sporijih naprava)
+
+    3. Nekim se napravama pristupa korištenjem adresa. Koji sve problemi zbog toga mogu nastati, tj. što treba “reci procesoru” u tom slucaju?
+        Da se nešto ne optimira: - prirucni spremnik procesora - treba upisati u napravu, ne samo u prirucni spremnik
+                                                               - bitno kad je redoslijed upisivanja bitan
+                                 - optimiranje izmjenom redoslijeda izvodenja susjednih nezavisnih instrukcija
+                                                               - ako se takvim instrukcijama upisuje u mapirane registre naprave takve promjene
+                                                                 redoslijeda mogu biti problem
+                                 - da se izbjegnu ovakvi problemi ubacuju se posebne instrukcije
+
+    4. Zašto se koriste meduspremnici? Koju funkcionalnost obavljaju?
+        Meduspremnici se koriste radi povecanja ucinkovitosti. Oni koji ih koriste mogu raditi raznim brzinama.
+        Meduspremnik dozvoljava “gomilanje” podataka i “praznog” prostora.
+        Ponekad tek skup podataka cini cjelinu koji ima smisla prenositi. Mnoge naprave su optimirane za blokovski prijenos podataka (kao i pristup memoriji).
+        Za ulazno/izlazne naprave meduspremnik može biti podijeljen na dva dijela: za ulazne i za izlazne podatke.
+
+    5. Navesti vrste meduspremnika i opisati kako se oni koriste.
+        1. Meduspremnik za jedan podatak – u njega stane samo jedan podatak (bajt, paket, blok).
+        2. Dvostruki meduspremnik (engl. double buffer) - u prvi se piše dok se iz drugog cita, uz zamjenu uloga kad se citanje/pisanje obavi
+                                                     - ulazna naprava piše u prvi, a OS može ˇcitati iz drugog meduspremnika
+        3. Kružno korištenje meduspremnika - proširenje koncepta dvostrukog meduspremnika na N meduspremnika
+                                           - kad se jedno mjesto u meduspremniku popuni, iduci podatak stavlja se na iduce
+
+    6. Usporediti meduspremnik (engl. buffer) i prirucni spremnik (engl. cache).
+        Meduspremnik (engl. buffer) - Pojam meduspremnik se obicno odnosi na spremnik koji se koristi za prijenos podataka
+                                      izmedu dviju strana, npr. naprave i operacijskog sustava.
+                                    - Pri prijenosu se podaci micu s one strane koja ih je kopirala u meduspremnik
+                                    - Podaci su samo na jednom mjestu (nema kopija podataka)
+        Prirucni spremnik (engl. cache) - Prirucni spremnik se koristi za ubrzanje rada
+                                        - Kopija podataka (i instrukcija) se dohvaca da bude bliže onome tko ih koristi (procesor, naprava)
+                                        - Postoji više kopija podataka
+
+        Kod brzih naprava treba razmisliti o nacinu korištenja meduspremnika.
+        Pretjerano kopiranje podataka može usporiti operacije koje trebaju biti brze.
+
+Pitanja za vježbu 4
+
+    1. Navesti osnovna svojstva komunikacije preko serijske veze (npr. RS232).
+        U jednom smjeru bitovi se prenose preko jedne linije (žice). Jedinica podataka je znak (5–8 bita) – grupa uzastopnih bitova.
+        Potrebno je sinkronizirati pocetak/kraj (start/stop bit). Bitove jednog znaka moguce je zaštititi paritetnim bitom (ali se to ne mora koristiti).
+        Veca grupa podataka – znakova se šalje slijedno, znak po znak.
+
+    2. Navesti osnovna svojstva komunikacije preko paralelne veze.
+        Bitovi koji cine jednu informaciju (npr. jedan znak) se šalju paralelno preko više linija.
+        Ideja je da se u jednom ciklusu signala prenese više bitova.
+        Previše sinkronizacije ogranicava brzinu prijenosa na vécim udaljenostima.
+        Zato se danas sve više koristi serijska veza, osim na vrlo brzim sabirnicama, npr. procesor – memorija; ali je zato memorija jako blizu procesora.
+
+    3. Navesti nekoliko protokola koji koriste serijsku i nekoliko koji koriste paralelnu vezu.
+        Serijska: serijska veza (RS-232) se koristila za komunikaciju s modemom, DTE – data terminal equipment
+        Paralelna: LPT: paralelni port DB-25
+
+    4. Usporediti serijsku i paralelnu komunikaciju. Koje su prednosti serijske?
+        Skuzi iz proslih odgovora.
+
+    5. Opisati kako su USB naprave spojene u racunalu: logicki, fizicki.
+        Sabirnica povezuje naprave na racunalo. Sabirnica je upravljana s jednog, glavnog/upravljackog cvora – u nastavku upravljac.
+        Upravljac zapocinje svaku razmjenu poruka: komunikacija se uvijek odvija samo izmedu upravljaca i neke naprave.
+        Logicki, sve su naprave na zajednickoj sabirnici. Pri slanju podataka od naprave prema upravljacu koristi se samo jedna staza.
+        Svaka naprava dobiva (nakon spajanja) adresu: 7-bitovni broj.
+
+    6. Opisati osnovni nacin rada (komunikacije) naprave koja je spojena na USB prikljucak.
+        Svaka naprava dobiva (nakon spajanja) adresu: 7-bitovni broj.
+        Na jedan upravljac ukupno može biti spojeno 127 naprava.
+        Upravljac svaku napravu periodicki proziva – pita ju ima li nešto za javiti, podatke ili status.
+        Svaka transakcija se sastoji nekoliko paketa, ovisno o tipu transakcije.
+        Svaki se paket (na fizickoj razini) sastoji od tri dijela:
+            1. sinkronizacijskog zaglavlja (SZ, sync)
+            2. tijela paketa (paket podatkovne razine)
+            3. oznake kraja paketa (KP, End-of-Packet:EOP)
+        Tip paketa odreden je prvim bajtom paketa (prvi bajt nakon SZ) – PID – identifikator paketa:
+            1. TOKEN paketi (IN, OUT, SETUP, PING, Start-of-frame:SOF – oznaka pocetka okvira PO)
+            2. paketi za prijenos podataka (DATA0/1/2, cirkularno)
+            3. paketi za sinkronizaciju (handshake, ACK, NAK, . . . )
+
+
+    7. Što su to okviri, transakcije, paketi u kontektstu protokola USB?
+        Komunikacija je podijeljena u okvire (engl. frame). Svaki okvir se sastoji od oznake
+        pocetka okvira PO (engl. Start of Frame – SOF) te jedne ili više transakcija.
+        Svaka transakcija se sastoji nekoliko paketa, ovisno o tipu transakcije.
+        Svaki se paket (na fiziˇckoj razini) sastoji od tri dijela:
+            1. sinkronizacijskog zaglavlja (SZ, sync)
+            2. tijela paketa (paket podatkovne razine)
+            3. oznake kraja paketa (KP, End-of-Packet:EOP)
+
+
+    8. Što je to adresa naprave, a što adresa funkcije naprave (kod protokola USB)?
+        Adresa naprave se sastoji od same adrese naprave (7-bitovne adrese) te od broja funkcije naprave (engl. end-point).
+        Naprava može imati više “funkcija”. Svaka funkcija (engl. endpoint) ima svoj redni broj (poˇcevši s nulom), koji je dodijeljen pri inicijalizaciji naprave.
+        Veza upravljac–naprava je zapravo veza upravljac–funkcija.
+        Funkcije mogu biti grupirane u sucelja(engl.interface) koje definirane neku operaciju naprave
+
+    9. Za prijenos podataka USB-om preko protoka (engl. stream) koriste se cjevovodi: izokroni, prekidni i veliki. Opisati njihova svojstva i namjenu.
+        Dva tipa cjevovoda:
+            1. cjevovod za razmjenu poruka (dvosmjerni)
+            2. cjevovod za protok podataka (jednosmjerni)
+                a) Izokroni prijenosi (engl. Isochronous) – garantira se propusnost, ali s mogucim gubicima podataka
+                b) Prekidni prijenosi – za brze odgovore na dogadaje
+                c) Veliki prijenosi (engl. Bulk transfers) – za prijenos vece kolicine podataka
+                    – ne garantiraju se ni propusnost ni kašnjenja – koriste se slobodni ciklusi na sabirnici
+
+    10. Zašto za mnoge USB naprave nije potrebno instalirati upravljacke programe, véc ih operacijski sustav može koristiti s postoje cim?
+        USB definira nekoliko tipova naprava – klasa naprava, korištenjem 8-bitovnog koda
+        Ideja je da posebni upravljacki programi nisu potrebni za napravu koja spada u neku kategoriju.
+        Da se za nju mogu koristiti uobicajeni upravljacki programi za takvu klasu naprave (koje OS vec ima).
+
+    11. Kako se prenose podaci preko PCIe? Koliko vodica se koristi, je li moguc istovremeni prijenos u oba smjera?
+        Izravna komunikacija izmedu dviju strana (npr. naprave i PCIe kontrolera). Moguca istovremena dvosmjerna komunikacija i
+        serijska komunikacija po pojedinim stazama. Svaka veza (engl. link) izmed ̄u dviju naprava povezanih preko PCIe se sastoji od jedne ili
+        više staza. Dvosmjerna komunikacija na svakoj stazi. Za svaki smjer dva vodica, ukupno cetiri vodica za svaku stazu (lane).
+
+    12. Kako se prenose podaci u/iz memorije PCIe naprave?
+        Paketi se salju  na fizickoj, podatkovnoj i transakcijskoj razini.
+        Svaki paket se potvrduje s ACK ili NAK porukama (paketima) ako je bilo grešaka u prijenosu.
+        Da ne bi došlo do zagušenja, naprava javlja stanje svog meduspremnika – "kredit". Ona druga strana treba paziti da ne pošalje više od toga.
+        Kad se u meduspremniku oslobodi nešto mjesta ponovno se šalje osvježena vrijednost kredita.
+
+    13. Usporediti PCI i PCIe. Koje su prednosti sabirnice PCIe?
+        Nezz
+    14. Koja je jedinica podataka (ne upravljackih naredbi) koja se prenosi preko SATA protokola? Zašto nije proizvoljna velicina podataka?
+        Serijski prijenos bit-po-bit. Jedinica podataka blok (sektor). Pretpostavljam da je isti razlog kao gore, da nebi doslo do zagusenja medusoremnika???
+
+Pitanja za vježbu 5
+    1. Unutar jezgre kod se može izvoditi u “razlicitim kontekstima”. Koji su to i koja ogranicenja postavljaju pojedini konteksti?
+        Jezgrin kod se može izvoditi u tri “okoline”:
+            1. u jezgrinom kontekstu procesa (kad proces poziva jezgrinu funkciju)
+                -  kada se jezgrina funkcija zove iz programa, npr. read() tada se pri ulasku u jezgru prelazi u jezgrin kontekst procesa
+                - umjesto dretve koja se izvodila u korisnickom nacinu rada, sada se aktivira jezgrina dretva koja izvodi jezgrinu funkciju.
+                  Ta dretva je “produžetak” korisnicke (ali sada u jezgri).
+                - jezgrina dretva može se i blokirati posebnim “unutarnjim” mehanizmima, sliˇcnima “vanjskim” (semafori, monitori, ...)
+            2. u kontekstu jezgrine dretve (jezgrin proces)
+                - pri prihvatu zahtjeva zapocinje obrada prekida
+                -  “obrada” koja je ovako zapocela ne smije u svom kodu imati blokirajuce pozive
+                - ako je potrebno više vremena za obradu, onda se posao obrade dijeli na dva dijela:
+                    1. neophodni dio – “top half”
+                    2. dodatni dio – “bottom half” - obavlja se naknadno, s dozvoljenim prekidanjem
+            3. bez konteksta dretve – “atomarno” (obrada prekida, alarmi, taskler, softirq)
+
+    2. Što treba napraviti/koristiti ako u jezgrinoj funkciji treba pristupiti adresnom prostoru procesa?
+        Pristup adresnom prostoru procesa:
+            – samo ako se j.f. pozvala iz procesa
+            – dohvat/pohrana podataka iz/u proces posebnim funkcijama
+
+    3. Obrada prekida naprave vrlo je bitan dio upravljanja napravom, ali može bitno utjecati i na svojstva sustava.
+       Zbog cega? Koje mogucnosti u Linuxu stoje na raspolaganju za obradu prekida? Koja su njihova svojstva / kada ih koristiti?
+        Preduga obrada prekida blokira jezgru od obrade ostalih prekida koji dolaze. U linuxu postoji ova opcija da se obrada prekida podijeli na
+        top half i bottom half. Odgovaraju ́cim suceljem se unutar obrade prekida (top half) stvori/pripremi posao koji
+        ce se na jedan od navedenih nacina odraditi kasnije, nakon završetak ove obrade.
+
+    4. Što se smije a što ne koristiti u jezgri? Je li to ovisi o kontekstu u kojem se izvodi kod jezgre? Kako?
+        1. atomaran kod (obrada prekida=top half, tasklet, softirq, alarmi)
+            – nikakve funkcije koje mogu blokirati
+            – nikakve funkcije koje traže kontekst dretve (npr. semafori, monitori) – mogu funkcije s radnim cekanjem: spinlock
+        2. kod s kontekstom (u kontekstu procesa, workqueue, threaded IRQ) – sve funkcije (interne jezgrine)\
+
+    5. Što je to modul u kontekstu jezgre Linuxa? Cemu služi?
+        - upravljacki program može biti na dva nacina ukljucen u jezgru Linuxa:
+            1. permanentno (staticki)
+            2. dinamicki kao modul
+        - upravljacki program može biti pripremljen zajedno s cijelom jezgrom Linuxa ili pripremljen kao “modul” koji se po potrebi,
+          dinamicki ucitava u jezgru te mice kada više nije potreban
+
+    6. Navesti tri osnovne klase naprava u Linuxu.
+        • tri su osnovne klase naprava (stvarnih i virtualnih) u Linuxu
+            1. znakovne naprave – character devices
+                – naprave koje daju/primaju niz bajtova; npr. tipkovnica, miš, terminal, pisac
+            2. blokovske naprave – block devices
+                – naprave kojima je jedinica podataka blok; najcešce naprave koje ostvaruju datotecne sustave
+            3. mrežna sucelja – network devices
+                – naprave kojima je svrha ostvarenje komunikacije (koriste se iz mrežnog podsustava)
+
+    7. Koja je zadaca upravljackog programa naprave?
+        Upravljacki programi upravljaju stvarnim ili virtualnim napravama. On registrira svoje funkcije za neke dogadaje.
+        Uobicajene takve funkcije su: otvari, zatvori, citaj, piši, pomakni, asinkrono citaj/piši, šalji upravljacke naredbe, mapiraj memoriju, zakljucaj,...
+
+    8. Koja su uobicajena sucelja koja znakovna naprava mora ostvariti, a da bi se uklopila u Linux?
+        do_syscall ⇒ sys_write ⇒ ksys_write ⇒ vfs_write ⇒ shofer_write
+        Ne znam jel mislio na ovo i boli me.
+
+

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <canvas id="myCanvas" width="600" height="600">
+	  Your browser does not support the HTML5 canvas tag.
+	</canvas>
+	
+    <script>
+	var c = document.querySelector('canvas');
+	var ctx = c.getContext("2d");
+	
+	ctx.fillStyle = "black";
+	ctx.textAlign = "center";	
+	ctx.font = "20px Georgia"; // Prvi font
+	ctx.fillText("Hello World!", 100, 50); // Ispis teksta
+	
+	ctx.font = "30px Verdana"; // Promjena fonta, drugi font
+	
+	// Napravi gradijent
+	var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
+	gradient.addColorStop("0"," magenta");
+	gradient.addColorStop("0.5", "blue");
+	gradient.addColorStop("1.0", "red");
+		
+	ctx.fillStyle = gradient; // Ispuna gradijentom
+	ctx.fillText("Big smile!", 150, 90); // Ispis teksta
+    </script>
+</body>
+</html>
