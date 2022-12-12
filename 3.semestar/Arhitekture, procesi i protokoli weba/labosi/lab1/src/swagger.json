@@ -16,19 +16,9 @@
         "description": "",
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -130,12 +120,23 @@
     "/comments": {
       "get": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {}
       },
       "post": {
         "description": "",
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -146,9 +147,6 @@
                   "example": "any"
                 },
                 "gameweekIndex": {
-                  "example": "any"
-                },
-                "username": {
                   "example": "any"
                 }
               }
@@ -165,6 +163,11 @@
         "description": "",
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "schema": {
@@ -177,9 +180,6 @@
                   "example": "any"
                 },
                 "commentIndex": {
-                  "example": "any"
-                },
-                "username": {
                   "example": "any"
                 }
               }

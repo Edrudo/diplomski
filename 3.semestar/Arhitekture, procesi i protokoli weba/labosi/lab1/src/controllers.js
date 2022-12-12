@@ -1,5 +1,5 @@
-const fs = require('fs');
-const {parse} = require('csv-parse');
+import fs from 'fs';
+import {parse} from 'csv-parse';
 
 const gameweeks = [];
 const table = new Map();
@@ -146,7 +146,7 @@ function newComment(user, commentText, gameweekIndex) {
 }
 
 function updateComment(user, commentText, gameweekIndex, commentIndex) {
-  if (gameweekIndex < 12) {
+  if (gameweekIndex < gameweekNum) {
     comments[gameweekIndex][commentIndex] = {
       user: user,
       timestamp: timeNow(),
@@ -156,17 +156,19 @@ function updateComment(user, commentText, gameweekIndex, commentIndex) {
 }
 
 function deleteComment(gameweekIndex, commentIndex) {
-  const newArray = [];
-  for (let i = 0; i < comments[gameweekIndex].length; i++) {
-    if (i != commentIndex) {
-      newArray.push(comments[gameweekIndex][i]);
+  if (gameweekIndex < gameweekNum) {
+    const newArray = [];
+    for (let i = 0; i < comments[gameweekIndex].length; i++) {
+      if (i != commentIndex) {
+        newArray.push(comments[gameweekIndex][i]);
+      }
     }
-  }
 
-  comments[gameweekIndex] = newArray;
+    comments[gameweekIndex] = newArray;
+  }
 }
 
-module.exports = {
+export default {
   gameweekNum,
   getGameweeks,
   newGameweek,

@@ -1,19 +1,21 @@
-const controllers = require('./controllers.js');
+import controllers from './controllers.js';
 
-const express = require('express');
-const {auth} = require('express-openid-connect');
-const bodyParser = require('body-parser');
+import express from 'express';
+import {auth} from 'express-openid-connect';
+import bodyParser from 'body-parser';
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // reading configuration file
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 dotenv.config();
 
 // generating documentation
-const swaggerAutogen = require('swagger-autogen')();
+import swaggerAutogen1 from 'swagger-autogen';
+const swaggerAutogen = swaggerAutogen1();
+
 const doc = {
   info: {
     title: 'My API',
@@ -27,8 +29,8 @@ const endpointsFiles = ['./index.js'];
 swaggerAutogen(outputFile, endpointsFiles, doc);
 
 // setting documentation route
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger.json' assert {type: 'json'};
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const address = process.env.RENDER_EXTERNAL_URL || 'http://localhost';
@@ -46,29 +48,33 @@ const config = {
 };
 
 
-const cors = require('cors');
+import cors from 'cors';
 app.use(cors());
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
+function getUserAndPassFromReq(req) {
+  const base64Credentials = req.headers.authorization.split(' ')[1];
+  const credentials = Buffer.from(base64Credentials, 'base64').toString('utf8');
+  const [username, password] = credentials.split(':');
+  return {username, password};
+}
+
 const userPass = new Map();
 const isAuthorized = function(req, res, next) {
-  if (req.query.local) {
-    return next();
-  }
-  const username = req.body.username;
-  const password = req.body.password;
-  if (userPass.get(username) === password) {
-    return next();
+  if (req.headers.authorization) {
+    const {username, password} = getUserAndPassFromReq(req);
+    if (userPass.get(username) === password) {
+      return next();
+    }
   }
   const err = new Error('Not authorized! Go back!');
   err.status = 401;
   return next(err);
 };
 app.post('/register', function(req, res) {
-  const username = req.body.username;
-  const password = req.body.password;
+  const {username, password} = getUserAndPassFromReq(req);
   userPass.set(username, password);
   res.send(200);
 });
@@ -86,26 +92,26 @@ app.post('/gameweeks', isAuthorized, function(req, res) {
 
 app.put('/gameweeks', isAuthorized, function(req, res) {
   const gameweek = req.body.gameweek;
-  gameweekIndex = req.body.gameweekIndex;
+  const gameweekIndex = req.body.gameweekIndex;
   controllers.updateGameweek(gameweek, gameweekIndex);
   res.send(200);
 });
 
 app.delete('/gameweeks', isAuthorized, function(req, res) {
-  gameweekIndex = req.body.gameweekIndex;
+  const gameweekIndex = req.body.gameweekIndex;
   controllers.deleteGameweek(gameweekIndex);
   res.send(200);
 });
 
 app.get('/gameweeks/comments', isAuthorized, function(req, res) {
-  gameweekIndex = req.query.gameweek;
+  const gameweekIndex = req.query.gameweek;
   res.write(JSON.stringify(controllers.getCommentsForGameweek(gameweekIndex)));
   res.end();
 });
 
 app.get('/comments', isAuthorized, function(req, res) {
-  const user = req.body.username;
-  const userComments = controllers.getComments(user);
+  const {username} = getUserAndPassFromReq(req);
+  const userComments = controllers.getComments(username);
   res.write(JSON.stringify({
     data: {
       comments: userComments,
@@ -116,8 +122,9 @@ app.get('/comments', isAuthorized, function(req, res) {
 app.post('/comments', isAuthorized, function(req, res) {
   const commentText = req.body.commentText;
   const gameweekIndex = req.body.gameweekIndex;
+  const {username} = getUserAndPassFromReq(req);
 
-  controllers.newComment(req.body.username, commentText, gameweekIndex);
+  controllers.newComment(username, commentText, gameweekIndex);
   res.send('OK');
 });
 
@@ -125,8 +132,9 @@ app.put('/comments', isAuthorized, function(req, res) {
   const commentText = req.body.commentText;
   const gameweekIndex = req.body.gameweekIndex;
   const commentIndex = req.body.commentIndex;
+  const {username} = getUserAndPassFromReq(req);
 
-  controllers.updateComment(req.body.username, commentText, gameweekIndex, commentIndex);
+  controllers.updateComment(username, commentText, gameweekIndex, commentIndex);
   res.send('OK');
 });
 
