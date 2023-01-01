@@ -5,7 +5,8 @@
   "main": "napredni-web-labos-1.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "serve": "node index.js"
   },
   "repository": {
     "type": "git",
