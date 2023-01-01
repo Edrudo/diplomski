@@ -1,0 +1,23 @@
+{
+    "name": "web2 lab5",
+    "short_name": "lab5",
+    "description": "Laboratory exercise for web2",
+    "display": "fullscreen",
+    "theme_color": "red",
+    "background_color": "#DDD",
+    "start_url": "/",
+    "scope": ".",
+    "orientation": "portrait-primary",
+    "dir": "ltr",
+    "lang": "en-US",
+    "id": "/",
+    "icons": [
+        {
+            "src": "./icons/beans.jpg",
+            "sizes": "320x240"
+        },{
+            "src": "./icons/cancel.png",
+            "sizes": "512x512"
+        }
+    ]
+}

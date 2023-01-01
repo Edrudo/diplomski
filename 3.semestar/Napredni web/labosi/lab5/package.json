@@ -1,0 +1,24 @@
+{
+  "name": "napredni-web-labos-1",
+  "version": "1.0.0",
+  "description": "Labos iz kolegija Razvoj programske potpore za web",
+  "main": "napredni-web-labos-1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/eduard.duras/napredni-web-labos-1.git"
+  },
+  "author": "Eduard Duras",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/eduard.duras/napredni-web-labos-1/issues"
+  },
+  "homepage": "https://gitlab.com/eduard.duras/napredni-web-labos-1#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  }
+}

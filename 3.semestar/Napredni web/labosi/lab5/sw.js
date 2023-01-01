@@ -1,19 +1,11 @@
-import {
-  del,
-  entries,
-} from 'https://cdn.jsdelivr.net/npm/idb-keyval@6/+esm';
 const filesToCache = [
-  '/',
-  'manifest.json',
-  'index.html',
-  'offline.html',
-  '404.html',
-  'https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap',
-  'https://fonts.gstatic.com/s/firasans/v11/va9E4kDNxMZdWfMOD5Vvl4jLazX3dA.woff2',
-  'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css',
+  '../html/index.html',
+  '../manifest.json',
+  '../html/offline.html',
+  '../html/404.html',
 ];
 
-const staticCacheName = 'static-cache-v2';
+const staticCacheName = 'static-cache-v1';
 
 self.addEventListener('install', (event) => {
   console.log('Attempting to install service worker and cache static assets');
@@ -57,7 +49,7 @@ self.addEventListener('fetch', (event) => {
           .then((response) => {
             if (response) {
               console.log('Found ' + event.request.url + ' in cache!');
-              // return response;
+              return response;
             }
             console.log(
                 '----------------->> Network request for ',
@@ -84,46 +76,4 @@ self.addEventListener('fetch', (event) => {
           }),
   );
 });
-
-
-self.addEventListener('sync', function(event) {
-  console.log('Background sync!', event);
-  if (event.tag === 'sync-snaps') {
-    event.waitUntil(
-        syncSnaps(),
-    );
-  }
-});
-
-const syncSnaps = async function() {
-  entries()
-      .then((entries) => {
-        entries.forEach((entry) => {
-          const snap = entry[1]; //  Each entry is an array of [key, value].
-          const formData = new FormData();
-          formData.append('id', snap.id);
-          formData.append('ts', snap.ts);
-          formData.append('title', snap.title);
-          formData.append('image', snap.image, snap.id + '.png');
-          fetch('/saveSnap', {
-            method: 'POST',
-            body: formData,
-          })
-              .then(function(res) {
-                if (res.ok) {
-                  res.json()
-                      .then(function(data) {
-                        console.log('Deleting from idb:', data.id);
-                        del(data.id);
-                      });
-                } else {
-                  console.log(res);
-                }
-              })
-              .catch(function(error) {
-                console.log(error);
-              });
-        });
-      });
-};
 

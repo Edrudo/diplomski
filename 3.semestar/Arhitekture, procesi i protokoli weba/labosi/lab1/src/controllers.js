@@ -10,7 +10,11 @@ function timeNow() {
   return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + '.';
 }
 
-const comments = [];
+const comments = [[{
+  commentText: 'Ovo je komentar',
+  user: 'Eduard Duras',
+  timestamp: timeNow(),
+}]];
 let gameweekNum = 6;
 
 fs.createReadStream('./results')

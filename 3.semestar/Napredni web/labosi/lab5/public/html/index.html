@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>lab5</title>
+        <link rel="stylesheet" href="../css/index.css" />
+        <link rel="manifest" href="../manifest.json" />
+    </head>
+
+    <body>
+          <div class="record-container">
+              <div class="record-item">
+                <button id="startButton">Start Recording</button>
+                <h2>Preview</h2>
+                <video id="preview" width="160" height="120" autoplay muted></video>
+              </div>
+              <div class="record-item">
+                <button id="stopButton">Stop Recording</button>
+                <h2>Recording</h2>
+                <video id="recording" width="160" height="120" controls></video>
+              </div>
+          </div>
+          <hr/>
+          <script>
+
+            const preview = document.getElementById('preview');
+            const recording = document.getElementById('recording');
+            const startButton = document.getElementById('startButton');
+            const stopButton = document.getElementById('stopButton');
+            const downloadButton = document.getElementById('downloadButton');
+
+            const recordingTimeMS = 5000;
+
+            function wait(delayInMS) {
+              return new Promise((resolve) => setTimeout(resolve, delayInMS));
+            }
+
+            function startRecording(stream, lengthInMS) {
+              const recorder = new MediaRecorder(stream);
+              const data = [];
+
+              recorder.ondataavailable = (event) => data.push(event.data);
+              recorder.start();
+              console.log(`${recorder.state} for ${lengthInMS / 1000} seconds…`);
+
+              const stopped = new Promise((resolve, reject) => {
+                recorder.onstop = resolve;
+                recorder.onerror = (event) => reject(event.name);
+              });
+
+              const recorded = wait(lengthInMS).then(
+                  () => {
+                    if (recorder.state === 'recording') {
+                      recorder.stop();
+                    }
+                  },
+              );
+
+              return Promise.all([
+                stopped,
+                recorded,
+              ])
+                  .then(() => data);
+            }
+
+            function stop(stream) {
+              stream.getTracks().forEach((track) => track.stop());
+            }
+
+            startButton.addEventListener('click', () => {
+              navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true,
+              }).then((stream) => {
+                preview.srcObject = stream;
+                preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+                return new Promise((resolve) => preview.onplaying = resolve);
+              }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
+                  .then((recordedChunks) => {
+                    const recordedBlob = new Blob(recordedChunks, {type: 'video/webm'});
+                    recording.src = URL.createObjectURL(recordedBlob);
+
+                    console.log(`Successfully recorded ${recordedBlob.size} bytes of ${recordedBlob.type} media.`);
+                  })
+                  .catch((error) => {
+                    if (error.name === 'NotFoundError') {
+                        console.log('Camera or microphone not found. Can\'t record.');
+                    } else {
+                        console.log(error);
+                    }
+                  });
+            }, false);
+
+            stopButton.addEventListener('click', () => {
+  stop(preview.srcObject);
+}, false);
+
+          </script>
+          <script>
+            navigator.serviceWorker.register('/sw.js')
+              .then(reg => console.log('SW registered!', reg))
+              .catch(err => console.error('Error registering service worker', err));
+          </script>
+    </body>
+</html>
