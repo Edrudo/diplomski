@@ -10,7 +10,6 @@ import "./Timer.sol";
 /// investors except that they will start working on some project.
 /// (e.g. almost all blockchain spinoffs.)
 contract Crowdfunding {
-
     address private owner;
 
     Timer private timer;
@@ -19,7 +18,7 @@ contract Crowdfunding {
 
     uint256 public endTimestamp;
 
-    mapping (address => uint256) public investments;
+    mapping(address => uint256) public investments;
 
     constructor(
         address _owner,
@@ -35,17 +34,42 @@ contract Crowdfunding {
 
     function invest() public payable {
         // TODO Your code here
-        revert("Not yet implemented");
+        uint256 time = timer.getTime();
+        require(time <= endTimestamp, "Time for investing is over.");
+        uint256 funds = msg.value;
+        investments[msg.sender] += funds;
+        // revert("Not yet implemented");
     }
 
     function claimFunds() public {
         // TODO Your code here
-        revert("Not yet implemented");
+        require(
+            msg.sender == owner,
+            "Only the contract owner can call this function."
+        );
+        uint256 time = timer.getTime();
+        require(time > endTimestamp, "Investing is still in process.");
+        uint256 totalFunds = address(this).balance;
+        require(
+            totalFunds >= goal,
+            "You don't have the right to claim funds because the goal is not reached."
+        );
+        payable(owner).transfer(totalFunds);
+        // revert("Not yet implemented");
     }
 
     function refund() public {
         // TODO Your code here
-        revert("Not yet implemented");
+        uint256 time = timer.getTime();
+        require(time > endTimestamp, "Investing is still in process.");
+        uint256 totalFunds = address(this).balance;
+        require(
+            totalFunds < goal,
+            "You can't have a refund because the goal is already reached."
+        );
+        uint256 refundValue = investments[msg.sender];
+        investments[msg.sender] = 0;
+        payable(msg.sender).transfer(refundValue);
+        // revert("Not yet implemented");
     }
-    
 }

@@ -30,18 +30,29 @@ contract EnglishAuction is Auction {
     }
 
     function bid() public payable {
-        // TODO Your code here
-        revert("Not yet implemented");
+        require(time() - lastBidTimestamp < biddingPeriod);
+        require(msg.value >= initialPrice && 
+                msg.value > highestBid && 
+                msg.value - highestBid >= minimumPriceIncrement
+        );
+
+        payable(highestBidder).transfer(highestBid);
+
+        highestBid = msg.value;
+        lastBidTimestamp = block.timestamp;
+        highestBidder = msg.sender;
     }
 
-    function getHighestBidder() override public returns (address) {
-        // TODO Your code here
-        revert("Not yet implemented");
+    function getHighestBidder() override public view returns (address) {
+        if(time() - lastBidTimestamp < biddingPeriod){
+            return address(0);
+        }
+
+        return highestBidder;
     }
 
     function enableRefunds() public {
-        // TODO Your code here
-        revert("Not yet implemented");
+        outcome = Outcome.NOT_SUCCESSFUL;
     }
 
 }

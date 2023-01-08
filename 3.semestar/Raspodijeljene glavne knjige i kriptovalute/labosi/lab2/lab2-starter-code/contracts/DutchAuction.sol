@@ -41,12 +41,22 @@ contract DutchAuction is Auction {
     /// bid that is higher than the current prices.
     /// This method should be only called while the auction is active.
     function bid() public payable {
-        // TODO Your code here
-        revert("Not yet implemented");
+        require(outcome == Outcome.NOT_FINISHED);
+        require(time() < auctionEnd);
+
+        uint currentPrice = initialPrice - time() * priceDecrement;
+        require(msg.value >= currentPrice);
+
+
+        if(msg.value > currentPrice){
+            payable(msg.sender).transfer(msg.value - currentPrice);
+        }
+
+        highestBidderAddress = msg.sender;
+        outcome = Outcome.SUCCESSFUL;
     }
 
     function enableRefunds() public {
-        // TODO Your code here
-        revert("Not yet implemented");
+        outcome = Outcome.NOT_SUCCESSFUL;
     }
 }

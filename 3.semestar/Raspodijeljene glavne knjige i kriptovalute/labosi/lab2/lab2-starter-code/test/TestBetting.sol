@@ -74,9 +74,9 @@ contract TestBetting {
         require(better2.makeBet(50 wei, 1), "Better must be able to bet");
         require(better3.makeBet(10 wei, 2), "Better must be able to bet");
         oracle.setWinner(1);
-        Assert.isTrue(better1.claimWinningBets(), "Better must be able to claim his rewards.");
-        Assert.isTrue(better2.claimWinningBets(), "Better must be able to claim his rewards.");
-        Assert.isTrue(better3.claimWinningBets(), "Better must be able to claim his rewards.");
+        Assert.isTrue(better1.claimWinningBets(), "Better1 must be able to claim his rewards.");
+        Assert.isTrue(better2.claimWinningBets(), "Better2 must be able to claim his rewards.");
+        Assert.isTrue(better3.claimWinningBets(), "Better3 must be able to claim his rewards.");
         Assert.isTrue(address(better1).balance == betterInitialBalance + 30 wei, "The bet should be doubled while threshold is not crossed.");
         Assert.isTrue(address(better2).balance == betterInitialBalance + 50 wei, "The bet should be doubled while threshold is not crossed.");
         Assert.isTrue(address(better3).balance == betterInitialBalance - 10 wei, "The bet should be lost if outcome is different.");

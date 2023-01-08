@@ -77,16 +77,24 @@ contract Auction {
     /// the transfer of fonds to the seller. If the judge is specified,
     /// then only the judge or highest bidder can transfer the funds to the seller.
     function finalize() public {
-        // TODO Your code here
-        revert("Not yet implemented");
+        require(outcome == Outcome.SUCCESSFUL);
+        if(judgeAddress != address(0)){
+            require(msg.sender == judgeAddress || msg.sender == highestBidderAddress);
+        }
+
+        payable(sellerAddress).transfer(address(this).balance);
     }
 
     // If a judge is specified, this can ONLY be called by seller or the judge.
     // Otherwise, anybody can request refund to the highest bidder.
     // Money can only be refunded to the highest bidder.
     function refund() public {
-        // TODO Your code here
-        revert("Not yet implemented");
+        require(highestBidderAddress != address(0));
+        if(judgeAddress != address(0)){
+            require(msg.sender == judgeAddress || msg.sender == sellerAddress);
+        }
+
+        payable(highestBidderAddress).transfer(address(this).balance);
     }
 
     // This is provided for testing
