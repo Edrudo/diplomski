@@ -1,0 +1,65 @@
+<!doctype html5>
+<html>
+	<head>
+		<title>Labos 2 - polling</title>
+	</head>
+	<body>
+		<h1>Labos 2 - polling</h1>
+
+		<div>
+			<input type="radio" id="a" name="person" value="a" checked>
+			<label for="a">Person a</label>
+
+			<input type="radio" id="b" name="person" value="b">
+			<label for="b">Person b</label>
+		</div>
+
+		<input type="text" id="msg" placeholder="message to send"/>
+		<input onclick="sendMessage()" type="button" id="gumb" value="send"/>
+
+		<ul id="messages">
+		</ul>
+	</body>
+
+	<script>
+	var last_message = "";
+
+	function whoami() {
+		if (document.getElementById('a').checked) {return "a";} else {return "b"}
+	}
+	function other(me) {
+		if (me == "a") {
+			return "b";
+		} else {
+			return "a";
+		}
+	}
+	function checkUpdates() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', '/poll/'+other(whoami()));
+		xhr.onload = function() {
+			if (this.status == 200) {
+					if (this.response != last_message) {
+						last_message = this.response;
+						messages = document.getElementById("messages");
+						var message = document.createElement('li');
+						message.appendChild(document.createTextNode(this.response));
+						messages.appendChild(message);
+				};
+
+			} else {alert("greska");};
+		};
+		xhr.send();
+
+	};
+	setInterval(checkUpdates, 1000);
+
+	function sendMessage(){
+		var message = document.getElementById("msg").value;
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/send/'+whoami()+"?message=" + encodeURIComponent(message));
+		xhr.send();
+
+	};
+	</script>
+</html>

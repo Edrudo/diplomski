@@ -1,0 +1,54 @@
+<!doctype html5>
+<html>
+	<head>
+		<title>Labos 2 - websocket</title>
+	</head>
+	<body>
+		<h1>Labos 2 - websocket</h1>
+
+		<div>
+			<input type="radio" id="a" name="person" value="a" checked>
+			<label for="a">Person a</label>
+
+			<input type="radio" id="b" name="person" value="b">
+			<label for="b">Person b</label>
+			
+			<input onclick="start()" type="button" value="start"/>
+		</div>
+
+		<input type="text" id="msg" placeholder="message to send"/>
+		<input onclick="sendMessage()" type="button" id="gumb" value="send"/>
+
+		<ul id="messages">
+		</ul>
+	</body>
+
+	<script>
+
+	function whoami() {
+		if (document.getElementById('a').checked) {return "a";} else {return "b"}
+	}
+	function other(me) {
+		if (me == "a") {
+			return "b";
+		} else {
+			return "a";
+		}
+	}
+
+	var ws;
+	function start() {
+		ws = new WebSocket("ws://localhost:81/ws/"+other(whoami()));
+		ws.onmessage = function(evt) {
+			messages = document.getElementById("messages");
+			var message = document.createElement('li');
+			message.appendChild(document.createTextNode(evt.data));
+			messages.appendChild(message);
+		};
+	}
+
+	function sendMessage(){
+		ws.send(document.getElementById("msg").value);
+	};
+	</script>
+</html>
