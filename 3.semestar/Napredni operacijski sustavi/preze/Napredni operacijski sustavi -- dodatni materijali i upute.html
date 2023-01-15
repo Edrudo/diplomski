@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)http://www.zemris.fer.hr/~leonardo/nos/ -->
+<html lang="hr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./Napredni operacijski sustavi -- dodatni materijali i upute_files/nos.css">
+
+<title>Napredni operacijski sustavi -- dodatni materijali i upute</title>
+</head>
+
+<body>
+
+<header>
+<h1>Napredni operacijski sustavi -- dodatni materijali i upute</h1>
+<hr>
+</header>
+
+<main>
+<section>
+<p>
+<a href="http://www.zemris.fer.hr/~leonardo/nos/skripta/" style="text-decoration: none;font-size: 20px;">
+Skripta s tekstom o ulazno-izlaznim napravama i višeprocesorskim sustavima
+</a></p>
+<hr>
+</section>
+
+<section>
+<h1>Ulazno-izlazne naprave - LAB2</h1>
+<hr>
+
+<h2>Primjeri koda koji se koriste u skripti i na vježbama</h2>
+<div class="opis">
+<ul>
+<li><a href="https://github.com/ljelenkovic/shofer">Kod na githubu</a>
+<!--<li><a href="shofer">Lokalno</a>-->
+</li></ul>
+</div>
+<hr>
+
+<h2>Upute za drugu laboratorijsku vježbu</h2>
+<div class="opis">
+Druga vježba se sastoji od tri zadatka. Prva dva donose (maksimalno) po tri boda, a treći četiri boda (ovisno o tjednu kad se predaju).
+<p>Sadržaj vježbi biti će detaljnije pojašnjen na predavanjima (upute su u skripti).
+</p><p>Vježbe bi trebalo moći izraditi u bilo kojoj distribuciji Linuxa. Međutim, obzirom da se zadire u jezgru OS-a i puno toga može poći krivo, preporučeno je koristiti <a href="https://drive.google.com/file/d/1p_-tLKHCPlX1aEqmEJFqQG5ZamSdgMeB/view?usp=sharing">pripremljenu sliku</a> (Ubuntu.20.04.64-bit.7z)
+za VMware okruženje. Asistenti mogu (ponekad) pomoći ali samo ako se koristi ovaj sustav.
+</p></div>
+
+<h3>Lab2a: Korištenje operacije <a href="https://man7.org/linux/man-pages/man2/poll.2.html"><code>poll</code></a></h3>
+<div class="opis">
+<p>Napisati dva programa koji će koristiti kod iz direktorija <code>lab2a</code>, ili neku njegovu modifikaciju.</p><p>
+</p><p>Modul pokretati tako da se stvori više naprava i međuspremnika (može jednako).
+</p><p>Prvi program otvara sve naprave za čitanje, s <code>poll</code> čeka da se na bilo kojoj pojavi znak, čita ga i ispisuje.
+</p><p>Drugi program otvara sve naprave za pisanje te periodički (npr. svakih 5 sekundi) s <code>poll</code> provjerava je li barem jedna od njih spremna za prihvat novih znakova i ako je nasumice odabire jednu takvu i šalje joj jedan znak.
+</p></div>
+
+<h3>Lab2b: Korištenje operacije <a href="https://man7.org/linux/man-pages/man2/ioctl.2.html"><code>ioctl</code></a></h3>
+<div class="opis">
+<p>Napraviti modul koji će stvoriti tri naprave: ulaznu, radnu i izlaznu (koristiti skoro gotov kod u <code>lab2b</code>).
+</p><p>Ulazna ostvaruje samo operacije <code>open</code> i <code>write</code> - dobivene podatke sprema u svoj  međuspremnik.
+</p><p>Izlazna naprava ostvaruje samo operacije <code>open</code> i <code>read</code> - šalje podatke iz svog međuspremnika.
+</p><p>Radna naprava ostvaruje samo <code>open</code> i <code>ioctl</code>. Kad joj se s <code>ioctl</code> pošalje naredba, tj. broj, prebacuje zadani broj bajtova iz međuspremnika ulazne naprave u međuspremnik izlazne, ili završava  ako brojeva više nema u ulaznom međuspremniku ili se izlazni prepuni.
+</p><p>Pri učitavanju modula treba stvoriti i alarm (timer) koji će periodički (npr. svakih pet sekundi) prebacivati jedan znak iz ulaznog međuspremnika u izlazni.
+</p></div>
+
+<h3>Lab2c: (opcionalni dio) Mehanizmom naprava ostvariti red poruka ili cjevovod</h3>
+<div class="opis">
+<p>Studenti s predzanjom parnom znamenkom u JMBAGu trebaju ostvariti red poruka, oni s neparnom cjevovod.
+</p><h4>Red poruka</h4>
+<div class="opis">
+<p>Upravljačkim programom ostvariti jedan red poruka koji istovremeno može koristiti više dretvi, neke za slanje poruka i neke za primanje poruka.
+</p><p>
+Dretve trebaju moći koristiti mehanizam reda poruka preko sučelja za rad s datotekama (<code>open</code>, <code>close</code>, <code>read</code>, <code>write</code>). Slanje poruke obaviti preko sučelja <code>write</code> a čitanje preko <code>read</code>. Nije potrebno da poruka ima prioritet (ili neku drugu oznaku).
+Primjerom programa pokazati rad reda poruka (programima koji ga koriste).
+</p><p>
+Pri pokretanju modula argumentima definirati najveći broj poruka u redu, najveću veličinu poruke i najveći broj procesa/dretvi koje mogu istovremeno raditi s redom (pozvati <code>open</code>).
+</p><p>
+Pri otvaranju reda od strane nekog procesa (funkcija <code>open</code>) mora se koristiti zastavica <code>O_RDONLY</code> ili <code>O_WRONLY</code>. Za sve ostale zastavice javiti grešku. Ako je korištena zastavica <code>O_RDONLY</code> onda operacija <code>write</code> mora javiti grešku, i obratno, ako je korištena zastavica <code>O_WRONLY</code> onda read mora javiti grešku.
+</p><p>
+Funkcija <code>write</code> u red stavlja jednu poruku zadane veličine.
+Ukoliko je veličina podataka koji se šalje veći od maksimalno definirane za red, javiti grešku.
+Ukoliko je red poruka već pun (već ima maksimalan broj poruka u redu), onda blokirati dretvu dok se neka poruka ne pročita.
+Pri uspješnom stavljanju poruke u red, odblokirati prvu iz reda dretvi koje čekaju na poruku (npr. koristiti semafor).
+</p><p>
+Funkcija <code>read</code> čita jednu poruku iz reda.
+Ako je veličina poruke koju se želi pročitati manja od veličine najveće poruke koja stane u red, javiti grešku.
+Ako je red prazan, blokirati dretvu.
+Pri uspješnom uzimanju poruka iz reda, odblokirati prvu dretvu koja želi staviti poruku u red.
+</p></div>
+
+<h4>Cjevovod</h4>
+<div class="opis">
+<p>
+Upravljačkim programom ostvariti jedan cjevovod koji istovremeno može koristiti više dretvi, neke za stavljanje podataka u cijev i neke za uzimanje podataka.
+</p><p>
+Dretve trebaju moći koristiti mehanizam cjevovoda preko sučelja za rad s datotekama (<code>open</code>, <code>close</code>, <code>read</code>, <code>write</code>). Stavljanje podataka u cjevovod obaviti preko sučelja <code>write</code> a čitanje preko <code>read</code>.
+Primjerom programa pokazati rad cjevovoda (programima koji ga koriste).
+</p><p>
+Pri pokretanju modula argumentima definirati veličinu kružnog međuspremnika za cjevovod i najveći broj procesa/dretvi koje mogu istovremeno raditi s njim (pozvati <code>open</code>). Preporuka je koristiti postojeće kfifo* sučelje za međuspremnik.
+</p><p>
+Pri otvaranju cjevovoda od strane nekog procesa (funkcija <code>open</code>) mora se koristiti zastavica <code>O_RDONLY</code> ili <code>O_WRONLY</code>. Za sve ostale zastavice javiti grešku. Ako je korištena zastavica <code>O_RDONLY</code> onda operacija <code>write</code> mora javiti grešku, i obratno, ako je korištena zastavica <code>O_WRONLY</code> onda read mora javiti grešku.
+</p><p>
+Funkcija <code>write</code> u cijev stavlja jedan podatak zadane veličine.
+Ukoliko je podatak koji se želi staviti prevelik, veći od veličine međuspremnika cjevovoda, javiti grešku.
+Ukoliko se podatak ne može staviti jer trenutno nema dovoljno praznog prostora u međuspremniku, onda blokirati dretvu dok se ne napravi mjesta. Ukoliko ima blokiranih dretvi, svi ostale dretve koje pozovu <code>write</code> treba također blokirati - treba osigurati da neka dretva "kasnije" ne stavi podatak u cijev prije neke druge dretve koja za to vrijeme čeka.
+Pri uspješnom stavljanju podataka u cjevovod, odblokirati prvu iz reda dretvi koje čekaju na čitanje (npr. koristiti semafor).
+</p><p>
+Funkcija <code>read</code> čita jedan podatak iz cjevovoda.
+Ukoliko je međuspremnik prazan, blokirati dretvu dok se u cijev nešto ne stavi.
+Ako ima podataka u cjevovodu, pročitati traženi broj okteta ili manje ako ih toliko nema. Povratnom vrijednošću javiti koliko je podataka pročitano u redu. Npr. u cjevovodu je 10 okteta a <code>read</code> traži 50 - pročitati 10 i vratiti tu vrijednost (ne blokirati dretvu na <code>read</code> ako se može nešto pročitati).
+Pri uspješnom uzimanju podataka iz cijevi, odblokirati prvu dretvu koja želi staviti podatke u cijev, ako sada ima dovoljno mjesta u cijevi za njene podatke.
+</p></div>
+
+</div>
+
+
+<hr>
+
+<h3>Linkovi</h3>
+<div class="opis">
+<ul>
+<li><a href="http://www.zemris.fer.hr/~leonardo/nos/misc/razvojna-okolina.html">Kratke upute za pripremu razvojne okoline</a>
+</li><li><a href="https://lwn.net/Kernel/LDD3/">Linux Device Drivers, Third Edition</a>
+</li><li><a href="https://www.kernel.org/doc/html/latest/driver-api/index.html">The Linux driver implementer’s API guide</a>
+</li><li><a href="https://www.kernel.org/doc/htmldocs/kernel-locking/index.html">Unreliable Guide To Locking</a>
+</li><li><a href="https://linux-kernel-labs.github.io/">Linux Kernel Teaching</a>
+</li></ul>
+</div>
+</section>
+
+
+
+</main>
+
+
+</body></html>

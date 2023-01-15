@@ -1,0 +1,104 @@
+pre{
+    background-color: #EBECE4; 
+}
+
+code{
+    background-color: #EBECE4; 
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+th, td {
+    padding: 7px;
+	text-align: center;
+}
+
+.floatedTable {
+	float:left;
+}
+.inlineTable {
+	display: inline-block;
+}
+
+figure{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+figure.tablice {
+    margin-left: 10px;
+    margin-right: 10px;
+	display: inline-block;
+}
+
+div.slike {
+	text-align: center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.opis {
+    margin-left: 1em;
+}
+
+li{
+//    margin: 10px 0;
+//    margin-top: 10px;
+    //border:1px solid grey;
+}
+li:first-child {
+    margin-top: 6px;
+}
+li:not(:last-child) {
+    margin-bottom: 6px;
+}
+li:last-child {
+    margin-bottom: 12px;
+}
+
+h1 {
+    font-size: 22px;
+	font-style: bold;
+    margin-bottom: 12px;
+}
+h2 {
+    font-size: 20px;
+	font-style: bold;
+    margin-bottom: 10px;
+}
+h3 {
+    font-size: 18px;
+	font-style: bold;
+    margin-bottom: 6px;
+}
+h4 {
+    font-size: 16px;
+	font-style: bold;
+    margin-bottom: 6px;
+}
+
+p {
+//    font-size: 16px;
+}
+body {
+    font-size: 16px;
+//    background-color: linen;
+}
+
+
+
+body {counter-reset: h2}
+h2 {counter-reset: h3}
+h3 {counter-reset: h4}
+
+h2:before {counter-increment: h2; content: counter(h2) ". "}
+h3:before {counter-increment: h3; content: counter(h2) "." counter(h3) ". "}
+h4:before {counter-increment: h4; content: counter(h2) "." counter(h3) "." counter(h4) ". "}
+
+h2.nocount:before, h3.nocount:before, h4.nocount:before { content: ""; counter-increment: none } 
+

@@ -8,7 +8,7 @@
 
 /*
 Pisi u nasumicno odabrane naprave periodicki.
-/
+*/
 
 #define errExit(msg)        \
     do                      \
