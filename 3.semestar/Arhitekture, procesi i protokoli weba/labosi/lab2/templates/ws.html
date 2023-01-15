@@ -37,13 +37,17 @@
 	}
 
 	var ws;
+	var lastMessage = "";
 	function start() {
 		ws = new WebSocket("ws://localhost:81/ws/"+other(whoami()));
 		ws.onmessage = function(evt) {
 			messages = document.getElementById("messages");
 			var message = document.createElement('li');
-			message.appendChild(document.createTextNode(evt.data));
-			messages.appendChild(message);
+			if(evt.data != "" && evt.data != lastMessage){
+				message.appendChild(document.createTextNode(evt.data));
+				messages.appendChild(message);
+				lastMessage = message
+			}
 		};
 	}
 

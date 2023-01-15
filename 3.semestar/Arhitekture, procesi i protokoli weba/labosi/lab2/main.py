@@ -5,8 +5,8 @@ import flask_sock
 app = flask.Flask(__name__)
 sock = flask_sock.Sock(app)
 
-last_message_a = "bok, ja sam a"
-last_message_b = "bok, ja sam b"
+last_message_a = ""
+last_message_b = ""
 
 @app.route('/')
 def index():
@@ -30,6 +30,8 @@ def longpolling(person):
 	if person not in ["a", "b"]:
 		return "nemoze", 413
 	
+	print(last_message_a + " " + last_message_b)
+  
 	if person == "a":
 		last_a = last_message_a
 		while True:

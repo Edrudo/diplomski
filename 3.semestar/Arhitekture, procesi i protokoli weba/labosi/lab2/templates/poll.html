@@ -34,19 +34,20 @@
 			return "a";
 		}
 	}
+
+	var lastMessage = "";
 	function checkUpdates() {
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', '/poll/'+other(whoami()));
 		xhr.onload = function() {
 			if (this.status == 200) {
-					if (this.response != last_message) {
-						last_message = this.response;
-						messages = document.getElementById("messages");
-						var message = document.createElement('li');
-						message.appendChild(document.createTextNode(this.response));
-						messages.appendChild(message);
-				};
-
+				if(this.response != "" && this.response != last_message){
+					last_message = this.response;
+					messages = document.getElementById("messages");
+					var message = document.createElement('li');
+					message.appendChild(document.createTextNode(this.response));
+					messages.appendChild(message);
+				}
 			} else {alert("greska");};
 		};
 		xhr.send();

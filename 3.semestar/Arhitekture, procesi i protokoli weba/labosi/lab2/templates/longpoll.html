@@ -35,17 +35,21 @@
 			return "a";
 		}
 	}
+
+	var lastMessage = "";
 	function checkUpdates() {
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', '/longpoll/'+other(whoami()));
 		xhr.onload = function() {
 			if (this.status == 200) {
-					last_message = this.response;
+				console.log(this.response)
+				if(this.response != "" && this.response != lastMessage){
 					messages = document.getElementById("messages");
 					var message = document.createElement('li');
 					message.appendChild(document.createTextNode(this.response));
 					messages.appendChild(message);
-
+					lastMessage = this.response;
+				}
 			} else {alert("greska");};
 
 			checkUpdates();
