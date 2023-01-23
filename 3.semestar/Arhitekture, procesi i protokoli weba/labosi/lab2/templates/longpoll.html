@@ -42,7 +42,6 @@
 		xhr.open('GET', '/longpoll/'+other(whoami()));
 		xhr.onload = function() {
 			if (this.status == 200) {
-				console.log(this.response)
 				if(this.response != "" && this.response != lastMessage){
 					messages = document.getElementById("messages");
 					var message = document.createElement('li');
