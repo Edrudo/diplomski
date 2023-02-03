@@ -1,0 +1,91 @@
+****7. Svojstva višeprocesorskih sustava****
+
+	
+1. Zašto su višeprocesorski sustavi danas svugdje?
+	Zato što današnja tehnologija ne omogućava efikasno korištenje veće frekvencije na jednom procesoru (a da se ne troši jako puno energije na hlađenje)
+2. Navesti osnovne vrste višeprocesorskih sustava i gdje se one koriste
+	1. Simetrični višeprocesorski sustavi
+		- svaki procesor je zaseban čip i ima svoj priručni spremnik
+		- stariji višeprocesorski sustavi spadaju u ovu kategoriju
+	2. Višejezgreni procesori
+		- jedan čip s više procesorskih jedinki – jezgri (priručni spremnik podijeljen na razine)
+ 		- zajednička memorija odvojena
+		- većina današnjih sustava spada u ovu kategoriju
+	3. Simetrični višeprocesorski sustavi s višejezgrenim procesorima
+		- simetrični višeprocesorski sustavi kod kojih je svaki procesor višejezgreni
+		- uglavnom na poslužiteljima
+	4. raspodijeljeni višeprocesorski sustavi
+		- više procesorskih kartica, na svakoj više procesora i lokalna memorija
+		- odvojena zajednička memorija
+		- NUMA sustavi
+		- kod jačih poslužitelja
+3. Navesti prednosti i nedostatke simetričnih i asimetričnih višeprocesorskih sustava.
+		?
+4. Zbog kojih svojstava današnje sustave možemo nazivati i nehomogenim višeprocesorskim sustavima?
+	Jer koriste brze i spore jezgre zbog uštede energije??
+5. Što je to sklopovska višedretvenost (npr. hyperthreading)?
+	To je višedretvenost u kojoj se kada čekamo da određena dretva čeka druga dretva izvršava svoje instrukcije kako ne bismo gubili vrijeme
+
+
+****8. Problemi pri ostvarenju operacijskog sustava za višeprocesorske sustave****
+
+
+1. Navesti načine za očuvanje konzistentnosti strukture podataka jezgre u višeprocesorskom sustavu
+	1.	zaključavanja
+	2.	atomarne operacije
+	3.	oprezno korištenje
+2. Koje dvije osnovne vrste zaključavanja postoje? Koja su njihova dobra i loša svojstva?
+	1.	blokirajuće - dretva se zaustavlja i miče u stranu, ako se jezgrina funkcija izvodi u kontekstu neke (jezgrine) dretve
+		a.	dobro je što se ne dohvaća stalno vrijednost koja se provjerava
+		b.	loše je što se prilikom micanja u stranu moraju obaviti razni poslovi (spremanje konteksta, promjena dretve i prateće operacije s priručnim spremnikom)
+	2.	radno čekanje - dretva u petlji provjerava neki uvjet dok se ne ispuni (i troši procesorsko vrijeme), tj. dok ga neka druga dretva na nekom drugom procesoru ispuni (koja paralelno radi) - radno čekanje je efikasno samo ako se zaključavaju kratki dijelovi koda
+		a.	dobro je što se ne moraju obavljati poslovi micanja u stranu
+		b.	loše djelovanje na priručni spremnik zbog stalnog dohvaćanja i provjeravanja jedne vrijednosti
+3. Kada ima smisla koristiti atomarne operacije?
+	za kratke operacije možda se zaključavanje može izbjeći korištenjem atomarnih operacija
+4. Zašto samo korištenje atomarnih operacija ponekad nije dovoljno?
+	?
+5. Koja od navedenih “razina atomarnosti” je najzahtjevnija pri radu: a) je točno
+	a) konzistencija nad slijedom operacija (total ordering)
+	b) konzistencija nad jednom operacijom (relaksirana)
+	c) konzistencija nad povezanim varijablama (acquire/release) 
+	d) konzistencija nad nepovezanim varijablama (acquire/consume)?
+6. Zašto ponekad i samo spremanje/čitanje jedne varijable može biti problem (zašto se koriste READ_ONCE i WRITE_ONCE)?
+	Zato što ako ne koristimo atomarne operacije onda prevoditelj ima “punu slobodu” nad optimiranjem koda i svašta se još može dogoditi što u paralelnom radu može prouzrokovati neočekivane probleme. npr. ponekad spremanje i samo jedne vrijednosti (ili ˇčitanje) može biti odgođeno ili čak i razlomljeno na više sabirničkih ciklusa
+7. Zašto se za “red pripravnih dretvi” na višeprocesorskom operacijskom sustavu zapravo koristi više redova, po jedan za svaki procesor?
+	– osnovni razlog za to je korištenje priručnog spremnika procesora
+	- ideja je da dretve koje se izvode na tom procesoru, iako se povremeno ne izvode (zbog drugih dretvi na tom procesoru) ipak će pri povratku izvođenja u tom priručnom spremniku naći neke svoje podatke koje neće trebati ponovno dohvaćati iz radnog spremnika – tako se povećavaju performanse
+
+
+****9. Raspoređivanje dretvi u višeprocesorskim sustavima****
+
+
+1. Koji se kriterij raspoređivanja najčešće koristi za vremenski kritične dretve (SCHED_FIFO, SCHED_RR) a koji kriterij za nekritične (obične, SCHED_OTHER)?
+	U linuxu se koristi SCHED_DEADLINE za kritične.??
+	MFQ se koristi za nekritične??
+2. Zašto se za svaki procesor stvara zasebni red pripravnih dretvi?
+	– zbog performansi – boljem korištenju priručnog spremnika (“hot cache”)
+3. Kada se koristi guranje a kada povlačenje dretvi kod raspoređivanja kritičnih dretvi?
+	Kad neka dretva na nekom procesoru završi s radom (ili nije više pripravna) ako prva u redu pripravnih na tom procesoru ima manji prioritet od prve u redu pripravnih nekog drugog procesora treba takvu dretvu većeg prioriteta POVUĆI iz tog reda i nju izvoditi. (procesor sam POVLAČI)
+	Kad se jedna dretva ili više njih odblokira na jednom procesoru ako imaju veći prioritet od drugih trenutno aktivnih dretvi na tom ili drugim procesorima treba GURNUTI  odgovarajućim procesorima, tako da u svakom trenutku medu svim pripravnim dretvama, aktivne dretve budu one najvećeg prioriteta (dretva se GURA nekom procesoru)
+4. Kada se kod nekritičnih dretvi neke prebacuju iz jednog reda pripravnih u drugi (drugog procesora)?
+	Onda kada je potrebno uravnotežiti opterećenje procesore – balansirati redove pripravnih dretvi da sve ravnopravno dobiju procesorsko vrijeme.
+
+
+****10. Primjeri iz implementacije raspoređivanja u Linuxu****
+
+
+1. Navesti klase raspoređivača u Linuxu namijenjene za korisničke dretve.
+	STOP – interni, koristi se pri micanju svih zadataka s nekog procesora
+	DEADLINE - raspoređivanje vremenski kritičnih zadataka, prema kriteriju najbližeg krajnjeg trenutka završetka (klasa SCHED_DEADLINE)
+	REALTIME – prioritetno raspoređivanje vremenski kritičnih zadataka (klase SCHED_FIFO i SCHED_RR)
+	CFS - raspoređivanje normalnih zadataka podjelom vremena
+	IDLE - kad nema drugih zadataka, onda se koriste ovi jezgrini
+2. Koja struktura podataka se koristi za ostvarenje “reda pripravnih dretvi” kod CFS-a?
+	crveno crna stabla
+
+3. Što je to grupa zadataka (task_group) u kontekstu CFS-a?
+	To je grupa zadataka koji su na neki način povezani (zadaci istog procesa) radi optimiranja u nekom višejezgrenom, višeprocesorskom ili NUMA sustavu
+4. Koja je osnovna zamisao u korištenju procesorskih domena (engl. scheduling domains)?
+	Osnovna zamisao korištenja je uzimanje u obzir heterogenosti procesore gdje svaka domena sadrži skup procesora nekih zajedničkih svojstava te svaka domena ima jednu ili više grupa zadataka koje se raspoređuju nad pripravnim procesorima, te se za svaku domenu definiraju određena pravila kojima se nastoji iskoristiti svojstva tih procesora
+
