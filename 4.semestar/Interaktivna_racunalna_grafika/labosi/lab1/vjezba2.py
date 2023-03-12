@@ -3,7 +3,7 @@ from pyglet.gl import *
 from pyglet import shapes
 
 
-def bresenham_line(x0, y0, x1, y1):
+def bresenhamLine(x0, y0, x1, y1):
     points = []
     dx = abs(x1 - x0)
     dy = abs(y1 - y0)
