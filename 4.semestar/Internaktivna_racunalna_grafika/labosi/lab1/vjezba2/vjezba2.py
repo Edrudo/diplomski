@@ -1,85 +1,71 @@
-from ast import Global
-from asyncio import events
-from lib2to3.refactor import get_all_fix_names
-from re import L
-from turtle import width
-from sqlalchemy import true
 import pyglet
 from pyglet.gl import *
 from pyglet import shapes
 
 
-qtrCol = [1, 0, 0, 1]
-window = pyglet.window.Window()
-batch = pyglet.graphics.Batch()
-@window.event
-def on_mouse_press(x, y, button, modifiers):
-    global qtrCol
-    if button:
-        if qtrCol[0] == 1 or qtrCol[2] != 0:
-            qtrCol[0]=x
-            qtrCol[1]=y
-            qtrCol[2]=0
-            qtrCol[3]=0
-        else:
-            qtrCol[2]=x
-            qtrCol[3]=y
-            
-            
-@window.event                        
-def on_draw():
-    def drawLineX(x1, y1, x2, y2):
-        dy = y2 - y1;
-        a = abs(dy)/(x2-x1);
-        korekcija = 0
-        if dy<0 : korekcija = -1 
-        else: korekcija = 1;
-        yc=y1; yf = -0.5;
-        for x in range(x1, x2 + 1):
-            pyglet.graphics.draw(1, GL_POINTS, ('v2i',(x,yc)))
-            yf = yf+a;
-            if(yf>=0.0) :
-                yf=yf-1.0;
-                yc=yc+korekcija;
-            
-        
-    def drawLineY(x1, y1, x2, y2):
-        dx = x2-x1;
-        a = abs(dx)/(y2-y1);
-        korekcija = 0
-        if dx<0 :  korekcija = -1 
-        else: korekcija = 1;
-        xc=x1; xf = -0.5;
+def bresenham_line(x0, y0, x1, y1):
+    # Return a list of points that make up the line between (x0, y0) and (x1, y1) using Bresenham's algorithm
+    points = []
+    dx = abs(x1 - x0)
+    dy = abs(y1 - y0)
+    x, y = x0, y0
+    sx = -1 if x0 > x1 else 1
+    sy = -1 if y0 > y1 else 1
+    if dx > dy:
+        err = dx / 2.0
+        while x != x1:
+            points.append((x, y))
+            err -= dy
+            if err < 0:
+                y += sy
+                err += dx
+            x += sx
+    else:
+        err = dy / 2.0
+        while y != y1:
+            points.append((x, y))
+            err -= dx
+            if err < 0:
+                x += sx
+                err += dy
+            y += sy
+    points.append((x, y))
+    return points
 
-        for y in range(y1, y2 + 1):
-            pyglet.graphics.draw(1, GL_POINTS, ('v2i',(xc,y)))
-            xf = xf+a;
-
-            if(xf>=0.0):
-                xf=xf-1.0;
-                xc=xc+korekcija
-                
-                
-    x1=qtrCol[0]
-    y1=qtrCol[1]
-    x2=qtrCol[2]
-    y2=qtrCol[3]
+point1=(0,0)
+point2=(100,100)
+drawingInProgress=False
+linePoints=[]
     
-    dx = x2-x1;
-    dy = y2-y1;
-    if x2!=0:
-        if(abs(dx) >= abs(dy)):
-            if(dx>=0):
-                drawLineX(x1, y1, x2, y2);
+def main():
+    window = pyglet.window.Window()
+    batch = pyglet.graphics.Batch()
+    
+    @window.event
+    def on_mouse_press(x, y, button, modifiers):
+        global drawingInProgress, point1, point2, linePoints
+        
+        if button:
+            if not drawingInProgress:
+                point1=(x, y)
+                drawingInProgress = True
             else:
-                drawLineX(x2, y2, x1, y1);
-        else:
-            if(dy >= 0):
-                drawLineY(x1, y1, x2, y2);
-            else:
-                drawLineY(x2, y2, x1, y1);
+                point2=(x, y)
+                linePoints=bresenham_line(point1[0], point1[1], x, y)
+                print(drawingInProgress)
+                drawingInProgress=False
+                
                     
-        line = shapes.Line(qtrCol[0], qtrCol[1] + 20, qtrCol[2], qtrCol[3] + 20, width=3, batch=batch)
-        line.opacity = 250
-        if(qtrCol[2] != 0) : batch.draw()
-pyglet.app.run()
+    @window.event                        
+    def on_draw():
+        global drawingInProgress, linePoints, point1, point2
+        
+        if(not drawingInProgress):
+            window.clear()
+            line=shapes.Line(point1[0], point1[1] + 20, point2[0], point2[1] + 20, width=3, batch=batch)
+            batch.draw()
+            
+    pyglet.app.run()
+    
+if __name__ == "__main__":
+    main()
