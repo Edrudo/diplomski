@@ -33,7 +33,7 @@ def bresenham_line(x0, y0, x1, y1):
     return points
 
 point1=(0,0)
-point2=(100,100)
+point2=(0,0)
 drawingInProgress=False
 linePoints=[]
     
@@ -52,7 +52,6 @@ def main():
             else:
                 point2=(x, y)
                 linePoints=bresenham_line(point1[0], point1[1], x, y)
-                print(drawingInProgress)
                 drawingInProgress=False
                 
                     
@@ -61,8 +60,11 @@ def main():
         global drawingInProgress, linePoints, point1, point2
         
         if(not drawingInProgress):
-            window.clear()
             line=shapes.Line(point1[0], point1[1] + 20, point2[0], point2[1] + 20, width=3, batch=batch)
+            for point in linePoints:
+                pyglet.graphics.draw(1, pyglet.gl.GL_POINTS,
+                          ('v2i', point),
+                          ('c3B', (255, 255, 255)))
             batch.draw()
             
     pyglet.app.run()
