@@ -3,33 +3,67 @@ from pyglet.gl import *
 from pyglet import shapes
 
 
-def bresenhamLine(x0, y0, x1, y1):
-    points = []
-    dx = abs(x1 - x0)
-    dy = abs(y1 - y0)
-    x, y = x0, y0
-    sx = -1 if x0 > x1 else 1
-    sy = -1 if y0 > y1 else 1
-    if dx > dy:
-        err = dx / 2.0
-        while x != x1:
-            points.append((x, y))
-            err -= dy
-            if err < 0:
-                y += sy
-                err += dx
-            x += sx
-    else:
-        err = dy / 2.0
-        while y != y1:
-            points.append((x, y))
-            err -= dx
-            if err < 0:
-                x += sx
-                err += dy
-            y += sy
-    points.append((x, y))
-    return points
+def bresenhamLine(point1, point2):
+    def drawLineX(x1, y1, x2, y2):
+        points = []
+        
+        dy = y2 - y1;
+        a = abs(dy)/(x2-x1);
+        correction = 0
+        if dy<0 : correction = -1 
+        else: correction = 1;
+        yc=y1; 
+        yf = -0.5;
+        for x in range(x1, x2 + 1):
+            points.append((x, yc))
+            yf = yf+a;
+            if(yf>=0.0) :
+                yf=yf-1.0;
+                yc=yc+correction;
+        
+        return points
+            
+        
+    def drawLineY(x1, y1, x2, y2):
+        points = []
+        
+        dx = x2-x1;
+        a = abs(dx)/(y2-y1);
+        correction = 0
+        if dx<0 :  correction = -1 
+        else: correction = 1;
+        xc=x1; 
+        xf = -0.5;
+
+        for y in range(y1, y2 + 1):
+            points.append((xc, y))
+            xf = xf+a;
+
+            if(xf>=0.0):
+                xf=xf-1.0;
+                xc=xc+correction
+                
+        return points
+                
+    x1=point1[0]
+    y1=point1[1]
+    x2=point2[0]
+    y2=point2[1]
+    
+    dx = x2-x1;
+    dy = y2-y1;
+    if x2!=0:
+        if(abs(dx) >= abs(dy)):
+            if(dx>=0):
+                return drawLineX(x1, y1, x2, y2);
+            else:
+                return drawLineX(x2, y2, x1, y1);
+        else:
+            if(dy >= 0):
+                return drawLineY(x1, y1, x2, y2);
+            else:
+                return drawLineY(x2, y2, x1, y1);
+                
 
 point1=(0,0)
 point2=(0,0)
@@ -50,7 +84,7 @@ def main():
                 drawingInProgress = True
             else:
                 point2=(x, y)
-                linePoints=bresenham_line(point1[0], point1[1], x, y)
+                linePoints=bresenhamLine(point1, (x, y))
                 drawingInProgress=False
                 
                     
