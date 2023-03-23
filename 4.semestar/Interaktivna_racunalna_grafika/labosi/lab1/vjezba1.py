@@ -7,10 +7,12 @@ if __name__ == "__main__":
     v1=np.array([2, 3, -4]) + np.array([-1, 4, -1])
     print(f'{v1=}')
 
-    s=np.dot(v1,np.array([-1, 4, -1]))
+    print("Ovo je skalarni produkt zadanih vektora")
+    s=np.dot(np.array([1, 2, 3]), np.array([2, 3, 5]))
     print(f'{s=}')
 
-    v2=np.cross(v1,np.array([2, 2, 4]))
+    print("Ovo je vektorski produkt zadanih vektora")
+    v2=np.cross(np.array([1, 2, 3]), np.array([2, 3, 5]))
     print(f'{v2=}')
 
     v3=np.linalg.norm(v2)
@@ -21,19 +23,18 @@ if __name__ == "__main__":
 
     Mx=np.array([
         [1,2,3], 
-        [2,1,3], 
-        [4,5,1]
     ])
     My=np.array([
-        [-1,2,-3], 
-        [5,-2,7], 
-        [-4,-1,3]
+        [1,3,1], 
+        [2,1,1], 
+        [1,1,2]
     ])
     
     M1=np.add(Mx,My) # zbrajanje matrica
     print(f'{M1=}')
     
-    M2=np.dot(Mx,np.transpose(My)) # mnozenje matrica
+    print("Ovo je mnozenje zadanih matrica")
+    M2=np.dot(Mx, My) # mnozenje matrica
     print(f'{M2=}')
 
     M3=np.dot(Mx,np.linalg.inv(My))
