@@ -1,26 +1,23 @@
 import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
-import org.eclipse.paho.client.mqttv3.MqttException;
 
 
 public class gateway {
 
     public static void main(String[] args) {
-        String PORT = "COM9";
-        int BAUD_RATE = 115200;
+        String PORT = "COM1";
+        int BAUD_RATE = 9600;
 
+        MosquittoClient mqttClient = new MosquittoClient();
 
         // zigbee connection
         XBeeDevice myDevice = new XBeeDevice(PORT, BAUD_RATE);
 
         try {
-            MqttClient mqttClient = new MqttClient();
             myDevice.open();
 
-            MqttClientListener listener = new MqttClientListener(mqttClient, myDevice);
             myDevice.addDataListener(new MyDataReceiveListener(mqttClient));
-
-        } catch (XBeeException | MqttException e) {
+        } catch (XBeeException e) {
             e.printStackTrace();
             myDevice.close();
             System.exit(1);

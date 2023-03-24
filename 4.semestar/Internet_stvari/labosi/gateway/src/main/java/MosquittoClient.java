@@ -7,7 +7,7 @@ public class MosquittoClient {
     String topic        = "MQTT Examples";
     String content      = "Message from MqttPublishSample";
     int qos             = 2;
-    String broker       = "tcp://mqtt.eclipseprojects.io:1883";
+    String broker       = "tcp://172.20.144.1:1883";
     String clientId     = "JavaSample";
     MemoryPersistence persistence = new MemoryPersistence();
     MqttClient sampleClient;

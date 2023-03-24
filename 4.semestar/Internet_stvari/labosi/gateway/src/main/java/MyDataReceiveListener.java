@@ -15,11 +15,8 @@
  */
 
 import com.digi.xbee.api.listeners.IDataReceiveListener;
-import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.models.XBeeMessage;
 import com.digi.xbee.api.utils.HexUtils;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  * Class to manage the XBee received data that was sent by other modules in the 
@@ -33,46 +30,18 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  */
 public class MyDataReceiveListener implements IDataReceiveListener {
-	MqttClient mqttClient;
+	MosquittoClient mqttClient;
 
-	public MyDataReceiveListener(MqttClient mqttClient){
+	public MyDataReceiveListener(MosquittoClient mqttClient){
 		this.mqttClient = mqttClient;
 	}
 
-	String getTemperature(XBeeMessage xbeeMessage){
-		return "";
-	}
-	String getHumidity(XBeeMessage xbeeMessage){
-		return "";
-	}
-	String getAcceleration(XBeeMessage xbeeMessage){
-		return "";
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see com.digi.xbee.api.listeners.IDataReceiveListener#dataReceived(com.digi.xbee.api.models.XBeeMessage)
-	 */
-	@Override
 	public void dataReceived(XBeeMessage xbeeMessage) {
+		/*XBee64BitAddress device = xbeeMessage.getDevice().get64BitAddress();
+		String message = new String(xbeeMessage.getData());
+		String hexMessage = HexUtils.prettyHexString(HexUtils.byteArrayToHexString(xbeeMessage.getData()));*/
 		System.out.format("From %s >> %s | %s%n", xbeeMessage.getDevice().get64BitAddress(),
 				HexUtils.prettyHexString(HexUtils.byteArrayToHexString(xbeeMessage.getData())),
 				new String(xbeeMessage.getData()));
-
-		/*XBee64BitAddress device = xbeeMessage.getDevice().get64BitAddress();
-		String message = new String(xbeeMessage.getData());
-		String hexMessage = HexUtils.prettyHexString(HexUtils.byteArrayToHexString(xbeeMessage.getData()));
-
-		String temp = getTemperature(xbeeMessage);
-		String hum = getHumidity(xbeeMessage);
-		String acc = getAcceleration(xbeeMessage);
-
-		try {
-			mqttClient.client.publish("device/acceleration", new MqttMessage(acc.getBytes()));
-			mqttClient.client.publish("device/humidity", new MqttMessage(hum.getBytes()));
-			mqttClient.client.publish("device/temperature", new MqttMessage(temp.getBytes()));
-		} catch (MqttException e) {
-			e.printStackTrace();
-		}*/
 	}
 }
