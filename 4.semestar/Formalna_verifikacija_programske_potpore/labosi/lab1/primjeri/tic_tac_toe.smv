@@ -1,0 +1,204 @@
+-- Tic-tac-toe is a game for two players (X and O) who take turns marking
+-- the squares of a board (! a 3x3 grid). The player who succeeds in
+-- placing three respective marks in a horizontal, vertical or diagonal row
+-- wins the game.
+-- The tic-tac-toe puzzle is modeled with an array of size nine.
+--  1 | 2 | 3
+-- ___|___|___
+--  4 | 5 | 6
+-- ___|___|___
+--  7 | 8 | 9
+-- ___|___|___
+
+-- The board
+-- a square of the board can be empty or filled:
+-- "0" means empty,
+-- "1" filled by player 1, "2" filled by player 2
+MODULE main
+VAR
+B : array 1..9 of {0,1,2};
+-- initially, all squares are empty
+INIT
+B[1] = 0 &
+B[2] = 0 &
+B[3] = 0 &
+B[4] = 0 &
+B[5] = 0 &
+B[6] = 0 &
+B[7] = 0 &
+B[8] = 0 &
+B[9] = 0;
+
+-- The players
+-- let us assume that player 1 is the first player
+-- players move alternatively
+VAR
+player : 1..2;
+ASSIGN
+init(player) := 1;
+next(player) := case
+player = 1 : 2;
+player = 2 : 1;
+esac;
+
+-- The moves
+-- move=0 means no move
+-- move=i with i>0 means the current player fills B[i]
+VAR move : 0..9;
+INIT move=0
+TRANS
+next(move=0) ->
+next(B[1])=B[1] &
+next(B[2])=B[2] &
+next(B[3])=B[3] &
+next(B[4])=B[4] &
+next(B[5])=B[5] &
+next(B[6])=B[6] &
+next(B[7])=B[7] &
+next(B[8])=B[8] &
+next(B[9])=B[9]
+
+-- move=i with i>0 means the current player fills B[i]
+TRANS
+next(move=1) ->
+B[1] = 0 & next(B[1]) = player &
+next(B[2])=B[2] &
+next(B[3])=B[3] &
+next(B[4])=B[4] &
+next(B[5])=B[5] &
+next(B[6])=B[6] &
+next(B[7])=B[7] &
+next(B[8])=B[8] &
+next(B[9])=B[9]
+
+TRANS
+next(move=2) ->
+B[2] = 0 & next(B[2]) = player &
+next(B[1])=B[1] &
+next(B[3])=B[3] &
+next(B[4])=B[4] &
+next(B[5])=B[5] &
+next(B[6])=B[6] &
+next(B[7])=B[7] &
+next(B[8])=B[8] &
+next(B[9])=B[9]
+
+TRANS
+next(move=3) ->
+B[3] = 0 & next(B[3]) = player &
+next(B[1])=B[1] &
+next(B[2])=B[2] &
+next(B[4])=B[4] &
+next(B[5])=B[5] &
+next(B[6])=B[6] &
+next(B[7])=B[7] &
+next(B[8])=B[8] &
+next(B[9])=B[9]
+
+TRANS
+next(move=4) ->
+B[4] = 0 & next(B[4]) = player &
+next(B[1])=B[1] &
+next(B[2])=B[2] &
+next(B[3])=B[3] &
+next(B[5])=B[5] &
+next(B[6])=B[6] &
+next(B[7])=B[7] &
+next(B[8])=B[8] &
+next(B[9])=B[9]
+
+TRANS
+next(move=5) ->
+B[5] = 0 & next(B[5]) = player &
+next(B[1])=B[1] &
+next(B[2])=B[2] &
+next(B[3])=B[3] &
+next(B[4])=B[4] &
+next(B[6])=B[6] &
+next(B[7])=B[7] &
+next(B[8])=B[8] &
+next(B[9])=B[9]
+
+TRANS
+next(move=6) ->
+B[6] = 0 & next(B[6]) = player &
+next(B[1])=B[1] &
+next(B[2])=B[2] &
+next(B[3])=B[3] &
+next(B[4])=B[4] &
+next(B[5])=B[5] &
+next(B[7])=B[7] &
+next(B[8])=B[8] &
+next(B[9])=B[9]
+
+TRANS
+next(move=7) ->
+B[7] = 0 & next(B[7]) = player &
+next(B[1])=B[1] &
+next(B[2])=B[2] &
+next(B[3])=B[3] &
+next(B[4])=B[4] &
+next(B[5])=B[5] &
+next(B[6])=B[6] &
+next(B[8])=B[8] &
+next(B[9])=B[9]
+
+TRANS
+next(move=8) ->
+B[8] = 0 & next(B[8]) = player &
+next(B[1])=B[1] &
+next(B[2])=B[2] &
+next(B[3])=B[3] &
+next(B[4])=B[4] &
+next(B[5])=B[5] &
+next(B[6])=B[6] &
+next(B[7])=B[7] &
+next(B[9])=B[9]
+
+TRANS
+next(move=9) ->
+B[9] = 0 & next(B[9]) = player &
+next(B[1])=B[1] &
+next(B[2])=B[2] &
+next(B[3])=B[3] &
+next(B[4])=B[4] &
+next(B[5])=B[5] &
+next(B[6])=B[6] &
+next(B[7])=B[7] &
+next(B[8])=B[8]
+
+-- "win1" means player 1 wins
+-- "win2" means player 2 wins
+DEFINE
+win1 := (B[1]=1 & B[2]=1 & B[3]=1) |
+(B[4]=1 & B[5]=1 & B[6]=1) |
+(B[7]=1 & B[8]=1 & B[9]=1) |
+(B[1]=1 & B[4]=1 & B[7]=1) |
+(B[2]=1 & B[5]=1 & B[8]=1) |
+(B[3]=1 & B[6]=1 & B[9]=1) |
+(B[1]=1 & B[5]=1 & B[9]=1) |
+(B[3]=1 & B[5]=1 & B[7]=1);
+
+win2 := (B[1]=2 & B[2]=2 & B[3]=2) |
+(B[4]=2 & B[5]=2 & B[6]=2) |
+(B[7]=2 & B[8]=2 & B[9]=2) |
+(B[1]=2 & B[4]=2 & B[7]=2) |
+(B[2]=2 & B[5]=2 & B[8]=2) |
+(B[3]=2 & B[6]=2 & B[9]=2) |
+(B[1]=2 & B[5]=2 & B[9]=2) |
+(B[3]=2 & B[5]=2 & B[7]=2);
+
+-- "draw" means nobody wins
+draw := !win1 & !win2 &
+B[1]!=0 & B[2]!=0 & B[3]!=0 & B[4]!=0 &
+B[5]!=0 & B[6]!=0 & B[7]!=0 & B[8]!=0 & B[9]!=0;
+
+TRANS
+(win1 | win2 | draw) <-> next(move)=0
+
+CTLSPEC ! (AX (EX (AX (EX (AX (EX (AX (EX (AX win2)))))))))
+CTLSPEC AX (EX (AX (EX (AX (EX (AX (EX (AX !win1))))))))
+CTLSPEC EX (AX (EX (AX (EX (AX (EX (AX (EX !draw))))))))
+CTLSPEC ! EX (AX (EX (AX (EX (AX (EX (AX (EX draw))))))))
+
+

@@ -1,0 +1,4 @@
+read_model -i mutex_1ex.smv
+flatten_hierarchy
+encode_variables
+build_model

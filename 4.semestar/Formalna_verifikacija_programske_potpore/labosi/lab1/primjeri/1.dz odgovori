@@ -1,0 +1,169 @@
+1.
+    1.2
+        a)
+        EF (proc0.state = critical & proc1.state = critical)
+
+        b)
+        AG !(proc0.state = critical & proc1.state = critical)
+
+    1.3
+        Obiljezje sigurnosti je ispunjeno zato sto check_property naredba za prvi slucaj ispisuje False sto bi znacilo 
+        da se nikad ne pojavi put u kojem su u isto vrijeme oba procesa u KO. 
+        Druga naredba rezultira sa True sto samo potvrduje tu tvrdnju.
+        
+    1.4
+        AG(proc0.state = entering -> AF(proc0.state = critical))
+        AG(proc1.state = entering -> AF(proc1.state = critical))
+
+    1.5
+        Obiljeznje zivotnosti nije zadovoljeno. Problem je sto, ako proces koji je na redu za uci u kriticni odsjecak 
+        nikad ne odluci zapravo uci u njega (svojstvo neblokiranja), drugi proces biti ce blokiran za ulazak.
+        To se moze dogoditi i ukoliko taj prvi proces zavrsi sa izvrsavanjem pa drugi zauvijek ostane cekati ulazak u KO 
+        (svojstvo nedeterminiranog redoslijeda). Takoder ostaje problem kada neki proces zaglavi u KO.
+    
+    1.6
+        JUSTICE running
+
+    1.7
+        Ovdje smo rjesili problem kada je neki proces na redu za ulazak u KO i onda on zavrsi sa izvodenjem. 
+        I dalje ostaje problem kada se neki proces izvodi beskonace ali nikad vise ne odluci uci u KO (nedeterminizam).
+        Takoder ostaje problem kada neki proces zaglavi u KO.
+
+    1.8
+        JUSTICE !(state = critical)
+        Rijesili smo problem sa beskonacnim KO.
+
+    1.9
+        JUSTICE !(state = noncritical)
+        Svojstvo zivotnosti je sada zadovoljeno u potpunosti.
+
+    1.10
+        CTLSPEC AG(proc0.state = exiting -> A[proc1.state = exiting U !(proc0.state = critical)])
+        // TODO y?
+
+2
+    2.2
+        Zadovoljno je svojstvo sigurnosti zbog CTLSPEC uvjeta.
+    
+    2.3
+        Svojstvo zivotnosti nije zadovoljeno jer su ove dvije kontrole false:
+            CTLSPEC AG(proc0.state = testflag-> AF(proc0.state = critical))
+            CTLSPEC AG(proc1.state = testflag -> AF(proc1.state = critical))
+    
+    2.4
+        I dalje nije zadovoljeno ogranicenje zivotnosti makar smo dodali ogranicenja.
+    
+    2.5
+        Problem je sto neki proces moze zapeti u stateu start
+        CTLSPEC AG(proc0.state = start -> AF(proc0.state = critical))
+        CTLSPEC AG(proc1.state = start -> AF(proc1.state = critical))
+
+    2.6
+
+    2.7
+        Zadovoljena su sva tri ogranicenja
+
+    2.8
+        Ovo rješenje uvodi dvije dodatne zastavice testturn i
+        testturn1, koje označavaju namjeru ulaska procesa proc0,
+        odnosno proc1 u kritični odsječak. Ako oba procesa pokušaju
+        istovremeno ući u kritični odsječak, samo će jedan proces
+        moći ući, ovisno čiji je red za ulazak, označen varijablom
+        turn. Ako je jedan proces već u kritičnom odsječku, drugi
+        proces će zauzeto čekati (engl. busy wait) da proces izađe
+        iz kritičnog odsječka, za što se koriste zastavice testturn
+        i testturn1.
+
+3
+    3.1 NuSMV -int RET 
+        read_model -i mutex_1ex_int.smv
+
+    3.2
+        go
+        // TODO sto se dogada prilikom pokretanja naredbe
+
+    3.3
+        Similuranje kretanja kroz tri stanja od proizviljno odabranog pocetka
+            pick_state -i
+            simulate -k 3
+        Prikaz traga
+            show_traces
+
+    3.4
+        check_fsm
+
+        Nije doslo do potpunog zastoja.
+
+    3.5.
+        print_reachable_states
+        Ukupno postoji 32 stanja, a dosezljivih je 16. Diameter je 7.
+    3.6.  
+        check_property -n 0
+        Ona je lazna. Provjerava se sigurnost, obiljezje je zadovoljeno.
+
+    3.7.  
+        check_property -n 1
+        Ona je istinita. Provjerava se zivotnost i ono je zadovoljeno.
+    3.8.    
+        check_compute -n 2
+        check_compute -n 3
+
+        the result of MIN [ proc0.state = noncritical , proc0.state = exiting ]  is 3
+        the result of MAX [ proc0.state = noncritical , proc0.state = critical ]  is infinity
+
+        Rezultati navedenih COMPUTE naredbi jednaki su sa i bez
+        navedenim ograničenjima pravednosti, tako da one ne uzimaju
+        u obzir ograničenja pravednosti.
+
+
+4
+    4.2
+        CTLSPEC !E [safe_state U goal]
+
+    4.3
+        Zadano svojstvo nije zadovoljeno, jer postoji siguran put
+        kojim se dolazi do cilja problema. 
+        Ispis traga programa nam
+        daje protuprimjer u kojem je pokazan redoslijed kojim
+        skeledžija (engl. ferryman) uspješno prevozi vuka, ovcu i
+        kupus.
+
+        1. Prevezi kozu na lijevu stranu
+        2. Vrati se na desnu stranu
+        3. Prevezi kupus na lijevu stranu
+        4. Prevezi kozu na desnu stranu
+        5. Prevezi vuka na lijevu stranu
+        6. Vrati se na desnu stranu
+        7. Prevezi kozu na lijevu stranu
+
+    4.5
+        CTLSPEC ! (AX (EX (AX (EX (AX (EX (AX (EX (AX win2)))))))))
+        CTLSPEC AX (EX (AX (EX (AX (EX (AX (EX (AX !win1))))))))
+        CTLSPEC EX (AX (EX (AX (EX (AX (EX (AX (EX !draw))))))))
+        CTLSPEC ! EX (AX (EX (AX (EX (AX (EX (AX (EX draw))))))))
+    4.6
+        True
+        True
+        True
+        True
+    4.7
+        MODULE main
+        VAR
+            req: {0, 1};
+            request: boolean;
+            flag: {red, blue};
+        ASSIGN
+            init(req) := {0, 1};
+            init(flag) := red;
+            next(flag) := case
+                            request = TRUE : blue;
+                            TRUE : red;
+            esac;
+            next(request) := case
+                                req = 1 : FALSE;
+                                req = 0 : TRUE;
+            esac;
+            next(req) := {0, 1};
+
+    4.8
+        isto ko 4.5 iz dokumenta samo zamjeni neke varijable kaj su ti ostale u text compareu
