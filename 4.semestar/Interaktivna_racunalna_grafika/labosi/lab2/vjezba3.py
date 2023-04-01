@@ -78,15 +78,11 @@ def fillPolygon():
 
 def checkVertexPosition(vertex):
     vertexIsInPolygon = True
-    vt = np.array([vertex[0], vertex[1], 1])
-    for i in range(len(vertices)):
-        v1 = np.array([vertices[i][0], vertices[i][1], 1])
-        v2 = np.array([vertices[(i+1) % len(vertices)][0], vertices[(i+1) % len(vertices)][1], 1])
-        direction = np.cross(v1, v2)
-        if np.dot(vt, direction) > 0:
+    for x in edgesOrientationsAndCoef:
+        if vertex[0] * x[2] + vertex[1] * x[3] + x[4] > 0:
             vertexIsInPolygon = False
             break
-
+        
     if vertexIsInPolygon:
         print('Vrh je u poligonu.')
     else:
