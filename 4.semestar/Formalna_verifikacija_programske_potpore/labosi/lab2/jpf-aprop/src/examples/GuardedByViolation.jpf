@@ -1,0 +1,17 @@
+target = GuardedByViolation
+
+nonshared.throw_on_cycle=true
+
+listener.autoload=\
+  javax.annotation.Nonnull,\
+  javax.annotation.concurrent.GuardedBy,\
+  gov.nasa.jpf.annotation.Const,\
+  gov.nasa.jpf.annotation.NonShared
+
+listener.javax.annotation.Nonnull=.aprop.listener.NonnullChecker
+listener.javax.annotation.concurrent.GuardedBy=.aprop.listener.LockChecker
+listener.gov.nasa.jpf.annotation.Const=.aprop.listener.ConstChecker
+listener.gov.nasa.jpf.annotation.NonShared=.aprop.listener.NonSharedChecker
+
+
+log.info=gov.nasa.jpf.vm.ClassInfo

@@ -1,0 +1,3 @@
+target = ConstViolation
+
+listener = .aprop.listener.ConstChecker

@@ -1,0 +1,8 @@
+target = NonnullViolation
+
+listener.autoload=\
+  javax.annotation.Nonnull,\
+  gov.nasa.jpf.annotation.Const
+
+listener.javax.annotation.Nonnull=.aprop.listener.NonnullChecker
+listener.gov.nasa.jpf.annotation.Const=.aprop.listener.ConstChecker

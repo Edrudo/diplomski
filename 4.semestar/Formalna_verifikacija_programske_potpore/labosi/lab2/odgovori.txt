@@ -1,0 +1,87 @@
+1.1 micho...
+    Defaultna strategija koja se koristi za pretragu prostora stanja je
+    gov.nasa.jpf.search.DFSearch.
+    Standardna svojstva koja se provjeravaju prilikom pretrage su:
+    • gov.nasa.jpf.vm.NoUncaughtExceptionsProperty
+    • gov.nasa.jpf.vm.NotDeadlockedProperty
+
+1.2
+    Nakon što pokrenemo program, ispisuje se "I won’t say it!". Nakon toga
+    dolazi "no errors detected", što nam govori da prilikom testiranja programa
+    nisu pronađeni problemi.
+
+1.3
+    Sudionici su proizvođači i potrošači.
+
+1.4
+    Sudionici nasljeđuju Thread i svaki implementira metodu run() . Koriste se
+    metode get() i put() , koje su sinkronizirane uz pomoć metoda notify()
+    i wait() .
+
+1.5
+    Narušavamo svojstvo gov.nasa.jpf.vm.NotDeadlockedProperty. U programu
+    smo dali međuspremniku veličinu 2. Međutim, imamo 4 proizvođača i 1 potrošača.
+    Napunit ćemo međuspremnik, ali će sve dretve biti u stanju WAIT, što je definicija potpunog zastoja.
+
+1.6
+    Sada imamo dovoljno mjesta u međuspremniku za normalnu operaciju proizvođača
+    i potrošača, pa ne narušavamo nikakvo svojstvo.
+
+1.7
+    Aktivna dretva poziva ove metode. Ovisno o pozvanoj metodi, događa se sljedeće:
+        • wait() - dretva se odriče svojeg prava na izvršavanje i čeka dok neka druga dretva ne pozove svoj notify()
+        • notify - odabire se jedna dretva, te nakon što trenutna dretva izađe iz kritičnog odsječka se odabranoj dretvi daje mogućnost da uđe u kritični odsječak
+
+1.8
+    Nakon što proizvođač stavi nešto u spremnik, on će pozvati notify() . Rec-
+    imo da je proizvođač pozvao notify() nakon što je popunio zadnje mjesto u međuspremniku i da je time pozvao drugog proizvođača. Taj proizvođač zove wait() , i čeka da netko pozove notify() , međutim to je bila jedina aktivna
+    dretva, i sad sve dretve čekaju, tj. dogodio se potpuni zastoj.
+
+1.9
+    Naredba će potaknuti program da provjeri sve mogućnosti kad se u a stavi
+    nasumični broj iz {0, 1}, a u b stavi nasumičan broj iz {0, 1, 2}. U varijablu
+    c se, potom, stavlja rezultat operacije a , pri čemu postoji šansa da se a+b−2
+    dogodi dijeljenje s 0, što će baciti iznimku jer smo prisilili JPF da provjeri sve mogućnosti postavljanjem cg.enumerate_random = true .
+
+1.10
+    JPF će provjeriti svojstvo za vrijednosti a = 0 i b = 2, nakon koje će dojaviti gov.nasa.jpf.vm.NoUncaughtExceptionsProperty
+    java.lang.ArithmeticException: division by zero
+    Programer je previdio da bi se moglo dogoditi dijeljenje s 0, a od toga se lako može osigurati ako se uhvati ta iznimka try-catch blokom.
+
+1.11
+    Nije prijavljen problem. Pretpostavljamo da se ovo dogodilo jer JPF nije naletio na ilegalnu konfiguraciju varijabli a i b jer ih nije sve provjerio.
+
+
+2.1
+    Za Racer_2.jpf dobivamo ispis gov.nasa.jpf.vm.NoUncaughtExceptionsProperty
+    java.lang.ArithmeticException: division by zero
+    Za Racer.jpf dobivamo error 1 ispis gov.nasa.jpf.listener.PreciseRaceDetector
+    race for field Racer@15b.d
+
+2.2
+    Pokretanje dretvi je ovdje zbog nedostatka sinkronizacije proizvoljno. Ako se prvo pokrene dretva koja postavlja d na vrijednost 0, onda će doći do dijeljenja nulom.
+    Instanca dretve t ne može pristupiti toj liniji koda jer se ne nalazi unutar vlastite run() metode.
+
+2.3
+    Ideja je prilično jednostavna - izoliraj sve moguće objekte za koje bi se dretve mogle natjecati. Zatim, kako imamo konačan broj dretvi, izvršavamo ih u ra- zličitim redosljedima. Ako nakon ovog nemamo problema, pokrili smo sve sluča- jeve i onda garantirano nema utrke dretvi.
+    Nasljeđeni Adapter je PropertyListenerAdapter, a nadjačava metode check(), choiceGeneratorSet, executeInstruction, getErrorMessage, reset.
+2.4
+    JPF dojavljuje grešku
+    gov.nasa.jpf.listener.NumericValueChecker
+    local variable someVariable out of range: 12345,000000 > 42,000000
+2.5
+    Moguće je provjeravati konretne varijable ili polja - ovo je specificirano identifikatorom nakon range. Prema tome, iako je u originalnoj datoteci specificirano
+    range.vars = 1
+    Kad bi htjeli provjeravati raspon polja mogli bismo pisati
+    range.fields = 1
+
+2.6
+    Što se tiče T1, pokrivene su sve 3 metode, a kod T2 pokrivene su samo 2 metode. T1 je bolje pokriven s ispitnim primjerima.
+
+2.7
+    To je najvjerojatnije zadani konstruktor razreda.
+
+2.8
+    Analizator je preskočio assert naredbe.
+    Ako želimo isključiti ispisivanje provjeravanja pokrivenosti grana u izlaznoj
+    tablici možemo koristiti specifikaciju coverage.show_branches = false .

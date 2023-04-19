@@ -13,15 +13,16 @@ polygons, vertices = [], []
 def on_draw():
     glClear(GL_COLOR_BUFFER_BIT)
     glMatrixMode(GL_MODELVIEW)
+    
     glBegin(GL_TRIANGLES)
     
-    for polygon in polygons:
+    for p in polygons:
         glColor3f(1,1,0)
-        glVertex3f(vertices[polygon[0]-1][0], vertices[polygon[0]-1][1], 0)
+        glVertex3f(vertices[p[0]-1][0], vertices[p[0]-1][1], 0)
         glColor3f(1,1,1)
-        glVertex3f(vertices[polygon[1]-1][0], vertices[polygon[1]-1][1], 0)
+        glVertex3f(vertices[p[1]-1][0], vertices[p[1]-1][1], 0)
         glColor3f(0,1,1)
-        glVertex3f(vertices[polygon[2]-1][0], vertices[polygon[2]-1][1], 0)
+        glVertex3f(vertices[p[2]-1][0], vertices[p[2]-1][1], 0)
     glEnd()
     
 @window.event
@@ -35,15 +36,16 @@ def load_data(filename):
     global vertices, polygons
     with open(filename) as f:
         for line in f.readlines():
-            if line.startswith('v'):
-                coords = line.strip().split(' ')
-                vertices.append([float(coords[1]), float(coords[2]), float(coords[3])] )
-            if line.startswith('f'):
-                polygon_indexes = line.strip().split(' ')
-                polygons.append((int(polygon_indexes[1]), int(polygon_indexes[2]), int(polygon_indexes[3])))
+            if line[0] == 'v':
+                coordinates = line.strip().split(' ')
+                vertices.append([float(coordinates[1]), float(coordinates[2]), float(coordinates[3])] )
+                
+            if line[0] == 'f':
+                pIndexes = line.strip().split(' ')
+                polygons.append((int(pIndexes[1]), int(pIndexes[2]), int(pIndexes[3])))
 
-def check_vertex_position(vertex):
-    inside = True
+def checkVertexPosition(vertex):
+    isVertexInside = True
 
     for polygon in polygons:
         v_1 = vertices[polygon[0]-1]
@@ -56,10 +58,10 @@ def check_vertex_position(vertex):
         D = -v_1[0] * A - v_1[1] * B - v_1[2] * C
 
         if np.dot(np.array([vertex[0], vertex[1], vertex[2], 1]), np.array([A,B, C, D])) >= 0:
-            inside = False
+            isVertexInside = False
             break
 
-    print(f'Testni vrh je unutar objekta: {inside}')
+    print(f'Testni vrh je unutar objekta: {isVertexInside}')
     
 def main():
     file = sys.argv[1]
@@ -81,7 +83,7 @@ def main():
     yCenter = (y_min+y_max) / 2
     zCenter = (z_min+z_max) / 2
     
-    M = max(x_max-x_min, y_max-y_min, z_max-z_min)
+    MAX = max(x_max-x_min, y_max-y_min, z_max-z_min)
     
     for v in vertices:
         v[0] -= xCenter
@@ -89,13 +91,13 @@ def main():
         v[2] -= zCenter
         
     for i, v in enumerate(vertices):
-        vertices[i] = (v[0] * 2/M, v[1] * 2/M, v[2] * 2/M)
+        vertices[i] = (v[0] * 2/MAX, v[1] * 2/MAX, v[2] * 2/MAX)
         
     t_v = input('x, y, z za testni vrh: ')
     t_v = t_v.strip().split(' ')
     test_vertex = (float(t_v[0]), float(t_v[1]), float(t_v[2]))
     
-    check_vertex_position(test_vertex)
+    checkVertexPosition(test_vertex)
     
     glTranslatef(0, 0, -3)
     pyglet.app.run()

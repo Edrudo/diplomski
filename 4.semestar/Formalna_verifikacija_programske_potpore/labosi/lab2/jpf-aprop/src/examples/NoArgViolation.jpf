@@ -1,0 +1,10 @@
+target = NoArgViolation
+
+listener = .aprop.listener.ArgChecker
+
+listener.autoload=\
+  gov.nasa.jpf.annotation.NoArg,\
+  gov.nasa.jpf.annotation.NonHashStorable
+
+listener.gov.nasa.jpf.annotation.NoArg = gov.nasa.jpf.aprop.listener.NoArgChecker
+listener.gov.nasa.jpf.annotation.NonHashStorable = gov.nasa.jpf.aprop.listener.NonHashStorableChecker

@@ -1,0 +1,5 @@
+# JPF application property file for example application SandBoxViolation
+
+target = SandBoxViolation
+
+listener+=,.aprop.listener.SandBoxChecker
