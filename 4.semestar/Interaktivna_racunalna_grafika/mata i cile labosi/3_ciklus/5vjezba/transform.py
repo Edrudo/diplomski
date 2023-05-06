@@ -19,8 +19,8 @@ def on_draw():
     glBegin(GL_TRIANGLES)
     for polygon in polygons:
         glColor3f(1,1,0)
-        glVertex3f(vertices[polygon[0]-1][0], vertices[polygon[0]-1][1], vertices[polygon[0]-1][2])
         glColor3f(1,1,1)
+        glVertex3f(vertices[polygon[0]-1][0], vertices[polygon[0]-1][1], vertices[polygon[0]-1][2])
         glVertex3f(vertices[polygon[1]-1][0], vertices[polygon[1]-1][1], vertices[polygon[1]-1][2])
         glColor3f(0,1,1)
         glVertex3f(vertices[polygon[2]-1][0], vertices[polygon[2]-1][1], vertices[polygon[2]-1][2])
@@ -54,13 +54,11 @@ def rotate(dt):
     glRotatef(0.5, dt, dt, dt)
 
 
-def get_t1_matrix(local_coordinates) -> np.array:
-    '''Calculates translation matrix which maps coordinates
-    from eye's coordinate system to origin.'''
+def get_t1_matrix(coordinates) -> np.array:
     return np.array([[1,0,0,0],
                     [0,1,0,0],
                     [0,0,1,0],
-                    [-local_coordinates[0], -local_coordinates[1], -local_coordinates[2], 1]])
+                    [-coordinates[0], -coordinates[1], -coordinates[2], 1]])
 
 def get_z_mirror_matrix() -> np.array:
     '''Returns a matrix which mirrors elements by the 'z' axis.'''
