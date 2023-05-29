@@ -4,8 +4,8 @@ radius = 2
 k = 10
 x_min, x_max = 0, 600
 y_min, y_max = 0, 480
-u_min, u_max = -2, 2
-v_min, v_max = -2, 2
+u_min, u_max = -1.5, 0.5
+v_min, v_max = -1, 1
 
 window = pyglet.window.Window(x_max, y_max)
 batch = pyglet.graphics.Batch()
@@ -13,6 +13,7 @@ batch = pyglet.graphics.Batch()
 @window.event
 def on_draw():
     global k
+    eps = radius**2
     
     window.clear()
     glPointSize(1)
@@ -31,7 +32,7 @@ def on_draw():
                 next_imag = 2 * z.real*z.imag + c.imag
                 z = complex(next_real, next_imag)
                 modul = z.real**2 + z.imag**2
-                if modul > radius**2:
+                if modul > eps:
                     n = i
                     break
                 
