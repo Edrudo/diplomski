@@ -15,22 +15,6 @@ v_min, v_max = -1.2, 1.2
 window = pyglet.window.Window(x_max, y_max)
 batch = pyglet.graphics.Batch()
 
-def divergence_test(z0:complex, c:complex, limit:int, epsilon_square:int) -> int:
-    z = complex(z0.real, z0.imag)
-    modul2 = z.real**2 + z.imag**2
-    if modul2 > epsilon_square:
-        return 0
-
-    for i in range(limit):
-        next_re = z.real**2 - z.imag**2 + c.real
-        next_im = 2 * z.real*z.imag + c.imag
-        z = complex(next_re, next_im)
-        modul2 = z.real**2 + z.imag**2
-        if modul2 > epsilon_square:
-            return i
-    return -1
-
-
 @window.event
 def on_draw():
     global c, radius, k
