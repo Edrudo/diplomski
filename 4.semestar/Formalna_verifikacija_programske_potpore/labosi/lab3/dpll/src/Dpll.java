@@ -38,7 +38,7 @@ public class Dpll {
     log(0, "Formula CNF: " + formula.toStringCnf());
     final long timeNow = System.currentTimeMillis();
     HashMap<String, Boolean> settings = new HashMap<>();
-    int orderSize = formula.getLiteralsLex().size();
+    int orderSize = formula.getAllLiterals().size();
     DpllResult result = solve(formula, settings, orderSize, 0);
     if(result != null) {
       result.setTimeTaken(System.currentTimeMillis()-timeNow);
@@ -55,7 +55,7 @@ public class Dpll {
    * @return
    */
   private static DpllResult solve(Formula formula, HashMap<String, Boolean> variableSetting, int orderSize, int tabs) {
-    log(tabs,"Solving formula with " + formula.getClauses().size() + " clauses and " + formula.getLiteralsLex().size() + " literals:");
+    log(tabs,"Solving formula with " + formula.getClauses().size() + " clauses and " + formula.getAllLiterals().size() + " literals:");
     log(tabs,"As set of clauses: \t" + formula.toString());
 
     // {}
@@ -69,7 +69,7 @@ public class Dpll {
       return null;
     }
 
-    ArrayList<String> literals = formula.getLiteralsLex();
+    ArrayList<String> literals = formula.getAllLiterals();
 
     // First: Check if OLR is usable
     int rule = 0; // 0 = none, 1 = left/true, 2 = right/false
