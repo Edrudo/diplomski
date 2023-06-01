@@ -14,7 +14,6 @@ def get_z_mirror_matrix() -> np.array:
                     [0,0,0,1]])
     
 def get_transformation_matrix(O, G, UP) -> np.array:
-    eye_coordinates = np.append(O,1)
     t_1 = get_t1_matrix(O)
     z = np.subtract(G,O)
 

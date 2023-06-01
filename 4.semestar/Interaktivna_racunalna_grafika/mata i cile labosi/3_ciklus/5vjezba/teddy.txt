@@ -1,4 +1,2 @@
 O 10 2 5
 G 0 0 0
-#view-up vektor
-UP 1 1 0

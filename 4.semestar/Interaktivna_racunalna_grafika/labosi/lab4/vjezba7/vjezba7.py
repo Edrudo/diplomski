@@ -3,7 +3,7 @@ from pyglet.gl import *
 import numpy as np
 from transformation_and_projection import *
 
-window = pyglet.window.Window(width=1280, height=720, resizable=True, caption="Sjencanje")
+window = pyglet.window.Window(width=1280, height=720, resizable=True)
 window.set_minimum_size(300,200)
 window.projection = pyglet.window.Projection3D()
 pyglet.gl.glClearColor(0.6,0.6,0.5,1)
@@ -14,7 +14,6 @@ transform_matrix = np.array
 with_v_up = False
 center, eye_coordinates, light_source = np.array, np.array, np.array
 O, G, v_up = np.zeros(3), np.zeros(3), np.zeros(3)
-lighting_type = False
 col_min, col_max = 0, 1
 
 class Polygon():
@@ -50,7 +49,9 @@ class Polygon():
 
 @window.event
 def on_draw():
-    compute_lighting()
+    check_visible_polygons()
+    compute_constant_lighting(k_a=1,i_a=10,k_d=0.78125,i_p=256,k_c=0.1,k_s=0.17578125,n=5)
+    
     glClear(GL_COLOR_BUFFER_BIT)
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -90,9 +91,6 @@ def on_key_press(symbol, modifier):
         change_object_coordinates(2,-1)
     if symbol == pyglet.window.key.E:
         change_object_coordinates(2,1)
-    #lighting type change
-    if symbol == pyglet.window.key.SPACE:
-        lighting_type = not lighting_type
     #eye coordinates adjustment
     if symbol == pyglet.window.key.UP:
         change_light_source_coordinate(1,3)
@@ -118,35 +116,6 @@ def check_visible_polygons() -> None:
         if np.degrees(angle) < 90:
             polygon.set_visible(True)
 
-def compute_lighting() -> None:
-    # constants for ambient component
-    # assures that back polygons are not completely black
-    k_a = 1     # 0 <= k_a <= 1
-    i_a = 10    # ambient light intensity
-    
-
-    # constants for diffuse reflection calculation
-    k_d = 0.78125   # difuse reflection coefficient
-    i_p = 256       # light source intensity
-    k_c = 0.1       # constant to assure no division with zero
-
-
-    #constants for specular reflection calculation
-    k_s = 0.17578125   # specular reflection coefficient (0 <= k_s <= 1)
-    #n describes reflective property of the object
-    n = 5      # small n => plastic ..... large n => metal
-    
-    check_visible_polygons()
-    if lighting_type:
-        compute_gouraud_lighting(k_a,i_a,k_d,i_p,k_c,k_s,n)
-    else:
-        compute_constant_lighting(k_a,i_a,k_d,i_p,k_c,k_s,n)    
-
-def compute_gouraud_lighting(k_a,i_a,k_d,i_p,k_c,k_s,n) -> None:
-    for polygon in polygons:
-        if polygon.is_visible():
-            pass
-
 def compute_constant_lighting(k_a,i_a,k_d,i_p,k_c,k_s,n) -> None:
     global light_source, eye_coordinates, col_min, col_max
     for polygon in polygons:
@@ -158,10 +127,8 @@ def compute_constant_lighting(k_a,i_a,k_d,i_p,k_c,k_s,n) -> None:
             y_c = ( v_1[1]+v_2[1]+v_3[1] ) / 3
             z_c = ( v_1[2]+v_2[2]+v_3[2] ) / 3
             p_center = np.array([x_c, y_c, z_c, 1])
-            # vector spanning from the center of polygon to the light source
             L = np.subtract(light_source,p_center)
             L_hat = L / np.linalg.norm(L)
-            #vector spanning from the center of polygon to the eye
             V = np.subtract(eye_coordinates,p_center)
             V_hat = V / np.linalg.norm(V)
             
@@ -172,14 +139,17 @@ def compute_constant_lighting(k_a,i_a,k_d,i_p,k_c,k_s,n) -> None:
             dot_product = np.dot(polygon.n_hat, np.array([L_hat[0], L_hat[1], L_hat[2]]))
             diffuse_total = k_d*i_p*max(0,dot_product)
             
-            #mirror component
+            """ #mirror component
             initial_ray = np.subtract(center, light_source)
             initial_ray_hat = initial_ray / np.linalg.norm(initial_ray)
             initial_ray_hat = np.array([initial_ray_hat[0], initial_ray_hat[1], initial_ray_hat[2]])
             reflected_ray =  initial_ray_hat - (2 * np.dot(np.dot(initial_ray_hat, polygon.n_hat), polygon.n_hat))
             mirror_total = i_p * k_s * np.dot(reflected_ray, np.array([L_hat[0], L_hat[1], L_hat[2]])) * np.dot(reflected_ray, np.array([L_hat[0], L_hat[1], L_hat[2]]))
-
-            total = ambient_total + diffuse_total + mirror_total
+ """
+            total = ambient_total + diffuse_total
+            if total > 255:
+                total = 255
+                
             if total < col_min:
                 col_min = total
             elif total > col_max:
@@ -192,9 +162,6 @@ def compute_constant_lighting(k_a,i_a,k_d,i_p,k_c,k_s,n) -> None:
         polygon.set_intensity(scaled_intensity)
 
 
-
-#============================================
-#coordinate adjustment via keyboard
 def change_light_source_coordinate(pos, dt):
     global light_source
     light_source[pos] += dt
@@ -207,7 +174,6 @@ def change_object_coordinates(pos, dt):
     global vertices
     for i in range(len(vertices)):
         vertices[i][pos] += dt
-
 
 
 def load_data(filename):
@@ -231,13 +197,6 @@ def load_data(filename):
                 G = coords
             elif line.upper().startswith('UP'):
                 v_up = coords
-
-
-def rotate(dt):
-    glRotatef(0.5, dt, dt, dt)
-
-def draw_vertex(coordinates):
-    pyglet.graphics.draw(1, pyglet.gl.GL_POINTS, ('v3f', (coordinates[0],coordinates[1], coordinates[2] ) ), ('c3B', (1,1,0)) )
 
 
 def transformation() -> None:

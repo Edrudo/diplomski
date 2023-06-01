@@ -14,18 +14,10 @@ public class DpllResult {
     this.timeTaken = time;
   }
 
-  /**
-   * Returns how many milliseconds the algorithm has taken
-   * @return
-   */
   public long getTimeTaken() {
     return timeTaken;
   }
 
-  /**
-   * Returns the DPLL result as a String
-   * @return
-   */
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

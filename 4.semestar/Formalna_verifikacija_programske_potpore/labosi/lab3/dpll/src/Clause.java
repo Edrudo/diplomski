@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Clause {
-  private final ArrayList<String> literals;
+  private ArrayList<String> literals;
   public Clause(ArrayList<String> literals) {
     this.literals = literals;
   }
