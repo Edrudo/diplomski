@@ -19,13 +19,12 @@ public class Dpll {
     }
 
     if(formula.isOnlyEmptyClauses()) {
-      // log(depth,"Only empty clauses! Going up");
+      log(depth,"Only empty clauses! Going up");
       return null;
     }
 
     ArrayList<String> literals = formula.getAllLiterals();
 
-    // First: Check if UCP is usable
     String lit = null;
     boolean litValue = false;
     boolean ucpFound = false;
@@ -45,8 +44,6 @@ public class Dpll {
 
     boolean pleFound = false;
     if(!ucpFound) {
-      // Only look for PLE if UCP is not usable
-      // since UCP has a higher priority than UCP
       for(Clause c : formula.getClauses()) {
         for(String literal : c.getLiterals()) {
           String oppositeLiteral = literal.startsWith("-") ? literal.replaceFirst("-","") : "-" + literal;
@@ -69,10 +66,7 @@ public class Dpll {
       lit = literals.get(0);
     }
 
-    // Don't do this if UCP result was 2
-    // since that would mean we skip the true case and set x := false
     if((!ucpFound && !pleFound) || litValue) {
-      // Left part ( x:= true)
       Formula newFormulaLeft = Formula.copy(formula);
       HashMap<String, Boolean> newSettingsLeft = new HashMap<>(variableSetting);
 
@@ -93,10 +87,7 @@ public class Dpll {
       }
     }
 
-    // Don't do this if UCP result was 1
-    // since that would mean we skip the false case and set x := true
     if((!ucpFound && !pleFound) || !litValue) {
-      // Right part ( x:= false )
       Formula newFormulaRight = Formula.copy(formula);
       HashMap<String, Boolean> newSettingsR = new HashMap<>(variableSetting);
 
