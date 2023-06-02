@@ -3,7 +3,6 @@ import java.util.HashMap;
 
 public class Dpll {
   public static DpllResult solve(Formula formula) {
-    System.out.println("CNF formula: " + formula.toStringCnf());
     final long timeStart = System.currentTimeMillis();
     HashMap<String, Boolean> settings = new HashMap<>();
     DpllResult result = solve(formula, settings, 0);
@@ -19,7 +18,7 @@ public class Dpll {
     }
 
     if(formula.isOnlyEmptyClauses()) {
-      log(depth,"Only empty clauses! Going up");
+      //log(depth,"Only empty clauses! Going up");
       return null;
     }
 
@@ -70,13 +69,6 @@ public class Dpll {
       Formula newFormulaLeft = Formula.copy(formula);
       HashMap<String, Boolean> newSettingsLeft = new HashMap<>(variableSetting);
 
-      StringBuilder sb = new StringBuilder();
-      sb.append("[L] ").append(lit).append(":= true (");
-      for (String key : newSettingsLeft.keySet()) {
-        sb.append(" ").append(key).append("=").append(newSettingsLeft.get(key));
-      }
-      sb.append(" )");
-      log(depth, sb.toString());
       newSettingsLeft.put(lit, true);
       newFormulaLeft.set(lit, true);
 
@@ -91,13 +83,6 @@ public class Dpll {
       Formula newFormulaRight = Formula.copy(formula);
       HashMap<String, Boolean> newSettingsR = new HashMap<>(variableSetting);
 
-      StringBuilder sb = new StringBuilder();
-      sb.append("[R] ").append(lit).append(":= false (");
-      for (String key : newSettingsR.keySet()) {
-        sb.append(" ").append(key).append("=").append(newSettingsR.get(key));
-      }
-      sb.append(" )");
-      log(depth, sb.toString());
       newSettingsR.put(lit, false);
       newFormulaRight.set(lit, false);
 
@@ -113,5 +98,4 @@ public class Dpll {
     }
     System.out.println(msg.replaceAll("-", "¬"));
   }
-
 }

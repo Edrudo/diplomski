@@ -1,79 +1,76 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+
 public class Main {
 
     public static void main(String[] args) {
-        Formula f = new Formula(getTestFormula2());
+        String filePath = args[0];
+        int variableNum;
+        int clausesNum = 0;
+        List<String> literals = new ArrayList<>();
+
+        try {
+
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            String line;
+            do {
+                line = reader.readLine();
+                if(line == null){
+                    break;
+                }
+                if(line.startsWith("p")){
+                   String[] lineBreaked = line.split(" ");
+                   variableNum = Integer.parseInt(lineBreaked[2]);
+                   clausesNum = Integer.parseInt(lineBreaked[3]);
+                   System.out.printf("Variables: %s, clauses: %s\n", variableNum, clausesNum);
+               }else if(!line.startsWith("c")){
+                   literals.addAll(Arrays.asList(line.split(" ")));
+               }
+            }while(true);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<List<String>> clauses = new LinkedList<>();
+        clauses.add(new ArrayList<>());
+        int clauseIndex = 0;
+        for (String literal : literals) {
+            if (Objects.equals(literal, "0")) {
+                clauses.add(new ArrayList<>());
+                clauseIndex += 1;
+            } else {
+                clauses.get(clauseIndex).add(literal);
+            }
+        }
+
+        clauses.remove(clauses.size() - 1);
+
+
+        String[][] clausesArray = new String[clausesNum][];
+        for (int i = 0; i < clauses.size(); i++){
+            String[] literalArray = new String[clauses.get(i).size()];
+            for (int j = 0; j < clauses.get(i).size(); j++){
+                literalArray[j] = clauses.get(i).get(j);
+            }
+
+            clausesArray[i] = literalArray;
+        }
+
+        Formula f = new Formula(clausesArray);
+
+        final long timeStart = System.currentTimeMillis();
         DpllResult result = Dpll.solve(f);
-        if(result != null) {
-            System.out.println("Satisfiable! Took " + result.getTimeTaken() + "ms.");
+        final long timeEnd = System.currentTimeMillis();
+        final long timeTaken = timeEnd - timeStart;
+
+        if (result != null) {
+            System.out.println("Satisfiable! Took " + timeTaken + "ms.");
             System.out.println(result);
         } else {
-            System.out.println("Not satisfiable!");
+            System.out.println("Not satisfiable! Took " + timeTaken  + "ms.");
         }
     }
-
-    /*
-       (b ∨ ¬d) ∧ (d ∨ ¬c) ∧ (f ∨ ¬d) ∧ (f ∨ a ∨ c ∨ ¬b) ∧
-       (¬f ∨ ¬a ∨ ¬b ∨ ¬d) ∧ (f ∨ c ∨ ¬a ∨ ¬b ∨ ¬d) ∧ (a ∨ c ∨ d ∨ ¬f) ∧
-       (f ∨ b ∨ ¬a ∨ ¬d) ∧ (f ∨ ¬a ∨ ¬b ∨ ¬c ∨ ¬d)
-        Satisfiable with a -> 1, b -> 1, c -> 0, d -> 0
-     */
-    public static String[][] getTestFormula1() {
-        return new String[][] {{"b","-d"}, {"d","-c"},{"f","-d"},{"f","a","c","-b"},
-            {"-f","-a","-b","-d"},{"f","c","-a","-b","-d"},
-            {"a","c","d","-f"},{"f","b","-a","-d"},{"f","-a","-b","-c","-d"}};
-    }
-
-    /*
-        (¬p ∨ q ∨ ¬r ∨ s) ∧ (¬q ∨ ¬r ∨ s) ∧ (r) ∧ (¬p ∨ ¬s) ∧ (¬p ∨ r)
-        Satisfiable with p -> 0, q -> 0, r -> 1
-     */
-    public static String[][] getTestFormula2() {
-        return new String[][] {{"-p", "q", "-r", "s"}, {"-q", "-r", "s"}, {"r"}, {"-p", "-s"}, {"-p", "r"}};
-    }
-
-    /*
-        (¬q ∨ s) ∧ (¬p ∨ q ∨ s) ∧ (p) ∧ (r ∨ ¬s) ∧ (¬p ∨ ¬r ∨ ¬s)
-        Not satisfiable
-     */
-    public static String[][] getTestFormula3() {
-        return new String[][] {{"-q", "s"},{"-p", "q", "s"},{"p"},{"r", "-s"},{"-p", "-r", "-s"}};
-    }
-
-    /*
-        Sample Output:
-
-
-Formula CNF: (b ∨ ¬d) ∧ (d ∨ ¬c) ∧ (f ∨ ¬d) ∧ (f ∨ a ∨ c ∨ ¬b) ∧ (¬f ∨ ¬a ∨ ¬b ∨ ¬d) ∧ (f ∨ c ∨ ¬a ∨ ¬b ∨ ¬d) ∧ (a ∨ c ∨ d ∨ ¬f) ∧ (f ∨ b ∨ ¬a ∨ ¬d) ∧ (f ∨ ¬a ∨ ¬b ∨ ¬c ∨ ¬d)
-Solving formula with 9 clauses and 5 literals:
-As set of clauses: 	{ {b, ¬d}, {d, ¬c}, {f, ¬d}, {f, a, c, ¬b}, {¬f, ¬a, ¬b, ¬d}, {f, c, ¬a, ¬b, ¬d}, {a, c, d, ¬f}, {f, b, ¬a, ¬d}, {f, ¬a, ¬b, ¬c, ¬d} }
-[L] a:= true ( )
-	Solving formula with 7 clauses and 4 literals:
-	As set of clauses: 	{ {b, ¬d}, {d, ¬c}, {f, ¬d}, {¬f, ¬b, ¬d}, {f, c, ¬b, ¬d}, {f, b, ¬d}, {f, ¬b, ¬c, ¬d} }
-	[L] b:= true ( a=true )
-		Solving formula with 5 clauses and 3 literals:
-		As set of clauses: 	{ {d, ¬c}, {f, ¬d}, {¬f, ¬d}, {f, c, ¬d}, {f, ¬c, ¬d} }
-		[L] c:= true ( a=true b=true )
-			Solving formula with 3 clauses and 2 literals:
-			As set of clauses: 	{ {d}, {f, ¬d}, {¬f, ¬d} }
-			OLL: d => true
-			[L] d:= true ( a=true b=true c=true )
-				Solving formula with 2 clauses and 1 literals:
-				As set of clauses: 	{ {f}, {¬f} }
-				OLL: f => true
-				[L] f:= true ( a=true b=true c=true d=true )
-					Solving formula with 1 clauses and 0 literals:
-					As set of clauses: 	{ {} }
-					Only empty clauses! Going up
-		[R] c:= false ( a=true b=true )
-			Solving formula with 2 clauses and 2 literals:
-			As set of clauses: 	{ {f, ¬d}, {¬f, ¬d} }
-			PLL: ¬d => false
-			[R] d:= false ( a=true b=true c=false )
-				Solving formula with 0 clauses and 0 literals:
-				As set of clauses: 	{  }
-Satisfiable! Took 12ms.
-a -> 1, b -> 1, c -> 0, d -> 0
-
-     */
-
 }
