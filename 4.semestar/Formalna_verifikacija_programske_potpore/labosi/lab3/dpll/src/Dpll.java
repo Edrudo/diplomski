@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
 
 public class Dpll {
   public static DpllResult solve(Formula formula) {
@@ -12,13 +14,12 @@ public class Dpll {
     return result;
   }
 
-  private static DpllResult solve(Formula formula, HashMap<String, Boolean> variableSetting, int depth) {
+  private static DpllResult solve(Formula formula, HashMap<String, Boolean> literalSettings, int depth) {
     if(formula.getClauses().size() == 0) {
-      return new DpllResult(variableSetting);
+      return new DpllResult(literalSettings);
     }
 
     if(formula.isOnlyEmptyClauses()) {
-      //log(depth,"Only empty clauses! Going up");
       return null;
     }
 
@@ -36,7 +37,6 @@ public class Dpll {
         } else {
           litValue = true;
         }
-        // log(depth, "UCP: " + lit + " => " + (rule == 1 ? "true" : "false"));
         break;
       }
     }
@@ -54,20 +54,15 @@ public class Dpll {
               litValue = true;
               lit = literal;
             }
-            // log(depth, "PLE: " + lit + " => " + litValue);
             break;
           }
         }
       }
     }
 
-    if(lit == null) {
-      lit = literals.get(0);
-    }
-
-    if((!ucpFound && !pleFound) || litValue) {
+    if((ucpFound || pleFound) && litValue) {
       Formula newFormulaLeft = Formula.copy(formula);
-      HashMap<String, Boolean> newSettingsLeft = new HashMap<>(variableSetting);
+      HashMap<String, Boolean> newSettingsLeft = new HashMap<>(literalSettings);
 
       newSettingsLeft.put(lit, true);
       newFormulaLeft.set(lit, true);
@@ -79,12 +74,46 @@ public class Dpll {
       }
     }
 
-    if((!ucpFound && !pleFound) || !litValue) {
+    if((ucpFound || pleFound) && !litValue) {
       Formula newFormulaRight = Formula.copy(formula);
-      HashMap<String, Boolean> newSettingsR = new HashMap<>(variableSetting);
+      HashMap<String, Boolean> newSettingsR = new HashMap<>(literalSettings);
 
       newSettingsR.put(lit, false);
       newFormulaRight.set(lit, false);
+
+      return solve(newFormulaRight, newSettingsR, depth + 1);
+    }
+
+    // VSIDS
+    if(!ucpFound && !pleFound) {
+      VSIDS topElement  = formula.getLiteralStatistic().poll();
+      lit = topElement.literal;
+      if(topElement.nonNegativeNum > topElement.negativeNum){
+        litValue = true;
+      }else{
+        litValue = false;
+      }
+
+      // first direction
+      Formula newFormulaLeft = Formula.copy(formula);
+      HashMap<String, Boolean> newSettingsLeft = new HashMap<>(literalSettings);
+
+      newSettingsLeft.put(lit, litValue);
+      newFormulaLeft.set(lit, litValue);
+
+      DpllResult resultL = solve(newFormulaLeft, newSettingsLeft, depth + 1);
+
+      if (resultL != null) {
+        return resultL;
+      }
+
+      // second direction
+      litValue = !litValue;
+      Formula newFormulaRight = Formula.copy(formula);
+      HashMap<String, Boolean> newSettingsR = new HashMap<>(literalSettings);
+
+      newSettingsR.put(lit, litValue);
+      newFormulaRight.set(lit, litValue);
 
       return solve(newFormulaRight, newSettingsR, depth + 1);
     }

@@ -1,11 +1,11 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 public class Formula {
 
   private ArrayList<Clause> clauses;
+  private PriorityQueue<VSIDS> literalStatistic;
+  private HashMap<String, Integer> nonnegativeLiteralsNum;
+  private HashMap<String, Integer> negativeLiteralsNum;
 
   public Formula(String[][] formula) {
     ArrayList<Clause> clauses = new ArrayList<>();
@@ -13,8 +13,8 @@ public class Formula {
       clauses.add(new Clause(new ArrayList<>(Arrays.asList(strings))));
     }
     this.clauses = clauses;
+    calculateLiteralStatistic();
   }
-
   public Formula(Formula other) {
     this.clauses = new ArrayList<>();
     this.clauses.addAll(other.getClauses());
@@ -50,15 +50,14 @@ public class Formula {
 
   public void set(String literal, boolean value) {
     if(value) {
-      // x := true
       removeClausesContainingLiteral(literal);
       removeLiteralFromClauses("-" + literal);
     } else {
-      // x := false
       removeClausesContainingLiteral("-" + literal);
       removeLiteralFromClauses(literal);
     }
     removeDuplicateClauses();
+    calculateLiteralStatistic();
   }
 
   private void removeDuplicateClauses() {
@@ -109,11 +108,6 @@ public class Formula {
     this.clauses = clauses;
   }
 
-  /**
-   * Returns the formula represented by a set of clauses
-   * @return
-   */
-  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("{ ");
@@ -148,4 +142,46 @@ public class Formula {
     return this.clauses;
   }
 
+  public PriorityQueue<VSIDS> getLiteralStatistic() {
+    return this.literalStatistic;
+  }
+
+  private void calculateLiteralStatistic(){
+    nonnegativeLiteralsNum = new HashMap<>();
+    negativeLiteralsNum = new HashMap<>();
+
+    for(Clause c: this.clauses){
+      for(String literal: c.getLiterals()){
+        if(literal.startsWith("-")){
+          String lit = literal.replaceFirst("-", "");
+          if(this.negativeLiteralsNum.containsKey(lit)){
+            this.negativeLiteralsNum.put(lit, this.negativeLiteralsNum.get(lit) + 1);
+          }else{
+            this.negativeLiteralsNum.put(lit, 1);
+          }
+        }else{
+          if(this.nonnegativeLiteralsNum.containsKey(literal)){
+            this.nonnegativeLiteralsNum.put(literal, this.nonnegativeLiteralsNum.get(literal) + 1);
+          }else{
+            this.nonnegativeLiteralsNum.put(literal, 1);
+          }
+        }
+      }
+    }
+
+
+    this.literalStatistic = new PriorityQueue<>();
+    for(String literal: nonnegativeLiteralsNum.keySet()){
+      if(this.negativeLiteralsNum.containsKey(literal)) {
+        this.literalStatistic.add(new VSIDS(literal, nonnegativeLiteralsNum.get(literal), nonnegativeLiteralsNum.get(literal)));
+      }else{
+        this.literalStatistic.add(new VSIDS(literal, nonnegativeLiteralsNum.get(literal), 0));
+      }
+    }
+    for(String literal: negativeLiteralsNum.keySet()){
+      if(!this.nonnegativeLiteralsNum.containsKey(literal)){
+        this.literalStatistic.add(new VSIDS(literal, 0, negativeLiteralsNum.get(literal)));
+      }
+    }
+  }
 }

@@ -16,28 +16,23 @@ public class Clause {
   @Override
   public boolean equals(Object obj) {
     if(!(obj instanceof Clause)){
-      //System.out.println(toString() + " cmp " + obj + "-> false");
       return false;
     }
 
     Clause other = (Clause) obj;
     if(other.literals.size() != literals.size()) {
-      //System.out.println(toString() + " cmp " + obj + "-> false");
       return false;
     }
 
     if(literals.size() == 0) {
-      //System.out.println(toString() + " cmp " + other + "-> true");
       return true;
     }
 
     for(String lit : literals) {
       if(!other.containsLiteral(lit)) {
-        //System.out.println(toString() + " cmp " + other + "-> false");
         return false;
       }
     }
-    //System.out.println(toString() + " cmp " + other + "-> true");
     return true;
 }
 
