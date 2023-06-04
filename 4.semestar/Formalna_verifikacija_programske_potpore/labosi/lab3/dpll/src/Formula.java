@@ -7,13 +7,19 @@ public class Formula {
   private HashMap<String, Integer> nonnegativeLiteralsNum;
   private HashMap<String, Integer> negativeLiteralsNum;
 
+  private int subsumedClauses = 0;
+
   public Formula(String[][] formula) {
-    ArrayList<Clause> clauses = new ArrayList<>();
-    for (String[] strings : formula) {
-      clauses.add(new Clause(new ArrayList<>(Arrays.asList(strings))));
+    this.clauses = new ArrayList<>();
+    for (String[] c : formula) {
+      if(checkSubsumtion(c)){
+        this.clauses.add(new Clause(new ArrayList<>(Arrays.asList(c))));
+      }else{
+        this.subsumedClauses += 1;
+      }
     }
-    this.clauses = clauses;
     calculateLiteralStatistic();
+    System.out.printf("Subsumed clauses: %d\n", this.subsumedClauses);
   }
   public Formula(Formula other) {
     this.clauses = new ArrayList<>();
@@ -191,5 +197,38 @@ public class Formula {
         this.literalStatistic.add(new VSIDS(literal, 0, negativeLiteralsNum.get(literal)));
       }
     }
+  }
+
+  private boolean checkSubsumtion(String[] newClause){
+    ArrayList<Clause> subsumedClauses = new ArrayList<>();
+    for(Clause c: this.clauses) {
+      if(c.getLiterals().size() > newClause.length){
+        if(checkSubset(new ArrayList<>(Arrays.asList(newClause)), c.getLiterals())){
+          subsumedClauses.add(c);
+        }
+      }else{
+        if(checkSubset(c.getLiterals(), new ArrayList<>(Arrays.asList(newClause)))){
+          return false;
+        }
+      }
+    }
+
+    this.subsumedClauses += subsumedClauses.size();
+
+    for(Clause c: subsumedClauses){
+      this.clauses.remove(c);
+    }
+    return true;
+  }
+
+  // checkSubset1 checks id c1 is a subset of c2
+  private boolean checkSubset(ArrayList<String> subset, ArrayList<String> set){
+    for(String c : subset){
+      if(!set.contains(c)){
+        return false;
+      }
+    }
+
+    return true;
   }
 }
