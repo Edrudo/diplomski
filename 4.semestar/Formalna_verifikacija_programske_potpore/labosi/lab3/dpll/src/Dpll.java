@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Dpll {
   public static DpllResult solve(Formula formula) {
@@ -23,7 +20,49 @@ public class Dpll {
       return null;
     }
 
-    ArrayList<String> literals = formula.getAllLiterals();
+    // most common literal
+    if(depth == 0){
+      String lit = null;
+      int litNum = 0;
+      boolean litValue;
+      for(Map.Entry<String, Integer> entry : formula.getNonNegativeLiteralsNum().entrySet()) {
+        if(entry.getValue() > litNum){
+          lit = entry.getKey();
+          litNum = entry.getValue();
+        }
+      }
+
+      for(Map.Entry<String, Integer> entry : formula.getNonNegativeLiteralsNum().entrySet()) {
+        if(entry.getValue() > litNum){
+          lit = entry.getKey();
+          litNum = entry.getValue();
+        }
+      }
+
+      // first direction
+      litValue = !lit.startsWith("-");
+      Formula newFormulaLeft = Formula.copy(formula);
+      HashMap<String, Boolean> newSettingsLeft = new HashMap<>(literalSettings);
+
+      newSettingsLeft.put(lit, litValue);
+      newFormulaLeft.set(lit, litValue);
+
+      DpllResult resultL = solve(newFormulaLeft, newSettingsLeft, depth + 1);
+
+      if (resultL != null) {
+        return resultL;
+      }
+
+      // second direction
+      litValue = !litValue;
+      Formula newFormulaRight = Formula.copy(formula);
+      HashMap<String, Boolean> newSettingsR = new HashMap<>(literalSettings);
+
+      newSettingsR.put(lit, litValue);
+      newFormulaRight.set(lit, litValue);
+
+      return solve(newFormulaRight, newSettingsR, depth + 1);
+    }
 
     String lit = null;
     boolean litValue = false;

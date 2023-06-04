@@ -146,6 +146,14 @@ public class Formula {
     return this.literalStatistic;
   }
 
+  public HashMap<String, Integer> getNonNegativeLiteralsNum(){
+    return this.nonnegativeLiteralsNum;
+  }
+
+  public HashMap<String, Integer> getNegativeLiteralsNum(){
+    return this.negativeLiteralsNum;
+  }
+
   private void calculateLiteralStatistic(){
     nonnegativeLiteralsNum = new HashMap<>();
     negativeLiteralsNum = new HashMap<>();
