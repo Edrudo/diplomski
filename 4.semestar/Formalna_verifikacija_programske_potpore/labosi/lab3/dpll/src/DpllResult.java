@@ -26,7 +26,7 @@ public class DpllResult {
       String literal = (String) iterator.next();
       boolean value = map.get(literal);
       sb.append(literal + " -> ");
-      sb.append(value ? "1" : "0");
+      sb.append(value);
       if(iterator.hasNext()) {
         sb.append(", ");
       }

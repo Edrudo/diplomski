@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -67,12 +65,29 @@ public class Main {
             final long timeEnd = System.currentTimeMillis();
             final long timeTaken = timeEnd - timeStart;
 
-            if (result != null) {
-                System.out.println("Satisfiable! Took " + timeTaken + "ms.");
-                System.out.println(result);
-            } else {
-                System.out.println("Not satisfiable! Took " + timeTaken  + "ms.");
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("Satisfiable: ").append(result != null).append(", took ").append(timeTaken).append(" ms.\n");
+            if(result != null){
+                sb.append(result);
             }
+
+            try {
+                String problemName = filePath.replace(".cnf", "").replace("./benchmarks/", "");
+                File file = new File("./results/" + problemName);
+
+                file.createNewFile();
+
+                PrintWriter writer = new PrintWriter("./results/" + problemName);
+                writer.print(sb);
+                writer.close();
+            }
+            catch(IOException e) {
+                System.out.println("Exception Occurred:");
+                e.printStackTrace();
+            }
+
+            System.out.println(sb);
         }
     }
 }
