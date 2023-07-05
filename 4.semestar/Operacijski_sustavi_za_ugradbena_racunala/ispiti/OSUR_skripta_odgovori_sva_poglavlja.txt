@@ -1,0 +1,1130 @@
+         OSUR: Odgovori na pitanja iz skripte
+                                             by ____
+
+Pitanja za vježbu 1 – Uvod
+
+1. Navesti slojeve raˇcunalnog sustava.
+
+Slojevi su redom sklopovlje, operacijski sustav, programi te korisnik
+
+2. Što je to operacijski sustav? Koja je njegova uloga u raˇcunalnom sustavu?
+
+Operacijski sustav je skup osnovnih programa koji se nalaze između korisnika računala, tj.
+primjenskih programa i sklopovlja. Njegova zadaća je da korisniku (primjenskim programima)
+pruži prikladnu okolinu za učinkovito korištenje računalnog sklopovlja.
+
+3. Navesti svojstva ugradbenih raˇcunalnih sustava. Usporediti ih s osobnim raˇcunalima.
+
+Ugradbeni računalni sustavi moraju bit štedljivi (često napajani baterijama), traže dugotrajan
+rad(moraju bit stabilni, pouzdani, trebaju imati ugrađen postupak oporavka od pogreške), mogu
+upravljati kritičnim procesima (RT systems – zahtjeva se pouzdanost i vremenska određenost),
+izgrađeni za specifičnu zadaću odnosno prema njenim zahtjevima, često malih dimenzija i niske
+cijene zbog konkurentnosti
+
+Za razliku od osobnih računala koja su osmišljena za obavljanje mnoštva različitih poslova te stoga
+nemaju specifične mehanizme koji su potrebni za upotrebu u ugrađenim sustavima, dimenzijom i
+cijenom često bitno odudaraju od zahtjeva ugradbenih sustava te najvažnije nemaju mehanizme
+vremenske određenosti u programskoj okolini i sklopovlju.
+
+4. Što su to upravljaˇcki programi u kontekstu ugradbenih sustava koji imaju operacijski
+sustav i u kontekstu onih koji nemaju? (N)
+
+U kontekstu ugradbenih sustva koji imaju operacijski sustav:
+Dio koda koji sadrži određene funkcijonalnosti operacijskog sustava i ostvaren je izvan jezgre u
+korisničkom načinu rada.
+
+
+U kontekstu ugradbenih sustava koji nemaju operacijski sustav:
+Upravljački program je jedna beskonačna petlja u kojoj se na osnovu ulaza ili varijabli stanja
+sustava poduzimaju određene akcije.
+
+
+5. Usporedite neprekidivu višezada´cnost i višezada´cnost u pogledu jednostavnosti ostvare-
+nja te u pogledu mogu´cnosti koje nude.
+
+Neprekidiva višezadaćnost je jednostavnija za izvedbu od višezadaćnosti jer osim vanjskog prekida,
+dretvu koja se trenutno izvodi ne može prekinuti niti jedna druga dretva već ona pri završetku posla
+izravno zove raspoređivač pa mehanizmi sinkronizacije nisu potrebni. Kod višezadaćnosti postoje
+prijoriteti dretvi te kada postoje uvjeti za izvođenje dretve višeg prijoriteta od trenutne aktivne, ona
+se prekida te prijoritetnija postaje aktivna.
+
+Višezadaćnost je s obzirom na izvedbu mnogo većih mogućnosti, ali i složenosti.
+6. Što je to logiˇcka ispravnost, a što vremenska ispravnost?
+
+Logička ispravnost odnosi se na ispravnost vrijednosti koje program generira, dok vremenska
+ispravnost je zahtjev da program mora svoje rezultate i akcije generirati u definiranim trenutcima.
+
+7. Što su to sustavi za rad u stvarnom vremenu?
+
+Sustavi za rad u stvarnom vremenu su sustavi koji postavljaju stroga vremenska ograničenja u radu
+računalnih sustava koji se u njima koriste.
+
+8. Navesti svojstvene trenutke u životnom ciklusu zadatka.
+
+Trenutak dolaska – td
+Trenutak mogućeg početka -tmp
+Trenutak početka – tp
+Trenutak završetka – tz
+Trajanje obrade – C
+Krajnji trenutak završetka - tkz
+Period ponavljanja – T
+Pitanja za vježbu 3 – Razvojna okolina
+
+1. Navesti slojeve sustava Benu.
+
+Sloj arhitekture (arch), sloj jezgre (kernel), sloj sustavskih funkcija (api), sloj aplikacija tj. programa
+(programs).
+
+(Operacije koje su nezavisne i koje se koriste u više slojeva odvojene su u jednu biblioteku(lib))
+
+2. Navesti potrebne alate za izgradnju programske komponente. Koji se programi (alati)
+koriste pri izgradnji i pokretanju sustava nastalih na osnovu Benua?
+
+Alati koji su korišteni za izradu sustava:
+gcc – prevoditelj(engl. Compiler) iz paketa GCC (GNU Compiler Collection)
+ld – povezivač (engl. linker), GNU linker iz paketa GNU Binutils
+GNU Make – alat za pokretanje prevođenja izvornih kodova i izgradnju sustava
+QEMU – virtualizacijski alat za pokretanje izgrađenog sustava
+
+Razvojno okruženje pokretano je iz Linuxa(Ubuntu) u virtualnom okruženju korištenjem VMware
+Player programa. Okruženje za pisanje i mijenjanje izvornih kodova (Gedit, Atom, VSCode ...)
+
+3. Navesti prednosti i nedostatke korištenja virtualizacijskih alata za pokretanje:           (N)
+a) razvojnog raˇcunala
+b) izgra¯denog sustava (na osnovi inkremenata iz sustava Benu).
+
+Nez
+Pitanja za vježbu 4 – Postupak izgradnje sustava
+
+1. Kako se pokre´ce operacijski sustav? Koja je zada´ca BIOS-a?
+
+Pokretanje se najčešće obavlja u 2 koraka. U prvom se koraku pod upravljanjem BIOS-a prvo
+učitava te potom pokreće program (engl. boot loader) koji će tada učitati osnovne dijelove jezgre s
+nekog medija u glavni spremnik. Nakon učitavanja kontrola se predaje jezgri, koja potom dovršava
+učitavanje, provjerava dostupnost sklopovlja i slično te konačno postavlja sustav u operativno
+stanje.
+
+BIOS su programi spremljeni u trajnom spreminku(ROM) koji pri uključivanju računala najprije
+preuzimaju kontrolu. Njihova zadaća je dvojaka – prvo ispituju ispravnost komponenti
+sustava(spremnik, tvrdi disk, tipkovnica..), a potom omogućuju pokretanje operacijskog sustava
+nudeći operacije dohvata s raznih medija.
+
+2. Koje poslove obavlja gcc, a koje ld pri izgradnji slike sustava (.elf datoteke)?
+
+Program gcc služi za prevođenje izvornih datoteka, a ld služi za povezivanje objektnih datoteka u
+sliku sustava (.elf datoteku).
+
+3. Što je potrebno napraviti u dijelu programa koji preuzima upravljanje sustavom?
+
+Po preuzimanju kontrole nad sustavom najprije je potrebno inicijalizirati kazaljku stoga (registar
+esp) te postaviti odgovarajuće zastavice u registar stanja procesora.
+
+4. Kako se iz asemblera pozivaju funkcije ostvarene u C-u? Što sve treba prethodno na-
+praviti? Mogu li se iz C-a pozivati funkcije ostvarene u asembleru? Kako to napraviti?
+
+Iz asemblera funkcije ostvarene u C-u se pozivaju pomoću call ime_funkcije, gdje je funkcija
+prethodno navedena sa .extern ime_funkcije. Oznakom .extern se navode globalne varijable koje su
+izvorno definirane u drugim datotekama, a koriste se u ovoj.
+
+Iz C-a se također mogu pozivati funkcije ostvarene u asembleru tako da uz ime labele imaju
+naredbu .global koja ih čini vidljivim i izvan te datoteke.
+Pitanja za vježbu 5 – Postupak izgradnje sustava
+
+1. Zašto se ˇcesto koristi naˇcelo podijeli i vladaj?
+
+Načelo podijeli i vladaj omogućuje pojednostavljenje složenih sustava.
+
+2. Navesti podsustave operacijskog sustava.
+
+Najčešče korišteni podsustavi su: upravljanje spremnikom, upravljanje ulazno-izlaznim napravama,
+upravljanje dretvama I procesima, datotečni podsustav i mrežni podsustav.
+
+3. Navesti slojeve u kojima se operacijski sustav izgra¯duje.
+
+Sloj arhitekture – apstrahira sklopovlje
+Sloj jezgre – najosnovnije operacije
+Sloj sustavskih funkcija – složenije operacije potrebne višoj razini, a koje se ostvaruju korištenjem
+jezgre
+Programi – korisne operacije za korisnika
+
+4. Slojevita izgradnja operacijskih sustava (slojevi arch/kernel/api/programs) ima svoje
+prednosti i nedostatke. Navedite neke prednosti i nedostatke. (N)
+
+Prednosti:
+Pojednostavnjuje konceptualno izradu operacijskog sustava jer omogućuje izradu sloj po sloj, nudi
+određenu modularnost primjerice za neki drugi hardver dovoljno je izmjeniti arch sloj.
+
+Nedostatci:
+Dodavanje nekih novih funkcija može zahtjevati promjene u svim slojevima što povečava količinu
+posla.
+
+5. Opisati sadržaj datoteke s uputama za povezivaˇca.
+
+Datoteka s uputama za povezivača sastoji se od uputa kako složiti izlaznu datoteku. Glavni dio
+datoteke su definicije izlaznih odjeljaka tj. Koji se odjeljci kojih ulaznih datoteka slažu u koje
+odjeljke izlazne datoteke. Svaki odjeljak izlazne datoteke definira što ide u njega, ali i gdje treba
+učitati taj odjeljak pri pokretanju te za koju adresu se odjeljak priprema u RAMu.
+
+6. Koji se odjeljci stvaraju pri prevo¯denju C datoteke? Koji dijelovi datoteke idu u koje
+odjeljke?
+
+Uglavnom prevoditelji koriste ove nazive odjeljaka:
+
+.text za instrukcije
+.rodata za konstante
+.data za globalne varijable (sa zadanom početnom vrijednošću)
+.bss za dinamičke podatke (stog, neinicijalizirane globalne varijable, dio spremnika – malloc/free...)
+7. ˇCemu služi Makefile? Opisati sadržaj te datoteke u Benu sustavu.
+
+Makefile je definicija prevođenja za alat Make, on se koristi za automatiziranje prevođenja izvornog
+koda.
+
+U Benu sustavu prevođenje je odrađeno tako da se u zasebnom direktoriju build radi identično
+stablo direktorija kao za izvorne datoteke te će se pri prevođenju datoteke smjestiti u ekvivalentne
+direktorije.
+
+U Makefile je uključena datoteka config.ini koja sadrži razne varijable koje će se koristiti u
+Makefileu poput zastavica za prevoditelja i povezivača, direktorija gdje se nalaze datoteke koje
+treba prevodit I sl. , koriste se funkcije foreach, widcard, addprefix za generiranje popisa datoteka
+sa izvornim kodovima. U datoteci nije zadano kako se prevodi svaka izvorna datoteka zasebno već
+se koriste recepti odnosno pravila koja uključuju više datoteka.
+
+Konačno se nakon odrađenih svih ovisnosti one se povezuju u sliku operacijskog sustava(.elf
+datoteka).
+
+8. Opisati naˇcin ostvarenja makroa LOG. Kako se koriste navedeni elementi makroa (i u
+drugim primjerima)?
+
+#define LOG(LEVEL, format, ...) \
+kprintf("[" #LEVEL ":%s:%d]" format "\n", __FILE__, __LINE__, ##__VA_ARGS__)
+
+Makro prima parametre LEVEL, format te dodatno varijabilan broj parametara označen sa …
+Makro se zamjenjuje sa:
+kprintf("[" #LEVEL ":%s:%d]" format "\n", __FILE__, __LINE__, ##__VA_ARGS__)
+
+#LEVEL je stringifikacija parametra LEVEL
+Konstante __FILE__ i __LINE__ pri prevođenju će se zamijeniti imenom datoteke i linijom u
+kojoj se navedeni makro koristi.
+
+##__VA_ARGS__ znakovi ## predstavljaju operator spajanja koji spaja imena lijevo
+i desno od njega
+
+
+9. Korištenjem kombinacije alata QEMU i GDB dovesti sustav u neku funkciju (primjerice
+k_startup) te ispisati sadržaje varijabli.
+
+/
+Pitanja za vježbu 6 – Prekidi
+
+1. ˇCemu služe prekidi?
+
+Prekidi služe kako bi procesor dobio informaciju o događaju koji hitno zahtjeva njegovu obradu.
+
+2. Opisati postupak prihvata prekida te povratka iz prekida.
+
+Postupak prihvata prekida:
+1. zabranjuje se daljnje prekidanje – briše se odgovarajuća zastavica u statusnom registru
+2. prebacuje se u prekidni način rada – aktiviraju se posebni registri, nekad ne postoji već sve u
+istom načinu rada
+3. pohranjuje se programsko brojilo na stog – uz njega često i registar stanja
+4. u programsko brojilo se stavlja adresa potprograma za obradu prihvaćenog prekida, adresa
+potprograma se najčešće dobiva iz prekidnog broja.
+
+Kako se prekidom prekida aktivna dretva sprema se i njen kotnekst kako bi se povratkom iz prekida
+mogao obnoviti i dretva nastaviti sa radom(odrađuje se na početku prekidnog potptograma).
+Prilikom povratka iz prekida instrukcija za povratak iz prekida obnavlja kontekst sa stoga te
+ponovno dozvoljava prekidanje.
+
+3. Zašto se pri prihvatu prekida na stog pohranjuje i registar stanja i programsko brojilo?
+
+Pohranjuje se kako bi se sačuvao kontekst dretve odnosno omogućio njen nastavak nakon povratka
+iz prekida.
+
+4. Što su to sklopovski prekidi, iznimke i programski prekidi? Tko ih izaziva?
+
+Sklopovski prekidi su vrsta prekida čiji je uzrok izvan procesora – uzrokovani od raznih naprava
+
+Iznimke su prekidi izazvani neuspješnim izvođenjem instrukcija – dijeljenje s nulom, dohvat
+podatka s nepostojeće spremničke lokacije…, takve prekide izaziva procesor
+
+Programski prekidi su prekidi izazvani posebnom instrukcijom od strane procesora. Programskim se
+prekidom poziva zaštićen I privilegiran potprogram koji obavlja posebne aktivnosti (poziv jezgrene
+funkcije)
+
+5. Što je to prekidni broj?
+
+Prekidni broj je broj pomoću kojeg se određuje adresa potprograma za obradu pristiglog prekida.
+
+6. Što su to maskiraju´ci, a što nemaskiraju´ci prekidi?
+
+Maskirajući prekidi su prekidi koji se generiraju izvan procesora i koje procesor može maskirati
+odnosno zabraniti brisnajem zastavice IF, dok nemaskirajući prekidi su prekidi generirani u
+procesoru koji se ne mogu zabraniti.
+
+
+
+7. Ako je zastavica IF (engl. interrupt flag) obrisana, ho´ce li instrukcija INT 33 izazvati
+prekid (koji ´ce se prihvatiti i obraditi)? Zašto?
+
+Instrukcija INT33 izaziva prekid od strane procesora (on je izvor) pa se ne može zabraniti brisanjem
+zastavice IF jer ona utječe samo na prekide izazvane izvan procesora.
+
+8. Tri osnovne funkcije prekidnog sustava zadanog projekta su: arch_init_interrupts
+, arch_interrupt_handler i arch_register_interrupt_handler. Što one
+rade?
+
+arch_init_interrupts – inicijalizira strukturu podataka koja povezuje prekide s upravljačkim
+programima
+
+arch_interrupt_handler – zajednička funkcija svim prekidima koja se poziva pri obradi prekida te
+koja prema prekidnom broju zove odgovarajuću funkciju za obradu.
+
+arch_register_interrupt_handler – registrira zadani prekid s njegovom funkcijom za obradu,
+tj. s upravljačkim programom.
+
+9. Koja je zada´ca podsustava za upravljanje prekidima?
+
+Zadaća je omogućiti povezivanje prekida s odgovarajućim upravljačkim programima te da obavlja
+sve međukorake koji su potrebni pri prihvatu prekida, a prije poziva prekidnog potprograma, kao I
+po dovršetku obrade prekida,a prije povratka u prekinutu dretvu. Dodatno očekuje se sučelje za
+omogućavanje I onemogućavanje prekidanja procesora od strane raznih naprava.
+
+10. Koja je zada´ca sklopa za upravljanje prekidima?
+
+Zadaća je upravljanje zahtjevima za prekid koji dolaze od naprava koje su na njega spojene –
+odnosno omogućiti programiranje prihvaćanja ili neprihvaćanja zahtjeva za prekid naprava.
+
+11. Obrada prekida može potrajati. Zašto to ponekad može predstavljati veliki problem?
+Kako se problem može riješiti ili ublažiti?
+
+Ako obrada nekog prekida potraje, svi zahtjevi za prekid koji dođu u međuvremenu moraju čekati
+što nekad nije zadovoljavajuće ponašanje.
+Problem se može ublažiti na dva načina. Prvi način je dodjela prijoriteta prekidima te obavljanje
+obrade uz dozvoljeno prekidanje. Drugi način je da se obrada prekida podijeli u dva dijela, u prvom
+se napravi samo osnovna obrada i ona se obavlja po prihvatu prekida dok drugi dio odnosno ostatak
+obrade se obavlja naknadno u skladu s prioritetom.
+
+12. Koji problemi mogu nastati pri obradi prekida ako se prekidi jako ˇcesto pojavljuju?
+
+Kada se često pojavljuju prekidi, kućanski poslovi (nekoristan dio obrade prekida – promjena
+načina rada, spremanje/obnavljanje konteksta) mogu uzimati previše procesorskog vremena te tako
+smanjiti učinkovitost procesora jer kućanski poslovi nisu produktivan rad.
+
+Rješelnje je kada učestalost nekog prekida pređe definiranu granicu zabranit mu prekidanje te
+napravu koja ga izaziva posluživat izravno u definiranim intervalima(npr. kada se njen
+međuspremnik napuni).
+Pitanja za vježbu 7 – Algoritmi upravljanja spremnikom
+
+1. Opisati postupke statiˇckog i dinamiˇckog upravljanja spremnikom. Koje su prednosti, a
+koji nedostaci pojedinih postupaka?
+
+Kod statičkog upravljanja spremnikom spremnički prostor se zauzima od njegova pokretanja do
+njegova gašenja. Dinamičko upravljenje spremnikom spremnički prostor se zauzima dinamički
+prema zahtjevima koji se javljaju tokom rada sustava. Pri pokretanju sustava zauzima se gomila
+koja predstvalja slobodan prostor te se prikladnim algoritmima dijeli na blokove - nakon korištenja
+blokovi se oslobađaju te su ponovno dostupni za nove zahtjeve.
+
+Prednost statičkog je jednostavnost izvedbe.
+
+Nedostatak statičkog je nemogućnost oslobađanja memorije pa se s toga spremnik koristi
+neefikasno jer često nekom zahtjevu je potrebna memorija samo kratak dio vremena, potrebno je
+unaprijed znati veličine elemenata sustava kako bi se zauzeli odgovarajuća veličina memorije. Kada
+se dodaje novi element nekom elementu sustava(npr novi opisnik za alarm) potrebno je tražiti prvo
+slobodno mjesto u polju koje je namjenjeno za taj element – slijedno pretraživanje O(N).
+
+Prednost dinamičkog je u tome što manji spremnik može poslužiti sve zahtjeve prikladne veličine
+ako dolaze u prikladnim vremenima (pokazalo se da zahtjevi dolaze u raznim trenutcima odnosno
+nekad jedan podsustav je aktivniji i zahtjeva više spremničkog prosotra, dok u drugom trenutku
+neki drugi).
+
+Nedostatak dinamičkog upravljanja je pojava fragmentacije te dodatan posao upravljanja
+spremnikom.
+
+2. Koja je složenost algoritama: prvi odgovaraju´ci, najbolji odgovaraju´ci, dlmalloc, Buddy
+te TLSF?
+
+Prvi odgovarajući - O(n)
+Najbolji odgovarajući - O(n)
+dlmalloc – O(n)
+Buddy - O(logn)
+TLSF - O(1)
+
+3. Što je to fragmentacija (kod dinamiˇckog upravljanja spremnikom)? Koji algoritmi
+imaju ve´cu, a koji manju fragmentaciju? Što je to unutarnja fragmantacija (primjerice
+kod Buddy algoritma)?
+
+Fragmentacija je pojava kada su iskorišteni blokovi memorije raspršeni po memoriji i između njih
+postoji slobodan prostor koji je premalen da bi poslužio zahtjeve koji dolaze, a kada bi zauzeti
+blokovi bili u kontinuiranom segmentu ostatak prostora bio bi i više nego dovoljan za posluživanje
+zahtjeva (eksterna fragmentacija). Također postoji i interna fragmentacija koja se događa kod
+algoritama koji kada dodjeljuju memoriju dodjeljuju je prema određenim pravilima o veličini pa je
+memorija dodjeljena zahtjevu veća od one koja je zahtjevana – primjerice blokovi memorije moraju
+bit potencije broja 2 – Buddy algoritam
+Buddy ima visoku internu fragmentaciju, prvi odgovarajući radi veliku fragmentaciju jer dijeli
+velike slobodne blokove pa je moguće da neki veći zahtjevi neće imati adekvatan blok, najbolji
+odgovarajući je u tom pogledu bolji jer nalazi najmanji blok koji zadovoljava zahtjev.
+
+4. Koje osnovno suˇcelje treba nuditi podsustav za dinamiˇcko upravljanje spremnikom?
+
+Treba nuditi inicijalizaciju, funkcije za posluživanje zahtjeva za blokovima i oslobađanje blokova.
+
+5. Navesti operacije nad listom te njihovu složenost.
+
+Dodaj element u listu (prvo/zadnje mjesto) O(1)
+Ukloni element iz liste(prvo/zadnje mjesto) O(1)
+Funkcije koje pretražuju listu O(n)
+
+Prema list_t koja sadrži pokazivač na prvi i zadnji element liste.
+Pitanja za vježbu 8 – Upravljanje vremenom
+
+1. Koje zahtjeve programi postavljaju prema podsustavu upravljanja vremenom?
+
+Zahtjevi prema podsustavu za upravljanje vremenom dolaze od:
+       jezgre – potrebe za upravljanjem podsustavima(npr. Raspoređivanje)
+       zadataka – očitanje trenutnog vremena, odgoda izvođenja, periodički signali
+
+Zahtjevi se mogu podijeliti u nekoliko skupina:
+- očitavanje trenutnog vremena sata
+- programiranje jedne akcije u zadanom budućem trenutku
+- programiranje periodičke akcije
+- odgoda dretve do zadanog budućeg trenutka
+
+2. Što je to alarm u kontekstu upravljanja vremenom?
+
+Alarm je alat čijim korištenjem možemo zadovoljiti gore navedene zahtjeve
+
+Osnovno načelo s alarmima sastoji se u stvaranju alarma, kada se definira što se treba dogoditi pri
+aktivaciji alarma te postavljanju alarma, kada se postavlja vrijeme kad alarm treba aktivirati
+(tada je alarm aktivan, engl. armed).
+
+3. Koje je osnovno sklopovlje potrebno za upravljanje vremenom? Opišite rad takvog
+sklopa i kako se pomo´cu njega može ostvariti pra´cenje vremena i ostvarenje jednos-
+tavnog alarma.
+
+Brojilo koje određenom stalnom frekvencijom odbrojava od zadane vrijednosti do nule (ili
+obrnuto), kada dođe do nule može izazvati prekid(ako je tako programirano), ponovno učitava
+početnu vrijednost i opet odbrojava prema nuli, osim početne vrijednosti nekim brojilima se može
+odrediti i djelilo ulazne frekvencije kada su potrebna sporija otkucavanja
+
+Sklop koji bi se koristio za upravljanje vremenom može se idejno opisati sa sljedećim elementima i
+akcijama:
+
+registar zadnje_učitano:
+– registar koji pamti zadnju poslanu vrijednost u registar brojilo, od koje treba početi brojati prema
+nuli
+
+registar brojilo :
+        – registar koji na svaki signal oscilatora smanjuje vrijednost za jedan
+        -kada mu vrijednost dođe do nule izaziva se zahtjev za prekid, učitava vrijednost iz
+registrazadnje_učitano te ponovno broji prema nuli
+        - čitanjem ovog registra dobije se trenutna vrijednost brojila te se može izračunati protok
+vremena
+        - upisivanjem u ovaj registar postavlkja se nova početna vrijednost koja se i zapamti u
+registru zadnje_učitano
+
+
+4. Navedite POSIX suˇcelje za upravljanje vremenom. Koje operacije obavlja pojedino
+suˇcelje (u jezgri)?
+
+POSIX sučelje možemo podijeliti na funkcije za upravljanje satom i funkcije za upravljanje
+alarmima.
+
+U funkcije za upravljanje satom spadaju funkcije za dohvat i postavljanje trenutnog vremena:
+int clock_gettime(clockid_t clockid, timespec_t *time);
+int clock_settime(clockid_t clockid, timespec_t *time);
+
+U funkcije za upravljanje alarmima spadaju:
+
+- funkcije za stvaranje i brisanje alarma:
+int timer_create(clockid_t clockid, sigevent_t *evp, timer_t *timer);
+int timer_delete(timer_t *timer)
+
+- funkcije za postavljanje i brisanje vremena aktivacije:
+int timer_settime(timer_t *timer, int flags, itimerspec_t *value, itimerspec_t *ovalue);
+
+funkcije za odgodu(POSIX sučelje za odgodu):
+int clock_nanosleep(clockid_t clockid, int flags, timespec_t *request, timespec_t *remain);
+int nanosleep(timespec_t *request, timespec_t *remain);
+
+Gotovo sve funkcije za upravljanje vremenom primaju idnetifikator sata kojeg trebaju koristiti. Dva
+su osnovna sata CLOCK_REALTIME i CLOCK_MONOTONIC.
+CLOCK_REALTIME – sat sustava koji odbrojava sukladno stvarnom protoku vremena, ali se može
+podešavati posebnim sučeljem
+CLOCK_MONOTONIC – sat koji odbrojava sukladno stvarnom protoku vremena, ali se ne može
+mijenjati
+
+
+5. Što je to povratna vrijednost funkcije, a što oznaka greške (engl. error number)?
+
+Povratna vrijednost funkcije (kod većine) je status obavljanja operacije – ako je operacija uspješno
+obavljena vratit će se nula kao povratna vrijednost. Ako operacija nije uspješno obavljena, postavlja
+se potrebna vrijednost u oznaku greške te se vraća vrijednost -1 kao povratna vrijednost.
+
+Oznaka greške ili identifikator greške predstavlja status zadnje jezgrene funkcije, a govori o
+uspješnosti te funkcije. Kada funkcija uspješno obavi zahtjevanu operaciju onda je oznaka greške
+jednaka nuli, a kada se dogodi greška (npr. Krivi ulanzi paramtri) onda se kao oznaka greške vraća
+odgovarajuća vrijednost (u ovom primjeru EINVAL).
+6. Opišite mogu´ce ostvarenje podsustava za upravljanje vremenom ako na raspolaganju
+stoji suˇcelje sloja arhitekture koje omogu´cava samo jedan alarm.
+
+Svi aktivni alarmi – alarmi koji imaju postavljeno vrijeme koje nije isteklo nalaze se u listi složenoj
+prema vremenima aktiviranja – prvi u listi će se prvi aktivirati(ima najbliže vrijeme aktivacije).
+Vremena aktivacije se interno zapisuju u opisniku alarma koji jezgra stvara i koristi u apsolutnim
+iznosima. Na prekid sata uspoređuje se vrijednost sata i prvog alarma u listi. Ukoliko sat nije veći
+od prvog alarma u brojilo se učitava vrijednost( maksimalna ako je preostalo vrijeme do aktivacije
+veće od Tmax ili ona vrijednost koja je jednaka ostatku vremena preračunatog u broj otkucaja), a
+ukoliko je onda se u brojilo učitava maksimalna vrijednost te poziva funkcija obrade tog alarma
+ukoliko postoji.
+
+7. Što je to nadzorni alarm? ˇCemu služi i kako se koristi?
+
+Nadzorni alarm je alarm koji služi kao postupak oporavka od greške.
+
+Načelo rada sustava s nadzornim alarmom je u periodičkom poništavaju (resetiranju) alarma
+– alarmu se ponovno postavlja početni interval za odbrojavanje. Alarm odbrojava od neke
+zadane vrijednosti do nule. Ako on u tom periodu nije primio signal koji ga poništava, on će po
+isteku perioda resetirati cijeli sustav – aktivirati signal na RESET priključku procesora. Naime,
+sustav je tako građen da se u normalnom radu nadzorni alarm periodički poništava iz ključnih
+dijelova programa te nikada ne odbroji do kraja. U slučaju zastoja (kritiče greške) alarm se neće
+poništiti te kao jedan od mehanizama oporavka jest ponovno pokretanje cijelog sustava
+(reset).
+Pitanja za vježbu 9 – Korištenje naprava
+
+1. Što je to upravljaˇcki program (naprave)?
+
+Program koji upravlja odeređenom napravom, najčešće izgrađeni prema definiranom sučelju od
+strane operacijskog sustava radi pojednostavljenja što omogućuje:
+
+- jednostavnost zamjene jedne naprave drugom u izvođenju sličnih operacija (primjerice iz-
+laz/ispis može se prikazati na zaslonu ili poslati preko serijske veze ili korištenjem drugih
+protokola i veza je ostvariv na isti način, kroz isto sučelje, ali raznim napravama)
+
+- lakšoj integraciji novih upravljačkih programa, jednostavnije ostvaraenje podsustava jezgre za
+upravljanje napravama(svi upravljački programi dodaju se na isti način)
+
+
+2. Koje osnovne elemente mora imati suˇcelje upravljaˇckog programa?
+
+Najjednostavnije sučelje za naprave (za izgradnju upravljačkih programa) uključuje funkciju za
+slanje podataka prema napravi te funkciju za čitanje podataka iz naprave.
+
+U petom inkrementu , strukturom device_t (u datoteci include/arch/device.h) je definirano sučelje
+upravljačkih programa sa sljedećim elementima (podacima i kazaljkama na funkcije):
+• dev_name – ime naprave (koristi se pri dohvatu opisnika naprave)
+• init – funkcija za inicijalizaciju naprave
+• destroy – funkcija za uklanjanje naprave (ona se programski onemogućava, tj. isključuje)
+• send – funkcija za slanje podataka prema napravi
+• recv – funkcija za čitanje podataka s naprave
+• irq_num – broj prekida koji izaziva naprava (ako izaziva)
+• irq_handler – funkcija za obradu prekida koji je izazvala naprava
+• callback – jezgrena funkcija koju treba pozvati (ako je definirana) iz obrade prekida naprave (iz
+irq_handler poziva se callback)
+• flags – razne zastavice koje mogu pobliže definirati posebna ponašanja naprave (načini
+rada i slično)
+• params – kazaljka koju upravljački program naprave može koristiti za svoje interne po-
+trebe
+
+3. Kako jezgra treba upravljati napravama?
+
+Iz jezgre i iz programa naprave se ne koriste izravno preko njihovih sucelja, vec su napravljene
+dodatne jezgrene funkcije preko kojih se naprave trebaju koristiti, a koje omogucuju ugradnju
+potrebne kontrole.
+        Za te potrebe definirana je nova struktura u jezgri kdevice_t koja sadrži elemente i varijable:
+                 • dev – sucelje upravljackog programa (device_t ostvarenog u sloju arch)
+                 • id – jedinstven identifikator objekta jezgre
+                 • flags – oznacava je li naprava “otvorena” u nedjeljivom nacinu, tj. može li se opet
+otvoriti od strane nekog drugog objekta
+                 • ref_cnt – brojac procesa koji koriste napravu
+                 • descriptors – lista opisnika koji sadrže kazaljku na ovu napravu
+                 • list – koristi se za ostvarenje liste upravljackih programa (svi se svrstavaju u jednu
+zajednicku listu pri inicijalizaciji sustava).
+       Korištenje naprave mora zapoceti spajanjem na napravu – “ostvaranjem naprave”. Pri
+spajanju na napravu potrebno je navesti jedinstveno ime naprave.
+
+        Odabrano sucelje za rad s napravama iz programa je jednako sucelju za rad s datotekama jer
+se slicne operacije obavljaju u oba slucaja: otvaranje, citanje, pisanje te zatvaranje. Razlika je u
+mogucnosti pomicanja kazaljke trenutnog položaja u datoteci koji nema smisla za naprave.
+        (open, close, read i write)
+
+4. Što je to oˇcitani kôd (engl. scan code)?
+
+Stanja tipki se periodički očitavaju (skeniraju) pod utjecajem internog upravljačkog sklopa tip-
+kovnice (kodera). Ako se ustanovi da je neka tipka promijenila stanje (pritisnuta, otpuštena ili
+zadržana), podatkovni se paket šalje upravljačkom sklopu tipkovnice koji se obično nalazi na
+matičnoj ploči računala. Podatkovni paket koji se šalje naziva se očitani kôd (engl. scan code)
+
+5. Kako su idejno ostvareni upravljaˇcki programi za tipkovnicu i serijsku vezu?
+
+Upravljacki sklop na tipkovnici (koder) saznaje koji ocitani kôd odgovara odredenoj tipki pomocu
+mape znakova koja se nalazi u njegovom ROM-u. Kada upravljacki sklop tipkovnice (na maticnoj
+ploci) primi ocitani kôd, sprema ga u ulazni spremnik i signalizira prekid. U obradi prekida treba
+procitati što se novo dogodilo i proslijediti dogadaj odgovarajucem programu (koji ocekuje ulaz
+preko tipkovnice).
+
+Načelno, upravljanje i korištenje serijske veze vrlo je slično kao i kod tipkovnice. Razlika je u
+sklopovlju, više statusnih i upravljačkih registara te dvosmjerna komunikacija
+
+6. Što su to funkcije s povratnim pozivom (engl. callback)? Gdje se one koriste u prikaza-
+nom sustavu?
+
+callback – jezgrena funkcija koju treba pozvati (ako je definirana) iz obrade prekida naprave
+
+Koristi se kod sučelja naprave prema jezgri.
+Pitanja za vježbu 10 – Naredbena ljuska
+
+1. ˇCemu služi naredbena ljuska?
+
+Naredbena ljuska je program koji pokreće druge programe. Ona služi kao jednostvna
+implementacija pokretanja programa. Njezin rad se moze opisati cikličkim poslom:
+
+ponavljaj
+{
+       ulaz = pročitaj naredbu s ulaza (primjerice tipkovnice);
+       {naredba, parametri} = obradi_ulaz (ulaz);
+       ako ("naredba" je valjana/postojeća naredba)
+              pokreni(naredba, parametri);
+       inače
+              dojavi grešku("Nepostojeća naredba/program!");
+}
+dok (naredba != "kraj");
+
+
+2. Koji raˇcunalni sustavi trebaju neki oblik korisniˇckog suˇcelja, a koji ne?
+
+/
+
+3. Kako se zadaju naredbe u naredbenoj ljusci?
+
+Upisuju se na ulaz primjerice tipkovnicom i završetkom upisa ljuska provjerava je li naredba
+valjana/postojeća naredba i pokreće ju ili javlja grešku-
+
+4. Kako se predaju parametri programima?
+
+Argumenti se u funkcije šalju kao polje kazaljki na niz znakova (svaki argument je jedan niz
+znakova). Zadnji element polja mora biti NULL. Nacelo predaje argumenata je slicno (ali nije isto)
+kao i kod funkcije main obiˇcnog C programa (int main (int argc, char *argv[])). Razlika je što
+nema zasebnog argumenta koji kaže koliko ima argumenata (argc) vec se to mora doznati
+pretraživanjem polja i pronalaskom polja s vrijednošcu NULL (koja može biti i na pocetku ako
+nema argumenata).
+
+5. Kako se iz programa koriste parametri (primjerice u obiˇcnoj main funkciji C programa)?
+
+Preko polja kazaljki
+Pitanja za vježbu 11 – Višedretvenost
+
+1. Podrška za višedretvenost iziskuje znatne dodatne operacije jezgre. Kada podršku za
+višedretvenost ima smisla ugra¯divati u sustav, a kada ne?
+
+Višedretvenost nema smisla ugrađivati u sustav kada se radi o jednostavnom sustavu čije se
+upravljanje može svesti na periodičko prozivanje ili obradu događaja koje izazivaju vanjski procesi.
+
+Navedeni načini upravljanja, koji se mogu ostvariti s do sada prikazanim podsustavima, pogodni su
+samo za jednostavnije sustave. U složenijim bi sustavima navedeni postupci postali
+suviše složeni, teško ostvarivi i vrlo teški za održavanje, otkrivanje grešaka, nadograđivanje i
+slično. Logika upravljanja koja se mora ugraditi u druge podsustave ili “zajedničke” upravljačke
+programe postaje suviše složena i glavni je problem ostvarenja takvih načina upravljanja.
+
+Značajno jednostavnije upravljanje postiže se odvajanjem upravljačkog programa u nezavisne
+entitete – zadatke (engl. task), od kojih se svaki brine za jedan vanjski proces. Za upravljanje
+pojedinim vanjskim procesima upravljačka je logika sva na jednom mjestu, razumljivija je što
+značajno olakšava i otkrivanje grešaka, ažuriranje i nadograđivanje. Dodavanje novih kompo-
+nenti u sustav, kao i micanje nekih nepotrebnih, značajno je jednostavnije. Isto razmišljanje
+vrijedi i za različite programe koji pokretanjem postaju različiti zadaci.
+Odvajanje nezavisnih poslova upravljanja u zasebne zadatke – koji time postaju nezavisne jedi-
+nice izvođenja – dretve zahtijeva višezadaćni sustav (engl. multitasking), tj. višedretveni sustav.
+
+2. U kojim se stanjima može na´ci dretva u raˇcunalnom sustavu (u operacijskom sustavu)?
+
+Dretve mogu biti u aktivnom, blokiranom, pripravnom i pasivnom stanju.
+
+3. Koje se dretve (u kojim stanjima) razmatraju pri raspore¯divanju dretvi? Opisati tipiˇcnu
+podatkovnu strukturu u kojoj su takve dretve (njihovi opisnici).
+
+ Pri raspoređivanju razmatraju se samo dretve koje su spremne za izvođenje na procesoru –
+pripravne dretve, koje se nalaze u redu pripravnih dretvi. Uobičajeno je da za svaki mogući
+prioritet – razinu prioriteta postoji po jedna lista (koja može biti i prazna), tada operacije nad
+svakom listom uključuju samo uzimanje prvog elementa te dodavanje na kraj liste. Obje su
+operacije složenosti O(1) ako se za zaglavlje liste koriste kazaljke na prvi i zadnji element liste.
+
+4. Što je to opisnik dretve i koji se podaci trebaju na´ci u njemu?
+
+Opisnik dretve je struktura koja sadrži informacije o dretvi potrebene za njeno upravljanje. Opisnik
+svake dretve mora sadržavati potrebne strukture podataka kako za ostvarenje listi u
+kojima se opisnik može nalaziti tako i za druge operacije nad dretvama. Opisnik kthread_t
+je definiran u kernel/thread.h:
+
+98 /*! Thread descriptor */
+99 struct _kthread_t_
+100 {
+101 id_t id;
+102 /* thread id (number) */
+103
+104 int state;
+105 /* thread state (active,ready,wait,susp.) */
+106
+107 int flags;
+108 /* various flags (as detachable, cancelable) */
+109
+110 context_t context;
+111 /* storage for thread context */
+112
+113 int retval;
+114 /* return value from system call (when changed by others) */
+115
+116 int errno;
+117 /* exit status of last system function call */
+118
+119 void *exit_status;
+120 /* status with which thread exited (pointer!) */
+121
+122 void (*cancel_suspend_handler)(kthread_t *, void *);
+123 void *cancel_suspend_param;
+124 /* cancellation handler - when premature cancellation occurs while
+125 * thread is suspended; used to perform required actions at cancellation
+126 * event, e.g. when sleep is interrupted */
+127
+128 void *pparam;
+129 /* temporary storage for one private parameter;
+130 * to be used only when thread is blocked to store single
+131 * parameter used by kernel only - not for private storage */
+132
+133 void *stack;
+134 uint stack_size;
+135 /* stack address and size (for deallocation) */
+136
+137 int sched_policy;
+138 /* scheduling policy */
+139 int sched_priority;
+140 /* priority - primary scheduling parameter */
+141
+142 kthread_q *queue;
+143 /* in which queue thread is (if not active) */
+144
+145 kthread_q join_queue;
+146 /* queue for threads waiting for this to end */
+147
+148 list_h list;
+149 /* list element for "thread state" list */
+150
+151 list_h all;
+152 /* list element for list of all threads */
+153
+154 int ref_cnt;
+155 /* reference counter */
+156 };
+
+5. Zašto treba izbjegavati ure¯dene liste za opisnike dretvi (i druge svrhe)?
+
+Rad s uređenim listama je linearne složenosti te se u praksi takve liste rjeđe koriste (samo u sus-
+tavima s jako malo dretvi) jer postoje alternative sa boljim složenostima.
+6. Upravljanje dretvama zahtjeva poznavanje operacija sa stogom na niskoj razini, kao i
+pozivanje potprograma (i povratak iz njega). Koji je najˇceš´ci naˇcin pozivanja potpro-
+grama (kamo se stavljaju parametri, kako se sprema povratna adresa, kamo se sprema
+povratna vrijednost)?            (N)
+
+Svaka dretva pri stvaranju dobije sljedeći kontekst:
+od više adrese prema nižim: parametar za početnu funkciju, adresa izlazne funkcije, adresa početne
+funkcije(registar eip), registar stanja te registre opće namjene. (Slika 11.4)
+
+...Nova dretva će svoj rad započeti sa zadanom funkcijom kojoj treba predati jedan parametar.
+S obzirom na korišteni gcc i njegov način pozivanja funkcija (uobičajeni i za većinu ostalih
+prevoditelja), osnovni kontekst je oblikovan i proširen parametrom i povratnom adresom (prije
+samog konteksta). Naime, dretva svoj početak izvođenja treba započeti u zadanoj funkciji, a s
+obzirom na to da tada “očekuje” i “uobičajeni” stog, takvog treba i pripremiti.
+U normalnom pozivu potprograma, prije instrukcije call, na stog se postavljaju parametri.
+Sama instrukcija call na stog dodatno stavlja povratnu adresu – adresu iduće instrukcije iza
+call. Na primjer, kada bi postojala funkcija:
+
+int neka_funkcija(int p1, int p2, int p3)
+{
+       int x1, x2, x3;
+       ...
+
+koja se poziva s:
+p = neka_funkcija(a, b, c);
+
+tada bi prevoditelj (primjerice gcc) taj poziv preveo u asembler (pojednostavljeno):
+        push c
+        push b
+        push a
+        call neka_funkcija
+        add $12, %esp
+        mov %eax, p
+
+Prije poziva call na vrhu stoga se nalazi prvi parametar funkcije. Samim pozivom funkcije
+s call na stog se još stavlja povratna adresa (adresa idu´ce instrukcije po povratku iz potpro-
+grama, tj. adresa instrukcije add $12, %esp). Kôd poˇcetka funkcije oˇcekuje ovakav stog te
+ako se on ne poziva na gornji naˇcin treba ga napraviti takvim, što je i uˇcinjeno pri stvaranju
+poˇcetnog konteksta dretve. Lokalne varijable funkcije dodatno se postavljaju na stog – ali to
+radi kôd u samoj funkciji. Prije povratka iz potprograma treba sve dodatno maknuti sa stoga
+tako da na vrhu bude povratna adresa
+
+ Po obavljanju sveg posla u zadanoj funkciji, dretva će izaći iz početne funkcije na uobičajeni način
+– instrukcijom ret. Instrukcija ret će uzeti vrijednost s vrha stoga i staviti ju u programsko brojilo.
+Ako se tamo postavi adresa druge funkcije, dretva će po dovršetku početne započeti s tom drugom.
+
+7. Kako se jedna dretva (aktivna) zamjenjuje drugom u postupku raspore¯divanja? Što je
+to zamjena konteksta i kako se izvodi?
+
+Zamjena jedne dretve drugom zahtjeva dodatne operacije. Ako prva dretva koju se miče s
+procesora nije gotova već će kasnije nastaviti s radom, tada toj dretvi treba omogućiti kasniji
+nastavak s radom što znači osigurati joj isto stanje kao i u trenutku kad je zaustavljena. Sredstva
+koje dretva koristi nalaze se u radnom spremniku, ali i u registrima procesora. S obzirom na to
+da se podaci dretve u radnom spremniku ne mijenjaju radom druge dretve, ono što je potrebno
+sačuvati su registri procesora. Stoga se oni nazivaju i kontekstom dretve. Pri zamjeni jedne
+dretve drugom potrebno je najprije pohraniti kontekst prve, a potom obnoviti kontekst druge
+dretve.
+
+8. Navesti i opisati osnovne naˇcine (principe) raspore¯divanja dretvi.
+
+Načini raspoređivanja dretvi mogu se podijeliti u nekoliko osnovnih kategorija:
+• raspoređivanje prema redu prispijeća (engl. first come first served – FCFS te češći naziv first
+in first out – FIFO)
+• raspoređivanje prema prioritetu
+• raspoređivanje podjelom vremena – kružno raspoređivanje (engl. round robin – RR).
+
+U stvarnim se sustavima najčešće koriste kombinacije navedenih načina.
+
+9. Ako je neka dretva stanju ˇcekanja (zaustavljena/blokirana), kako i kada ´ce ta dretva
+nastaviti s radom? Koji razlozi mogu uzrokovati zaustavljanje dretve?
+
+Dretva se nalazi u stanju čekanja(zaustavljena/blokirana) jer ne mogu nastavit dok se neki uvijeti ne
+zadovolje (na primjer, sinkronizacijski uvjeti, kraj rada s UI napravama, oslobođenje nekog sredstva
+sustava, protok vremena, dolazak poruke/signala i slično). Za svako od stanja čekanja postoji
+zasebna lista (“red zaustavljenih dretvi”). Dretva će nastaviti s radom kada se stvore uvijeti za njen
+nastavak.
+
+10. Najˇceš´ce korišteni sinkronizacijski mehanizmi su semafori i monitori. Koji su osnovni
+principi rada tih mehanizama? Koje su osnovne operacije tih mehanizama (osnovne
+funkcije)? Koja su mogu´ca proširenja tih operacija?
+
+U svom uobičajenom obliku semafor se koristi za brojanje događaja, sredstava i slično. Sastoji se
+od jedne vrijednosti i reda za zaustavljene dretve (red semafora). Osnovne operacije nad semaforom
+su ČekajSemafor i PostaviSemafor. Prva operacija, ČekajSemafor, pokušava zauzeti jedno sredstvo
+za pozivajuću dretvu, dok suprotna operacija, PostaviSemafor, oslobađa jedno sredstvo (element
+polja, kritični odsječak i slično). Zauzeće i oslobađanje sredstava je zapravo samo logički povezano
+sa semaforom čije se operacije stavljaju na potrebna mjesta u programe. Same operacije se
+obavljaju samo nad objektom semafora (ne i sredstvima koja se štite). Operacije nad sredstvima
+slijede nakon zauzimanja semafora, a prije njegova otpuštanja.
+
+POSIX sučelje za rad sa semaforima uključuje (pogledati semaphore.h za sve):
+int sem_init(sem_t *sem, int pshared, unsigned init_value);
+int sem_post(sem_t *sem);
+int sem_wait(sem_t *sem);
+int sem_trywait (sem_t *sem);
+int sem_timedwait(sem_t *sem, const struct timespec *max_wait)
+
+Osnovna ideja mehanizma monitora jest da se složeni uvjeti provjeravaju u zaštićenom okruže-
+nju (“u monitoru”) programskim ispitivanjem stanja sustava (varijabli koje opisuju to stanje).
+Ako je stanje “povoljno”, dretva obavlja potrebne operacije ili zauzima potrebna sredstva – mi-
+jenja stanje sustava te potom napušta monitor. Ako stanje sustava “nije povoljno” za dretvu,
+ona ne može nastaviti s radom te se uvrštava u jedan od posebnih redova za zaustavljene dretve
+– u jedan od redova uvjeta. Time dretva ujedno i privremeno napušta monitor. Druge dretve
+mogu u monitoru promijeniti stanje sustava. Ako je neka od tih promjena “povoljna” za neku od
+zaustavljenih dretvi u redu uvjeta istog monitora, takvu dretvu treba propustiti, ali ne odmah
+u monitor jer bi tada u monitoru bile dvije dretve.
+
+Potrebne jezgrene funkcije su:
+• Zaključaj_monitor(m)
+• Otključaj_monitor(m)
+• Čekaj_u_redu_uvjeta(m, red)
+• Propusti_iz_reda(red)
+• Propusti_sve_iz_reda(red)
+
+Proširene prema POSIX:
+int pthread_mutex_init (pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);
+int pthread_mutex_lock (pthread_mutex_t *mutex);
+int pthread_mutex_unlock (pthread_mutex_t *mutex);
+int pthread_cond_init (pthread_cond_t *cond, const pthread_condattr_t *attr);
+int pthread_cond_wait (pthread_cond_t *cond, pthread_mutex_t *mutex);
+int pthread_cond_signal (pthread_cond_t *cond );
+int pthread_cond_broadcast (pthread_cond_t *cond);
+int pthread_mutex_trylock (pthread_mutex_t *mutex);
+int pthread_mutex_timedlock (pthread_mutex_t *mutex, const struct timespec *abstime);
+int pthread_cond_timedwait (pthread_cond_t *cond,
+pthread_mutex_t *mutex, const struct timespec *abstime);
+
+11. Navedite nekoliko ostalih sinkronizacijskih mehanizama (osim semafora i monitora)
+koji se ˇcesto koriste. Opišite osnovne principe tih mehanizama.
+
+(ILI iz dodatka E radno čekanje – npr ispituje vrijednost u petlji, štedi se jer se ne poziva jezgrina
+funkcija, barijera – sve dretve moraju doći do barijere kako bi nastavile s radom..., zaključavanje
+čitaj-piši, spin-locks ...)
+Poruke i signali.
+
+Poruka je kratka informacija zadana svojom veličinom i oznakom. Oznaka nije obavezna, ali
+može poslužiti za odabir koja ce se poruka uzeti iz reda.
+Poruka se šalje u red poruka. Red poruka može biti ureden ili prema redu prispijeca (najčešći
+način organizacije) ili na neki drugi način (prema oznakama). Red poruka može pripadati
+nekoj dretvi ili može biti nezavisan (globalan). U sustavima za rad u stvarnom vremenu je
+uobičajeno da se uz svaku dretvu veže i jedan red poruka za poruke upućene izravno toj dretvi.
+
+Sučelje za ostvarenje reda poruka osim sučelja za dohvat i brisanje reda poruka, mora imati
+dvije operacije:
+• PošaljiPoruku(red, poruka, duljina, tip) te
+• PročitajPoruku(red, poruka, duljina, tip).
+
+čitanje poruke miče poruku iz reda, tj. jedna se poruka može samo jednom pročitati od strane
+jedne dretve. Ako je zadan tip poruke, pri čitanju se red pretražuje dok se poruka zadanog
+tipa ne pronađe – ako je nema vraća se greška ili se dretva zaustavlja (ovisno o zastavicama s
+kojima je red otvoren)
+
+
+Uobičajeni mehanizam za sporadične događaje su signali ostvareni na razini operacijskog sus-
+tava. Signali su slični prekidima na razini procesora uz razliku da signale (izravno ili neizravno)
+šalju i jezgra operacijskog sustava i dretve, a “primaju” ih dretve. Ponašanje dretve za pojedini
+signal se u većini sustava može prilagoditi tako da ona:
+
+• prihvaća signal vlastitom (programski definiranom) funkcijom
+• prihvaća signal na uobičajeni način (pretpostavljenom, ugrađenom funkcijom)
+• ignorira signal ili
+• zadržava signal – signal se ne odbacuje, ali se trenutno niti ne prihvaća – signal ostaje u
+sustavu dok se ponašanje dretve za njega ne promijeni.
+
+Očekivano ponašanje dretve po primitku signala je:
+• prekinuti s trenutnim izvođenjem instrukcija
+• zabraniti daljnje prekidanje s tim signalom
+• pohraniti kontekst trenutnog posla na stog
+• skočiti u funkciju za obradu signala
+• obraditi signal
+• vratiti se iz obrade signala: obnoviti kontekst sa stoga i ponovno dozvoliti prekidanje istim
+signalom.
+
+12. Sliˇcno prekidima na “niskoj” razini – razini procesora, doga¯daji (signali) se koriste na
+razini operacijskog sustava. Koja su uobiˇcajena ponašanja koja dretva može definirati
+za svaki signal koji je njoj upu´cen?
+
+Ponašanje dretve za pojedini
+signal se u većini sustava može prilagoditi tako da ona:
+
+• prihvaća signal vlastitom (programski definiranom) funkcijom
+• prihvaća signal na uobičajeni način (pretpostavljenom, ugrađenom funkcijom)
+• ignorira signal ili
+• zadržava signal – signal se ne odbacuje, ali se trenutno niti ne prihvaća – signal ostaje u
+sustavu dok se ponašanje dretve za njega ne promijeni.
+
+Očekivano ponašanje dretve po primitku signala je:
+• prekinuti s trenutnim izvođenjem instrukcija
+• zabraniti daljnje prekidanje s tim signalom
+• pohraniti kontekst trenutnog posla na stog
+• skočiti u funkciju za obradu signala
+• obraditi signal
+• vratiti se iz obrade signala: obnoviti kontekst sa stoga i ponovno dozvoliti prekidanje istim
+signalom.
+
+
+13. Signal se dretvi može poslati u “neoˇcekivanom” trenutku. Koji problemi mogu nastati
+zbog toga (kako/kada prihvatiti signal)?
+Što ako je dretva kojoj se signal šalje privremeno zaustavljena (primjerice u redu semafora ili čeka
+na dohvat podataka s naprave)? Na prvi pogled moglo bi se opet isto napraviti: obraditi signal i
+vratiti dretvu u prijašnje stanje. Jedan problem jest u tome što se s redom u kojem je dretva bila u
+međuvremenu može svašta dogoditi. Drugi problem je što se u obradi signala svašta može napraviti
+pa i ponovno zaustaviti dretvu. UNIX i slični sustavi definiraju što će se dogoditi u slučaju primitka
+signala dok je dretva bila u nekoj jezgrenoj funkciji i to za svaku jezgrenu funkciju zasebno (za
+funkcije koje reagiraju na signal). Uobičajeno je da se dretva vraća iz tih funkcija s greškom kao
+povratnom vrijednošću te postavljanjem oznake greške u EINTR – “jezgrena funkcija prekinuta
+signalom” (engl. a signal interrupted the call)
+
+14. Komunikacija porukama je ˇcesto jedino komunikacijsko sredstvo ugra¯denim susta-
+vima. Kako ga ostvariti? Koji su pritom problemi? Zašto je ta komunikacija tako
+ˇcesto korištena upravo u tim sustavima?
+
+Poruka je kratka informacija zadana svojom veličinom i oznakom. Oznaka nije obavezna, ali
+može poslužiti za odabir koja ce se poruka uzeti iz reda.
+Poruka se šalje u red poruka. Red poruka može biti ureden ili prema redu prispijeca (najčešći
+način organizacije) ili na neki drugi način (prema oznakama). Red poruka može pripadati
+nekoj dretvi ili može biti nezavisan (globalan). U sustavima za rad u stvarnom vremenu je
+uobičajeno da se uz svaku dretvu veže i jedan red poruka za poruke upućene izravno toj dretvi.
+
+Sučelje za ostvarenje reda poruka osim sučelja za dohvat i brisanje reda poruka, mora imati
+dvije operacije:
+• PošaljiPoruku(red, poruka, duljina, tip) te
+• PročitajPoruku(red, poruka, duljina, tip).
+
+čitanje poruke miče poruku iz reda, tj. jedna se poruka može samo jednom pročitati od strane
+jedne dretve. Ako je zadan tip poruke, pri čitanju se red pretražuje dok se poruka zadanog
+tipa ne pronađe – ako je nema vraća se greška ili se dretva zaustavlja (ovisno o zastavicama s
+kojima je red otvoren)
+
+Operacije stavljanja poruke u red poruka i čitanja poruke iz reda poruka bit će donekle različite
+ovisno o tome ima li dretvi koje čekaju na poruku ili prazno mjesto u redu (da mogu staviti
+svoju poruku). Prilikom slanja poruke:
+• kada je red pun – dretva se zaustavlja
+• kada ima mjesta u redu poruka – poruka se stavlja u red poruka (dodaje u listu za poruke)
+te ako ima dretvi koje čekaju na poruku prva dretva iz tog reda se propušta (ta će dretva
+ponovno pokušati kad postane aktivna).
+
+Prilikom čitanja poruke:
+• kada je red prazan – dretva se zaustavlja
+• kada ima poruka u redu – uzima se prva poruka te ako ima dretvi koje čekaju na prazno
+mjesto u redu prva dretva iz tog reda se propušta (ta će dretva ponovno pokušati kad
+postane aktivna).
+
+15. Opisati POSIX suˇcelje za upravljanje dretvama, sinkronizaciju i komunikaciju.
+
+...
+Pitanja za vježbu 12 – Procesi
+
+1. Što su to dretve? Što je to jezgra? U ˇcemu se razlikuje izvo¯denje (korisniˇcke) dretve
+od izvo¯denja jezgrene funkcije?
+
+Dretve su osnovne jedinice izvršavanja unutar procesa, a jezgra je temeljni dio operacijskog sustava
+koji upravlja računalnim resursima u privilegiranom načinu. Razlikuju se u tome da korisničke
+dretve se izvode u neprivilegiranom načuinu rada te su im određene instrukcije procesora i resursi
+nedostupni dok jezgrene funkcije se izvode u privilegiranom načinu rada u kojem imaju na
+raspolaganju sva sredstva sustava i instrukcije.
+
+2. Što su to procesi? Koje mehanizme pružaju?
+
+Proces je dakle okolina u kojoj se izvodi program. Okolina je definirana dijelovima spremničkog
+prostora koji su na raspolaganju programu. U izvođenju, početna dretva koja izvodi instrukcije
+programa može stvoriti i dodatne dretve (sučeljem jezgre) tako da se unutar istog procesa može
+istovremeno nalaziti i nekoliko dretvi. Jedan proces od drugog procesa zaštićen je ograđenim
+spremničkim prostorima, tj. dretva jednog procesa ne može pristupiti spremničkom prostoru
+drugog procesa (ne bez posebnih zahtjeva jezgri). Također, dretve nekog procesa ne mogu
+izravno pristupiti podacima jezgre jer su podaci jezgre izvan adresnog prostora procesa (nisu
+mu dohvatljivi).
+
+3. Koji su nacini ostvarenja podrške za procese?          (N)
+
+Potrebno je odvojiti jezgru od programa i to se u više dijelova: pozivanje jezgrenih funkcija pomoću
+programskih prekida, odvajanje korisničkog i privilegiranog načina rada, odvajanje jezgre i
+programa u dvije cjeline pri prevođenju, program kao zaseban proces te konačno izvedba korz
+staički i dinamički proces.
+
+4. Što je to logiˇcka adresa, a što fiziˇcka? Kada se neki program prevodi u strojni oblik,
+koje se adrese koriste? Zašto?
+
+Svaki proces ima određen dio spremnika od neke početne fizičke adrese. Proces adresira spremnik
+kroz logičke adrese te njegova adresa 0 je zapravo logička adresa 0 koje se preslikava u fizičku
+adresu početka njegovog dijela spremnika. Fizička adresa je stvarna adresa u fizičkoj memoriji i tu
+adresu koristi hardver za pristup podacima u memoriji.
+
+Kada se program prevodi u strojni oblik, koriste se logičke adrese. Razlog za to je što u trenutku
+kompilacije nije poznato gdje će program biti učitan u fizičku memoriju. Logičke adrese omogućuju
+programu da ima konzistentan adresni prostor bez obzira na to gdje se nalazi u fizičkoj memoriji. U
+fazi izvršavanja, operacijski sustav i MMU (Memory Management Unit) preuzimaju odgovornost
+za mapiranje tih logičkih adresa na fizičke adrese.(ChatGPT)
+5. Korištenjem segmenata (sklopovske potpore u obliku zbrajala) adrese koje program
+generira pretvaraju se iz logiˇckih u fiziˇcke. Kako? Koji su nedostaci ostvarenja procesa
+nad ovim mehanizmom?
+
+Pri obavljanju operacija dohvata ili pohrane u radni spremnik (npr. nakon što je instrukcija
+movl %eax, (%ebx) dohvaćena korištenjem sličnih pravila) najprije se izračunava prava
+fizička adresa (još se naziva i apsolutna adresa) korištenjem zadane logičke adrese (relativne
+adrese, pomaka, engl. offset). Fizička adresa se izračunava kao suma adrese početka segmenta,
+koji se uzima iz opisnika na koji pokazuje registar za podatke ds, te zadane logičke adrese (npr.
+u registru ebx za gornju instrukciju), tj.
+fizička adresa = početna adresa segmenta + logička adresa.
+Potom se provjerava spada li izračunata fizička adresa zaista u segment, tj. izlazi li možda iz
+njega. Provjera se obavlja korištenjem opisnika segmenta, tj. početne adrese i veličine seg-
+menta. Ako je adresa valjana (pripada segmentu) onda se nastavlja s idućom provjerom prava
+pristupa (tražena razina privilegija teku´ce dretve). Ako je i iduća provjera uspješna opera-
+cija dohvata se provodi. U protivnom, ako adresa ne pripada segmentu već je izvan njega ili
+trenutna dretva nema potrebnu razinu privilegija, procesor izaziva prekid zbog narušene sigur-
+nosti sustava (engl. general protection fault).
+
+Nedostaci korištenja segmentacije:(ChatGPT)
+    1. Fragmentacija memorije: Kako procesi alociraju i oslobađaju segmente različitih veličina,
+       slobodan prostor u memoriji može postati fragmentiran. To može dovesti do situacije u kojoj
+       ima dovoljno slobodne memorije za alokaciju, ali nije kontinuirana, pa alokacija ne može
+       biti zadovoljena.
+    2. Složenost upravljanja: Upravljanje segmentima, osobito kada postoji mnogo segmenata
+       različitih veličina, može biti složeno i zahtijevati dodatne resurse.
+    3. Nedostatak zaštite i izolacije: Ako operacijski sustav i hardver ne pružaju strogu kontrolu
+       nad segmentacijskim registrima, procesi mogu slučajno ili namjerno pristupiti segmentima
+       koji im ne pripadaju.
+    4. Nedostatak fleksibilnosti: Velikost segmenata je često fiksna, što može biti neučinkovito za
+       aplikacije koje zahtijevaju dinamičke promjene u potrošnji memorije.
+
+
+
+6. Koji su osnovna naˇcela straniˇcenja? Kako se logiˇcka adresa pretvara u fiziˇcku?
+
+
+Osnovna ideja straničenja jest da se logički spremnički prostor procesa podijeli u mnoštvo malih
+jednakih dijelova koji se nazivaju stranice, da se fizički spremnik podijeli u dijelove istih veličina
+koji se nazivaju okviri te da se korištenjem sklopovske potpore svaka logička adresa, koja se
+odnosi na određeni dio stranice procesa prevede u fizičku adresu (dio nekog okvira).
+
+Veličina jedne stranice mora odgovarati veličini jednog okvira. Stranica i okviri moraju biti
+poravnati na adrese koje su višekratnici veličine stranice koje su potencija broja 2 (tj. veličina
+stranice je jednaka 2p). Drugim riječima, adresa početka svake stranice (i okvira) ima nule u
+najnižih p bitova, dok viši bitovi predstavljaju redni broj (indeks) stranice i okvira.
+Svaka logička adresa (primjerice adresa jedne varijable) može se podijeliti na dva dijela: gor-
+njih r-bita koji definiraju redni broj stranice te donjih p-bita koji određuju odmak od početka tablica
+se izgrađuje hijerarhijski.
+
+
+
+
+7. Kako se straniˇcenjem ostvaruje upravljanje spremnikom?
+
+Problemi dinamičkog upravljanja spremnikom, navedeni na početku ovog odjeljka, straniče-
+njem se u potpunosti mogu riješiti. Straničenje omogućava učinkovito korištenje pomoćnog
+spremnika za pohranu stranica koje se trenutno ne koriste. Višestrukim pokretanjem istog pro-
+grama ne moraju se nanovo učitavati isti segmenti instrukcija već se prethodno učitani mogu
+mapirati u tablicama prevođenja svih idućih procesa (koji koriste iste segmente instrukcija).
+Problem fragmentacije ne postoji jer je granulacija okvira jako mala i dodjeljivanje se obavlja
+po okvirima.
+Dinamičko dodavanje spremničkog prostora postojećem procesu je također ostvarivo. Primje-
+rice, ako se instrukcije postave na početak logičkog adresnog prostora procesa, stog na kraju,
+sredina ostaje za podatke (gomilu). U početku je ta sredina gotovo prazna, ali se daljnjim ra-
+dom procesa mogu zahtijevati novi segmenti za koje operacijski sustav stvara stranice i dodaje
+ih u tablicu prevođenja, tj. povećava spremnički prostor proces
+
+8. Zašto se straniˇcenje rijetko koristi u ugra¯denim sustavima?
+
+Straničenje zahtijeva složenu sklopovsku potporu te se ne koristi kod jednostavnih procesora
+jer bi tada njihova cijena bila znatno veća. Za složenije procesore taj se dodatak gotovo i ne
+primjećuje (u ukupnoj veličini procesora, tj. broju tranzistora).
+9. Koji su nedostaci straniˇcenja? Na što treba paziti ako se straniˇcenje koristi u SRSV-u?
+Straniˇcenje zahtijeva složenu sklopovsku potporu te se ne koristi kod jednostavnih procesora
+jer bi tada njihova cijena bila znatno ve´ca. Za složenije procesore taj se dodatak gotovo i ne
+primje´cuje (u ukupnoj veliˇcini procesora, tj. broju tranzistora).
+U sustavima koji pored glavnog, radnog spremnika, koriste i pomo´cni spremnik, izvo¯denje pro-
+cesa se zbog promašaja ponekad može znatno odgoditi. Dohvat stranice procesa s pomo´cnog
+spremnika (diska) ´ce potrajati bar desetak milisekundi. Iako ´ce za to vrijeme procesor mo´ci
+obavljati druge procese, navedena odgoda jednog procesa ograniˇcava uporabu sustava, tj. one
+se ne može koristiti u sustavima koji zahtijevaju poštivanje vremenskih ograniˇcenja (SRSV)
+Pitanja za vježbu 13 – Zasnivanje ugra¯denih raˇcunalnih sustava
+
+1. Navesti nekoliko operacijskih sustava za korištenje u SRSV-ovima sa strogim vremen-
+skim ograniˇcenjima te neke za sustave s blažim vremenskim ograniˇcenjima.
+
+Stroga: VxWorks, FreeRTOS, QNX Neutrino, RTlinux
+Slabi: Windows, Linux
+
+2. Koja svojstva ograniˇcavaju uporabu operacijskog sustava u ugra¯denim sustavima?
+
+Hardver, vrijeme odziva
+
+3. Što su to “prilago¯deni” operacijski sustavi? Kako se ostvaruju? Prikažite na primjeru
+operacijska sustava RTLinux.
+
+Prilagođeni operacijski sustavi su operacijski sustavi koji su posebno prilagođeni za određenu
+upotrebu ili aplikaciju.RTLinux je primjer prilagođenog operacijskog sustava. To je varijacija
+Linuxa koja je proširena kako bi podržala real-time značajke. Navedeni dodatak mijenja neke
+jezgrine funkcije, tj. omogu´cuje njihovo prekidanje
+u izvo¯denju. Jezgra tog sustava je stoga znatno predvidljivija i mogu´ca kašnjenja su popri-
+liˇcno smanjena pa se koristi u mnogim sustavima za rad u stvarnom vremenu s ublaženim
+vremenskim ograniˇcenjima.
+RTLinux [RTLinux] ima svoju jezgru koja izvodi kritiˇcne zadatke upravljanja (koji se pripremaju
+za tu jezgru). Linux je u tom sustavu samo jedan proces i to proces s najmanjim
+prioritetom. Svi programi pripremljeni za jezgru imaju ve´ci prioritet od Linuxa, koji zapravo
+jezgru vidi kao sklopovlje (jezgra “maskira” sklopovlje pravom Linuxu). Komunikacija zadataka
+kojima upravlja RTLinux i zadataka kojima upravlja Linux može se odvijati preko zajedniˇckog
+spremnika te preko struktura FIFO. I jedni i drugi se u Linuxu vide kao ure¯daji, dok ih dretve u
+RTLinuxu koriste posebnim suˇceljem
+
+4. Koji su mogu´ci izbori pri izgradnji jednostavnijih ugra¯denih sustava, a koji pri izgradnji
+složenijih sustava?
+
+Izbori pri izgradnji ugrađenih sustava:(ChatGPT)
+    • Za jednostavnije ugrađene sustave: Može se koristiti vrlo osnovni operacijski sustav (kao
+      što je FreeRTOS) ili čak bez operacijskog sustava (Bare-metal programming). Ovo često
+      uključuje direktan rad s hardverom, i koristi se u sustavima s vrlo ograničenim resursima.
+    • Za složenije ugrađene sustave: Može se koristiti puno funkcionalan operacijski sustav kao
+      što je Linux, Android, ili Windows Embedded. Ovi sustavi omogućuju korištenje složenih
+      mrežnih značajki, grafičkih sučelja, i visokih performansi.
+
