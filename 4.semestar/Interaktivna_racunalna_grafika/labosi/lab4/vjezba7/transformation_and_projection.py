@@ -28,7 +28,7 @@ def get_transformation_matrix(O, G, UP) -> np.array:
 
     rotation_matrix = np.transpose( np.vstack( (np.append(x_hat,0), np.append(y_hat,0), np.append(z_hat,0), np.array([0,0,0,1])) ) )
 
-    t_z = get_z_mirror_matrix()
+    tz = get_z_mirror_matrix()
 
     return t_1 @ rotation_matrix @ t_z
 
