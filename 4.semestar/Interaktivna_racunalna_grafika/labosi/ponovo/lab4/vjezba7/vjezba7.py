@@ -25,6 +25,10 @@ lightSource = [10, 10, 10]
 polygonConstantIntensities = []
 visiblePolygonConstantIntensities = []
 
+verticesGouraudovIntensities = []
+
+constantLighting = False
+
 T, P = [], []
 
 xaxis, yaxis, zaxis = [], [], []
@@ -215,7 +219,10 @@ def findVisiblePolygons():
 
 
 def calculateIntensity():
-    global polygons, polygonConstantIntensities, planeCoefs
+    global polygons, polygonConstantIntensities, planeCoefs, verticesGouraudovIntensities
+
+    polygonConstantIntensities = []
+    verticesGouraudovIntensities = []
 
     ka = 0.5
     ia = 100
@@ -241,14 +248,45 @@ def calculateIntensity():
 
         diffuseComponent = kd * ii * max(0, np.dot(L, N))
 
-        col_min, col_max = 0, 1
-
         total = ambientComponent + diffuseComponent
 
         if total > 255:
             total = 255
 
         polygonConstantIntensities.append(total)
+
+    # Gourad
+    for i, v in enumerate(vertices):
+        adjacentNormals = []
+        for j, p in enumerate(polygons):
+            if i + 1 in p:
+                pNormal = [planeCoefs[j][0],
+                           planeCoefs[j][1],
+                           planeCoefs[j][2]]
+                adjacentNormals.append(
+                    np.divide(pNormal, np.linalg.norm(pNormal)))
+
+        normal = [0, 0, 0]
+        for an in adjacentNormals:
+            normal = np.add(normal, an)
+
+        if (len(adjacentNormals) > 0):
+            N = np.divide(normal, len(adjacentNormals))
+
+            L1 = np.subtract(lightSource, [v[0], v[1], v[2]])
+
+            L = np.divide(L1, np.linalg.norm(L1))
+
+            diffuseComponent = kd * ii * max(0, np.dot(L, N))
+
+            total = ambientComponent + diffuseComponent
+
+            if total > 255:
+                total = 255
+
+            verticesGouraudovIntensities.append(total)
+        else:
+            verticesGouraudovIntensities.append(0)
 
 
 @window.event
@@ -266,21 +304,44 @@ def on_draw():
         gluLookAt(O[0], O[1], O[2], G[0], G[1], G[2], V[0], V[1], V[2])
 
     else:
-        glClear(GL_COLOR_BUFFER_BIT)
-        glMatrixMode(GL_MODELVIEW)
+        if constantLighting:
+            glClear(GL_COLOR_BUFFER_BIT)
+            glMatrixMode(GL_MODELVIEW)
 
-        glBegin(GL_TRIANGLES)
-        for i, p in enumerate(polygonsVisible):
-            v1 = verticesTransformed[p[0]]
-            v2 = verticesTransformed[p[1]]
-            v3 = verticesTransformed[p[2]]
-            glColor3f(visiblePolygonConstantIntensities[i] / 255,
-                      visiblePolygonConstantIntensities[i] / 255,
-                      visiblePolygonConstantIntensities[i] / 255)
-            glVertex3d(v1[0], v1[1], v1[2])
-            glVertex3d(v2[0], v2[1], v2[2])
-            glVertex3d(v3[0], v3[1], v3[2])
-        glEnd()
+            glBegin(GL_TRIANGLES)
+            for i, p in enumerate(polygonsVisible):
+                v1 = verticesTransformed[p[0]]
+                v2 = verticesTransformed[p[1]]
+                v3 = verticesTransformed[p[2]]
+                glColor3f(visiblePolygonConstantIntensities[i] / 255,
+                          visiblePolygonConstantIntensities[i] / 255,
+                          visiblePolygonConstantIntensities[i] / 255)
+                glVertex3d(v1[0], v1[1], v1[2])
+                glVertex3d(v2[0], v2[1], v2[2])
+                glVertex3d(v3[0], v3[1], v3[2])
+            glEnd()
+        else:
+            glClear(GL_COLOR_BUFFER_BIT)
+            glMatrixMode(GL_MODELVIEW)
+
+            glBegin(GL_TRIANGLES)
+            for i, p in enumerate(polygonsVisible):
+                v1 = verticesTransformed[p[0]]
+                v2 = verticesTransformed[p[1]]
+                v3 = verticesTransformed[p[2]]
+                glColor3f(verticesGouraudovIntensities[i] / 255,
+                          verticesGouraudovIntensities[i] / 255,
+                          verticesGouraudovIntensities[i] / 255)
+                glVertex3d(v1[0], v1[1], v1[2])
+                glColor3f(verticesGouraudovIntensities[i] / 255,
+                          verticesGouraudovIntensities[i] / 255,
+                          verticesGouraudovIntensities[i] / 255)
+                glVertex3d(v2[0], v2[1], v2[2])
+                glColor3f(verticesGouraudovIntensities[i] / 255,
+                          verticesGouraudovIntensities[i] / 255,
+                          verticesGouraudovIntensities[i] / 255)
+                glVertex3d(v3[0], v3[1], v3[2])
+            glEnd()
 
 
 if __name__ == "__main__":
