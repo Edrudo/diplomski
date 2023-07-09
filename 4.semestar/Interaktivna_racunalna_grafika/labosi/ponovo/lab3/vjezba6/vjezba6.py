@@ -252,7 +252,7 @@ def caluculateBezierCurvePoints():
 
 @window.event
 def on_draw():
-    global verticesTransformed, polygonsVisible, animation
+    global verticesTransformed, polygonsVisible, animation, window
 
     if animation:
         global O, G, objectCenter
@@ -276,6 +276,7 @@ def on_draw():
                 glVertex3d(v2[0], v2[1], v2[2])
                 glVertex3d(v3[0], v3[1], v3[2])
             glEnd()
+            window.flip()
 
         animation = False
 
