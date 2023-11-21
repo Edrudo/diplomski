@@ -43,7 +43,7 @@ if __name__ == "__main__":
     M3 = np.dot(Mx, np.linalg.inv(My))
     print(f'{M3=}')
 
-    """ print("Zadatak 2")
+    print("Zadatak 2")
 
     A = np.array([
         [0, 0, 0],
@@ -63,7 +63,7 @@ if __name__ == "__main__":
             print(B)
             j = j+1
 
-    print("\n\n\nRjesenja x, y, z = ", np.linalg.inv(A).dot(B)) """
+    print("\n\n\nRjesenja x, y, z = ", np.linalg.inv(A).dot(B))
 
     print('Zadatak 3:')
 
