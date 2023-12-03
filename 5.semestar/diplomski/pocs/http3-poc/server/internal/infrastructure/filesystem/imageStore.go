@@ -1,11 +1,8 @@
 package filesystem
 
 import (
-	"bytes"
 	"fmt"
-	"image"
 	"image/jpeg"
-	"log"
 	"os"
 )
 
@@ -16,19 +13,15 @@ func NewImageStore() *ImageStore {
 }
 
 func (i *ImageStore) StoreImage(imageHash string, imgBytes []byte) error {
-	img, _, err := image.Decode(bytes.NewReader(imgBytes))
-	if err != nil {
-		log.Fatalln(err)
-	}
-	out, _ := os.Create(fmt.Sprintf("./images/%s.jpg", imageHash))
+	out, _ := os.Create(fmt.Sprintf("/Users/eduardduras/Desktop/faks/diplomski/5.semestar/diplomski/pocs/http3-poc/server/images/%s.jpg", imageHash))
 	defer out.Close()
 
 	var opts jpeg.Options
 	opts.Quality = 1
 
-	err = jpeg.Encode(out, img, &opts)
-	if err != nil {
-		log.Println(err)
+	// write into a file
+	if _, err := out.Write(imgBytes); err != nil {
+		panic(err)
 	}
 
 	return nil

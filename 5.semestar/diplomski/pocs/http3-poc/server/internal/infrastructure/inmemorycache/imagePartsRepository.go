@@ -6,37 +6,39 @@ import (
 	"github.com/pkg/errors"
 )
 
-// TODO should I sync this with mutex?
-var hashImagePartsMap = make(map[string][]models.ImagePart)
-
-type ImagePartsRepository struct{}
+type ImagePartsRepository struct {
+	hashImagePartsMap map[string][]models.ImagePart
+}
 
 func NewImagePartsRepository() *ImagePartsRepository {
-	return &ImagePartsRepository{}
+	return &ImagePartsRepository{
+		map[string][]models.ImagePart{},
+	}
 }
 
 func (r *ImagePartsRepository) DoesImagePartListExist(imageHash string) (bool, error) {
-	_, exists := hashImagePartsMap[imageHash]
+	_, exists := r.hashImagePartsMap[imageHash]
 	return exists, nil
 }
 
 func (r *ImagePartsRepository) DeleteImagePartList(imageHash string) error {
-	delete(hashImagePartsMap, imageHash)
+	delete(r.hashImagePartsMap, imageHash)
 	return nil
 }
 
 func (r *ImagePartsRepository) StoreImagePart(imagePart models.ImagePart) error {
-	imageParts, ok := hashImagePartsMap[imagePart.ImageHash]
+	imageParts, ok := r.hashImagePartsMap[imagePart.ImageHash]
 	if !ok {
 		imageParts = make([]models.ImagePart, 0)
 	}
 
 	imageParts = append(imageParts, imagePart)
+	r.hashImagePartsMap[imagePart.ImageHash] = imageParts
 	return nil
 }
 
 func (r *ImagePartsRepository) GetNumberOfPartsInStorage(imageHash string) (int, error) {
-	imageParts, ok := hashImagePartsMap[imageHash]
+	imageParts, ok := r.hashImagePartsMap[imageHash]
 	if !ok {
 		return 0, nil
 	}
@@ -45,7 +47,7 @@ func (r *ImagePartsRepository) GetNumberOfPartsInStorage(imageHash string) (int,
 }
 
 func (r *ImagePartsRepository) GetImagePartsList(imageHash string) ([]models.ImagePart, error) {
-	imageParts, ok := hashImagePartsMap[imageHash]
+	imageParts, ok := r.hashImagePartsMap[imageHash]
 	if !ok {
 		return nil, errors.New("no list found")
 	}
