@@ -1,4 +1,4 @@
-package main
+package quicserver
 
 import (
 	"context"
@@ -7,33 +7,43 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/pem"
-	"fmt"
-	"io"
 	"math/big"
+
+	"quic-poc/cmd/config"
 
 	"github.com/quic-go/quic-go"
 )
 
-const addr = "localhost:4242"
+type QuicServer struct {
+	tlsConfig         *tls.Config
+	quicConfig        config.QuicConfig
+	connectionHandler *ConnectionHandler
+}
 
-func main() {
-	listener, err := quic.ListenAddr(addr, generateTLSConfig(), nil)
-	if err != nil {
-		panic(err)
+func NewQuicServer(quicConfig config.QuicConfig) *QuicServer {
+	return &QuicServer{
+		tlsConfig:         generateTLSConfig(),
+		quicConfig:        quicConfig,
+		connectionHandler: &ConnectionHandler{},
 	}
-	conn, err := listener.Accept(context.Background())
+}
+
+func (s *QuicServer) Start() error {
+	listener, err := quic.ListenAddr(s.quicConfig.Address, s.tlsConfig, nil)
 	if err != nil {
-		panic(err)
+		return err
 	}
-	stream, err := conn.AcceptStream(context.Background())
-	if err != nil {
-		panic(err)
+
+	for true {
+		conn, err := listener.Accept(context.Background())
+		if err != nil {
+			return err
+		}
+
+		go s.connectionHandler.handleConnection(conn)
 	}
-	// Echo through the loggingWriter
-	_, err = io.Copy(loggingWriter{stream}, stream)
-	if err != nil {
-		panic(err)
-	}
+
+	return nil
 }
 
 // Set up a bare-bones TLS config for the server
@@ -58,12 +68,4 @@ func generateTLSConfig() *tls.Config {
 		Certificates: []tls.Certificate{tlsCert},
 		NextProtos:   []string{"quic-echo-example"},
 	}
-}
-
-// A wrapper for io.Writer that also logs the message.
-type loggingWriter struct{ io.Writer }
-
-func (w loggingWriter) Write(b []byte) (int, error) {
-	fmt.Printf("Server: Got '%s'\n", string(b))
-	return w.Writer.Write(b)
 }
