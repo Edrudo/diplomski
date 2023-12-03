@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9e9ab851-d674-4512-bb8d-7268770af0e6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/server/cmd/api/bootstrap/api.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/cmd/api/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/api/controller/controller.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/api/controller/dtos.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/api/controller/imageProcessingService.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/api/controller/serverRequestMapper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/api/router/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/domain/models/imagePart.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/domain/services/ImageStoringService.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/domain/services/imagePartsRepository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/domain/services/imageProcessingEngine.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/domain/services/imageStore.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/infrastructure/filesystem/imageStore.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/internal/infrastructure/inmemorycache/imagePartsRepository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quic-poc/server/cmd/bootstrap/loggingWriter.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quic-poc/server/cmd/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quic-poc/server/internal/edoserver/edoserver.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quic-poc/server/internal/edoserver/quicserver.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quic-poc/server/internal/quicserver/connectionHandler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quic-poc/server/internal/quicserver/quicServer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../quic-poc/server/internal/quicserver/streamReader.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../quic-poc/server/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../quic-poc/server/cmd/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../haskell/edo-duras" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" url="file:///opt/homebrew/opt/go/libexec" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectId" id="2Z1fLVTyrXAZWIOXnFWXfdYrx2B" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "/Users/eduardduras"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>
