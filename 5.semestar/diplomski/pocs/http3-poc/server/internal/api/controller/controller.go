@@ -15,10 +15,11 @@ type Controller struct {
 	serverRequestMapper ServerRequestMapper
 }
 
-func NewController(imageStoringService ImageStoringService, logger *zap.Logger) *Controller {
+func NewController(imageStoringService ImageStoringService, logger *zap.Logger, mapper ServerRequestMapper) *Controller {
 	return &Controller{
 		logger:              logger,
 		imageStoringService: imageStoringService,
+		serverRequestMapper: mapper,
 	}
 }
 

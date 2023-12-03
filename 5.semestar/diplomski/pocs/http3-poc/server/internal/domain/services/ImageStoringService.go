@@ -27,7 +27,7 @@ func (i *ImageStoringService) StoreImagePart(imagePart models.ImagePart) error {
 	}
 
 	// if it's the first part, check if the list exists and delete it if it does
-	if imagePart.PartNumber == 0 {
+	if imagePart.PartNumber == 1 {
 		imagePartListExists, err := i.imagePartsRepository.DoesImagePartListExist(imagePart.ImageHash)
 		if err != nil {
 			return errctx(err)

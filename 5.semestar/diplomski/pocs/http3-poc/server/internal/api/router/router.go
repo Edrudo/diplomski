@@ -26,7 +26,7 @@ func GenerateRoutingHandler(
 
 	// IMAGE PROCESSING ENDPOINT
 	{
-		router.GET(ImageProcessingRoute, controller.ProcessImagePart)
+		router.POST(ImageProcessingRoute, controller.ProcessImagePart)
 	}
 
 	return router, nil
