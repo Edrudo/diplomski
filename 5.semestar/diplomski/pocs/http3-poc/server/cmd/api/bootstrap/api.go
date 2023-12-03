@@ -7,6 +7,7 @@ import (
 
 	"http3-server-poc/cmd/api/config"
 	"http3-server-poc/internal/api/controller"
+	controllermappers "http3-server-poc/internal/api/controller/mappers"
 	"http3-server-poc/internal/api/router"
 	"http3-server-poc/internal/domain/services"
 	"http3-server-poc/internal/infrastructure/filesystem"
@@ -22,7 +23,8 @@ func newController(
 	imageStoringService controller.ImageStoringService,
 	logger *zap.Logger,
 ) *controller.Controller {
-	return controller.NewController(imageStoringService, logger)
+	serverRequestMapper := controllermappers.NewServerRequestMapper()
+	return controller.NewController(imageStoringService, logger, serverRequestMapper)
 }
 
 func newImageProcessingEngine(
@@ -35,8 +37,8 @@ func newImageProcessingEngine(
 
 func newHttp3Server(handler http.Handler) http3.Server {
 	return http3.Server{
-		Addr:      config.Cfg.ServerConfig.Http3ServerUrl,
-		Port:      config.Cfg.ServerConfig.Http3ServerPort,
+		Addr:      "localhost:4242",
+		Port:      4242,
 		TLSConfig: config.GenerateTLSConfig(),
 		QuicConfig: &quic.Config{
 			HandshakeIdleTimeout: time.Millisecond * time.Duration(config.Cfg.OuicConfig.HandshakeIdleTimeoutMs),
