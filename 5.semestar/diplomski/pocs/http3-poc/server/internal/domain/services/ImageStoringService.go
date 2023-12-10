@@ -26,31 +26,28 @@ func (i *ImageStoringService) StoreImagePart(imagePart models.ImagePart) error {
 		return errors.WithMessagef(err, "image storing i, store image part")
 	}
 
-	// if it's the first part, check if the list exists and delete it if it does
-	if imagePart.PartNumber == 1 {
-		imagePartListExists, err := i.imagePartsRepository.DoesImagePartListExist(imagePart.ImageHash)
-		if err != nil {
-			return errctx(err)
-		}
-		if imagePartListExists {
-			err = i.imagePartsRepository.DeleteImagePartList(imagePart.ImageHash)
-			if err != nil {
-				return errctx(err)
+	// check if this image part already exists in stoage
+	imageParts, ok, err := i.imagePartsRepository.GetImagePartsList(imagePart.ImageHash)
+	if err != nil {
+		return errctx(err)
+	}
+
+	// if it exists then do a noop
+	if ok {
+		for _, part := range imageParts {
+			if part.PartNumber == imagePart.PartNumber {
+				return nil
 			}
 		}
 	}
 
-	err := i.imagePartsRepository.StoreImagePart(imagePart)
+	// otherwise store the image part
+	err = i.imagePartsRepository.StoreImagePart(imagePart)
 	if err != nil {
 		return errctx(err)
 	}
 
-	numOfPartsInStorage, err := i.imagePartsRepository.GetNumberOfPartsInStorage(imagePart.ImageHash)
-	if err != nil {
-		return errctx(err)
-	}
-
-	if numOfPartsInStorage == imagePart.TotalParts {
+	if len(imageParts)+1 == imagePart.TotalParts {
 		i.imageProcessingEngineChan <- imagePart.ImageHash
 	}
 

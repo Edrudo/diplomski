@@ -2,8 +2,6 @@ package inmemorycache
 
 import (
 	"http3-server-poc/internal/domain/models"
-
-	"github.com/pkg/errors"
 )
 
 type ImagePartsRepository struct {
@@ -46,11 +44,8 @@ func (r *ImagePartsRepository) GetNumberOfPartsInStorage(imageHash string) (int,
 	return len(imageParts), nil
 }
 
-func (r *ImagePartsRepository) GetImagePartsList(imageHash string) ([]models.ImagePart, error) {
+func (r *ImagePartsRepository) GetImagePartsList(imageHash string) ([]models.ImagePart, bool, error) {
 	imageParts, ok := r.hashImagePartsMap[imageHash]
-	if !ok {
-		return nil, errors.New("no list found")
-	}
 
-	return imageParts, nil
+	return imageParts, ok, nil
 }

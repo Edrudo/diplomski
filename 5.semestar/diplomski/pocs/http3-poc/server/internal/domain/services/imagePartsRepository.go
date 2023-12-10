@@ -7,5 +7,5 @@ type ImagePartsRepository interface {
 	DeleteImagePartList(imageHash string) error
 	StoreImagePart(imagePart models.ImagePart) error
 	GetNumberOfPartsInStorage(imageHash string) (int, error)
-	GetImagePartsList(imageHash string) ([]models.ImagePart, error)
+	GetImagePartsList(imageHash string) ([]models.ImagePart, bool, error)
 }

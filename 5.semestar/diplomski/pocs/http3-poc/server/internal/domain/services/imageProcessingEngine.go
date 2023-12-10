@@ -30,8 +30,12 @@ func (e *ImageProcessingEngine) StartProcessing() {
 }
 
 func (e *ImageProcessingEngine) ProcessImage(imageHash string) {
-	imageParts, err := e.imagePartsRepository.GetImagePartsList(imageHash)
+	imageParts, ok, err := e.imagePartsRepository.GetImagePartsList(imageHash)
 	if err != nil {
+		// add logging
+		return
+	}
+	if !ok {
 		// add logging
 		return
 	}
@@ -53,6 +57,9 @@ func (e *ImageProcessingEngine) ProcessImage(imageHash string) {
 	err = e.imageStore.StoreImage(imageHash, imageBytes)
 	// add logging
 	return
+
+	// delete image parts from memory
+
 }
 
 func getImagePartsMapFromList(imageParts []models.ImagePart) map[int]models.ImagePart {

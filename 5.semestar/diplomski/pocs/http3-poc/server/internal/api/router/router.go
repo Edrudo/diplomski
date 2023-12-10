@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	ImageProcessingRoute = "/processImage"
+	ImagePartRoute = "/imagePart"
 )
 
 type Controller interface {
@@ -26,7 +26,7 @@ func GenerateRoutingHandler(
 
 	// IMAGE PROCESSING ENDPOINT
 	{
-		router.POST(ImageProcessingRoute, controller.ProcessImagePart)
+		router.POST(ImagePartRoute, controller.ProcessImagePart)
 	}
 
 	return router, nil

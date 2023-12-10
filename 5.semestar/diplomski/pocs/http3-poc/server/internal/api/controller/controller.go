@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -15,7 +16,11 @@ type Controller struct {
 	serverRequestMapper ServerRequestMapper
 }
 
-func NewController(imageStoringService ImageStoringService, logger *zap.Logger, mapper ServerRequestMapper) *Controller {
+func NewController(
+	imageStoringService ImageStoringService,
+	logger *zap.Logger,
+	mapper ServerRequestMapper,
+) *Controller {
 	return &Controller{
 		logger:              logger,
 		imageStoringService: imageStoringService,
@@ -56,10 +61,11 @@ func (c *Controller) ProcessImagePart(requestContext *gin.Context) {
 	// Map the DTO struct into a domain model
 	imagePart := c.serverRequestMapper.MapImagePartToImagePartDomainModel(imagePartDto)
 
+	// store the image part
 	err = c.imageStoringService.StoreImagePart(imagePart)
 	if err != nil {
 		c.logger.Warn(
-			"processing image part, failed to stor image part",
+			fmt.Sprintf("processing image part, failed to store image part: %s", err.Error()),
 		)
 		httpStatusCode = http.StatusInternalServerError
 		requestContext.Writer.WriteHeader(httpStatusCode)
