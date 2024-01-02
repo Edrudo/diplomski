@@ -4,8 +4,10 @@ import (
 	"bufio"
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"crypto/tls"
 	"crypto/x509"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"flag"
@@ -13,6 +15,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"sync"
 
 	"github.com/quic-go/quic-go"
@@ -45,6 +48,10 @@ func main() {
 	}
 	addr := args[1]
 	imagePath := args[2]
+	imagePartSize, err := strconv.Atoi(args[3])
+	if err != nil {
+		panic(errors.New("image part size must be a number"))
+	}
 
 	logger := utils.DefaultLogger
 
@@ -54,10 +61,14 @@ func main() {
 	}
 
 	imageParts := make([]ImagePart, 0)
-	numImageParts := len(image) / 1450
+	numImageParts := len(image) / imagePartSize
 	if len(imageParts)%1450 > 0 {
 		numImageParts++
 	}
+
+	hashGenerator := sha256.New()
+	hashGenerator.Write(image)
+	calculatedHash := base64.URLEncoding.EncodeToString(hashGenerator.Sum(nil))
 
 	roundTripper := initilizeRoundTripper()
 
@@ -74,10 +85,10 @@ func main() {
 	for i := 0; i < numImageParts; i++ {
 		bdy, err := json.Marshal(
 			ImagePart{
-				ImageHash:  "hash",
+				ImageHash:  calculatedHash,
 				PartNumber: i + 1,
 				TotalParts: numImageParts,
-				PartData:   image[i*1450 : (i+1)*1450],
+				PartData:   image[i*imagePartSize : (i+1)*imagePartSize],
 			},
 		)
 		if err != nil {
@@ -92,6 +103,7 @@ func main() {
 		logger.Infof("Got response for %s: %#v", addr, rsp)
 		wg.Done()
 	}
+
 	wg.Wait()
 }
 
