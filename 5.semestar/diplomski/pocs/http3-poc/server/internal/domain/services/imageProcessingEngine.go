@@ -55,11 +55,13 @@ func (e *ImageProcessingEngine) ProcessImage(imageHash string) {
 	}
 
 	err = e.imageStore.StoreImage(imageHash, imageBytes)
-	// add logging
-	return
 
 	// delete image parts from memory
+	err = e.imagePartsRepository.DeleteImagePartList(imageHash)
 
+	// add logging
+
+	return
 }
 
 func getImagePartsMapFromList(imageParts []models.ImagePart) map[int]models.ImagePart {
