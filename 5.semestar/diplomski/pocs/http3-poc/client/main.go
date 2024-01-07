@@ -15,7 +15,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 	"sync"
 
 	"github.com/quic-go/quic-go"
@@ -41,70 +40,76 @@ func main() {
 		log.Fatal(
 			errors.New(
 				"arguments needed for the program: " +
-					"\t - url where image will be sent at least one" +
-					"\t - path to image that needs to be sent",
+					"\t - url where image will be sent" +
+					"\t - at least one path to image that needs to be sent",
 			),
 		)
 	}
 	addr := args[1]
-	imagePath := args[2]
-	imagePartSize, err := strconv.Atoi(args[3])
-	if err != nil {
-		panic(errors.New("image part size must be a number"))
-	}
+	imagePaths := args[2:]
+	imagePartSize := 1400
 
 	logger := utils.DefaultLogger
-
-	image, err := os.ReadFile(imagePath)
-	if err != nil {
-		panic(err)
-	}
-
-	imageParts := make([]ImagePart, 0)
-	numImageParts := len(image) / imagePartSize
-	if len(imageParts)%1450 > 0 {
-		numImageParts++
-	}
+	logger.SetLogLevel(utils.LogLevelError)
 
 	hashGenerator := sha256.New()
-	hashGenerator.Write(image)
-	calculatedHash := base64.URLEncoding.EncodeToString(hashGenerator.Sum(nil))
 
 	roundTripper := initilizeRoundTripper()
-
 	defer roundTripper.Close()
 	hclient := &http.Client{
 		Transport: roundTripper,
 	}
 
-	var wg sync.WaitGroup
-	wg.Add(numImageParts)
-	if err != nil {
-		panic(err)
-	}
-	for i := 0; i < numImageParts; i++ {
-		bdy, err := json.Marshal(
-			ImagePart{
-				ImageHash:  calculatedHash,
-				PartNumber: i + 1,
-				TotalParts: numImageParts,
-				PartData:   image[i*imagePartSize : (i+1)*imagePartSize],
-			},
-		)
+	for _, imagePath := range imagePaths {
+		image, err := os.ReadFile(imagePath)
 		if err != nil {
 			panic(err)
 		}
 
-		logger.Infof("GET %s", addr)
-		rsp, err := hclient.Post(addr, "application/json", bytes.NewBuffer(bdy))
-		if err != nil {
-			log.Fatal(err)
+		imageParts := make([]ImagePart, 0)
+		numImageParts := len(image) / imagePartSize
+		if len(imageParts)%1450 > 0 {
+			numImageParts++
 		}
-		logger.Infof("Got response for %s: %#v", addr, rsp)
-		wg.Done()
+
+		hashGenerator.Write(image)
+		calculatedHash := base64.URLEncoding.EncodeToString(hashGenerator.Sum(nil))
+
+		var wg sync.WaitGroup
+		wg.Add(numImageParts)
+		if err != nil {
+			panic(err)
+		}
+		for i := 0; i < numImageParts; i++ {
+			go func(partNumber int) {
+				bdy, err := json.Marshal(
+					ImagePart{
+						ImageHash:  calculatedHash,
+						PartNumber: partNumber + 1,
+						TotalParts: numImageParts,
+						PartData:   image[partNumber*imagePartSize : (partNumber+1)*imagePartSize],
+					},
+				)
+				if err != nil {
+					panic(err)
+				}
+
+				for true {
+					logger.Infof("GET %s", addr)
+					rsp, err := hclient.Post(addr, "application/json", bytes.NewBuffer(bdy))
+					if err == nil {
+						logger.Infof("Got response for %s: %#v", addr, rsp)
+						wg.Done()
+						break
+					}
+					logger.Errorf(err.Error())
+				}
+			}(i)
+		}
+		wg.Wait()
+
 	}
 
-	wg.Wait()
 }
 
 func initilizeRoundTripper() *http3.RoundTripper {
