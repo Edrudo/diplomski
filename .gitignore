@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+*.xml
 
 # Test binary, build with `go test -c`
 *.test
