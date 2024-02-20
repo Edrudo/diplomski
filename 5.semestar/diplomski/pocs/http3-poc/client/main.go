@@ -12,6 +12,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"hash"
 	"log"
 	"net/http"
 	"os"
@@ -33,6 +34,29 @@ type ImagePart struct {
 	PartData   []byte `json:"partData"`
 }
 
+type Client struct {
+	hashGenerator hash.Hash
+	httpClient    *http.Client
+	roundTriper   *http3.RoundTripper
+	logger        utils.Logger
+}
+
+func NewClient(roundTripper *http3.RoundTripper) *Client {
+	httpClient := &http.Client{
+		Transport: roundTripper,
+	}
+
+	logger := utils.DefaultLogger
+	logger.SetLogLevel(utils.LogLevelError)
+
+	return &Client{
+		hashGenerator: sha256.New(),
+		roundTriper:   roundTripper,
+		httpClient:    httpClient,
+		logger:        logger,
+	}
+}
+
 func main() {
 	// extracting image path from args
 	args := os.Args
@@ -49,16 +73,15 @@ func main() {
 	imagePaths := args[2:]
 	imagePartSize := 1400
 
-	logger := utils.DefaultLogger
-	logger.SetLogLevel(utils.LogLevelError)
-
-	hashGenerator := sha256.New()
-
+	// initlize client
 	roundTripper := initilizeRoundTripper()
-	defer roundTripper.Close()
-	hclient := &http.Client{
-		Transport: roundTripper,
-	}
+	client := NewClient(roundTripper)
+	defer func() {
+		err := roundTripper.Close()
+		if err != nil {
+			client.logger.Errorf("Error closing round tripper: %s", err)
+		}
+	}()
 
 	for _, imagePath := range imagePaths {
 		image, err := os.ReadFile(imagePath)
@@ -72,8 +95,8 @@ func main() {
 			numImageParts++
 		}
 
-		hashGenerator.Write(image)
-		calculatedHash := base64.URLEncoding.EncodeToString(hashGenerator.Sum(nil))
+		client.hashGenerator.Write(image)
+		calculatedHash := base64.URLEncoding.EncodeToString(client.hashGenerator.Sum(nil))
 
 		var wg sync.WaitGroup
 		wg.Add(numImageParts)
@@ -95,19 +118,18 @@ func main() {
 				}
 
 				for true {
-					logger.Infof("GET %s", addr)
-					rsp, err := hclient.Post(addr, "application/json", bytes.NewBuffer(bdy))
+					client.logger.Infof("GET %s", addr)
+					rsp, err := client.httpClient.Post(addr, "application/json", bytes.NewBuffer(bdy))
 					if err == nil {
-						logger.Infof("Got response for %s: %#v", addr, rsp)
+						client.logger.Infof("Got response for %s: %#v", addr, rsp)
 						wg.Done()
 						break
 					}
-					logger.Errorf(err.Error())
+					client.logger.Errorf(err.Error())
 				}
 			}(i)
 		}
 		wg.Wait()
-
 	}
 
 }
