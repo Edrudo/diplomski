@@ -5,31 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e9ab851-d674-4512-bb8d-7268770af0e6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/server/cmd/api/bootstrap/api.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/cmd/api/config/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/go.mod" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/api/controller/controller.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/api/controller/dtos.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/api/controller/imageProcessingService.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/api/controller/serverRequestMapper.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/api/router/router.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/domain/models/imagePart.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/domain/services/ImageStoringService.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/domain/services/imagePartsRepository.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/domain/services/imageProcessingEngine.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/domain/services/imageStore.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/infrastructure/filesystem/imageStore.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/internal/infrastructure/inmemorycache/imagePartsRepository.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../quic-poc/server/cmd/bootstrap/loggingWriter.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../quic-poc/server/cmd/config/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../quic-poc/server/internal/edoserver/edoserver.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../quic-poc/server/internal/edoserver/quicserver.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../quic-poc/server/internal/quicserver/connectionHandler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../quic-poc/server/internal/quicserver/quicServer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../quic-poc/server/internal/quicserver/streamReader.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../quic-poc/server/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../quic-poc/server/cmd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../haskell/edo-duras" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/go.sum" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/internal/testdata/ca.pem" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/internal/testdata/cert.pem" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/internal/testdata/generate_key.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/internal/testdata/priv.key" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/internal/utils/linkedlist/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../haskell/edo-duras" beforeDir="false" afterPath="$PROJECT_DIR$/../../../haskell/edo-duras" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../haskell/lectures" beforeDir="false" afterPath="$PROJECT_DIR$/../../../haskell/lectures" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../haskell/tmp.hs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../haskell/tmp.hs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,19 +31,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "go.import.settings.migrated": "true",
-    "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/Users/eduardduras"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/eduardduras/Desktop/faks/diplomski/5.semestar/diplomski/pocs/http3-poc&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager" selected="Go Build.go build http3-server-poc">
+    <configuration name="go build http3-client-poc" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="http3-poc" />
+      <working_directory value="$PROJECT_DIR$/client" />
+      <kind value="PACKAGE" />
+      <package value="http3-client-poc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/client/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build http3-server-poc" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="http3-poc" />
+      <working_directory value="$PROJECT_DIR$/server" />
+      <kind value="PACKAGE" />
+      <package value="http3-server-poc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/server/main.go" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build http3-server-poc" />
+        <item itemvalue="Go Build.go build http3-client-poc" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
