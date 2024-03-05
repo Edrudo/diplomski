@@ -1,29 +1,19 @@
 package main
 
 import (
-	"bufio"
 	"bytes"
-	"context"
-	"crypto/sha256"
-	"crypto/tls"
-	"crypto/x509"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"flag"
-	"fmt"
 	"hash"
 	"log"
 	"net/http"
 	"os"
 	"sync"
 
-	"github.com/quic-go/quic-go"
 	"github.com/quic-go/quic-go/http3"
-	"github.com/quic-go/quic-go/logging"
-	"github.com/quic-go/quic-go/qlog"
 
-	"http3-client-poc/internal/testdata"
+	"http3-client-poc/cmd/bootstrap"
 	"http3-client-poc/internal/utils"
 )
 
@@ -39,22 +29,6 @@ type Client struct {
 	httpClient    *http.Client
 	roundTriper   *http3.RoundTripper
 	logger        utils.Logger
-}
-
-func NewClient(roundTripper *http3.RoundTripper) *Client {
-	httpClient := &http.Client{
-		Transport: roundTripper,
-	}
-
-	logger := utils.DefaultLogger
-	logger.SetLogLevel(utils.LogLevelError)
-
-	return &Client{
-		hashGenerator: sha256.New(),
-		roundTriper:   roundTripper,
-		httpClient:    httpClient,
-		logger:        logger,
-	}
 }
 
 func main() {
@@ -74,12 +48,11 @@ func main() {
 	imagePartSize := 1400
 
 	// initlize client
-	roundTripper := initilizeRoundTripper()
-	client := NewClient(roundTripper)
+	client, roundTripper := bootstrap.NewClient()
 	defer func() {
 		err := roundTripper.Close()
 		if err != nil {
-			client.logger.Errorf("Error closing round tripper: %s", err)
+			client.Logger.Errorf("Error closing round tripper: %s", err)
 		}
 	}()
 
@@ -95,8 +68,8 @@ func main() {
 			numImageParts++
 		}
 
-		client.hashGenerator.Write(image)
-		calculatedHash := base64.URLEncoding.EncodeToString(client.hashGenerator.Sum(nil))
+		client.HashGenerator.Write(image)
+		calculatedHash := base64.URLEncoding.EncodeToString(client.HashGenerator.Sum(nil))
 
 		var wg sync.WaitGroup
 		wg.Add(numImageParts)
@@ -118,55 +91,18 @@ func main() {
 				}
 
 				for true {
-					client.logger.Infof("GET %s", addr)
-					rsp, err := client.httpClient.Post(addr, "application/json", bytes.NewBuffer(bdy))
+					client.Logger.Infof("GET %s", addr)
+					rsp, err := client.HttpClient.Post(addr, "application/json", bytes.NewBuffer(bdy))
 					if err == nil {
-						client.logger.Infof("Got response for %s: %#v", addr, rsp)
+						client.Logger.Infof("Got response for %s: %#v", addr, rsp)
 						wg.Done()
 						break
 					}
-					client.logger.Errorf(err.Error())
+					client.Logger.Errorf(err.Error())
 				}
 			}(i)
 		}
 		wg.Wait()
 	}
 
-}
-
-func initilizeRoundTripper() *http3.RoundTripper {
-	insecure := flag.Bool("insecure", true, "skip certificate verification")
-	enableQlog := flag.Bool("qlog", false, "output a qlog (in the same directory)")
-	flag.Parse()
-
-	pool, err := x509.SystemCertPool()
-	if err != nil {
-		log.Fatal(err)
-	}
-	testdata.AddRootCA(pool)
-
-	var qconf quic.Config
-	if *enableQlog {
-		qconf.Tracer = func(
-			ctx context.Context,
-			p logging.Perspective,
-			connID quic.ConnectionID,
-		) *logging.ConnectionTracer {
-			filename := fmt.Sprintf("client_%s.qlog", connID)
-			f, err := os.Create(filename)
-			if err != nil {
-				log.Fatal(err)
-			}
-			log.Printf("Creating qlog file %s.\n", filename)
-			return qlog.NewConnectionTracer(utils.NewBufferedWriteCloser(bufio.NewWriter(f), f), p, connID)
-		}
-	}
-
-	return &http3.RoundTripper{
-		TLSClientConfig: &tls.Config{
-			RootCAs:            pool,
-			InsecureSkipVerify: *insecure,
-		},
-		QuicConfig: &qconf,
-	}
 }
