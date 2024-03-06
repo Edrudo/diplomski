@@ -12,6 +12,7 @@ import (
 	"http3-server-poc/internal/domain/services"
 	"http3-server-poc/internal/infrastructure/filesystem"
 	"http3-server-poc/internal/infrastructure/inmemorycache"
+	"http3-server-poc/internal/tls"
 
 	"github.com/quic-go/quic-go"
 	"github.com/quic-go/quic-go/http3"
@@ -39,7 +40,7 @@ func newHttp3Server(handler http.Handler) http3.Server {
 	return http3.Server{
 		Addr:      "localhost:4242",
 		Port:      4242,
-		TLSConfig: config.GenerateTLSConfig(),
+		TLSConfig: tls.GetTLSConfig(),
 		QuicConfig: &quic.Config{
 			HandshakeIdleTimeout: time.Millisecond * time.Duration(config.Cfg.OuicConfig.HandshakeIdleTimeoutMs),
 			MaxIdleTimeout:       time.Millisecond * time.Duration(config.Cfg.OuicConfig.MaxIdleTimeoutMs),
