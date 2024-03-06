@@ -5,16 +5,11 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"hash"
 	"log"
-	"net/http"
 	"os"
 	"sync"
 
-	"github.com/quic-go/quic-go/http3"
-
 	"http3-client-poc/cmd/bootstrap"
-	"http3-client-poc/internal/utils"
 )
 
 type ImagePart struct {
@@ -22,13 +17,6 @@ type ImagePart struct {
 	PartNumber int    `json:"partNumber"`
 	TotalParts int    `json:"totalParts"`
 	PartData   []byte `json:"partData"`
-}
-
-type Client struct {
-	hashGenerator hash.Hash
-	httpClient    *http.Client
-	roundTriper   *http3.RoundTripper
-	logger        utils.Logger
 }
 
 func main() {
