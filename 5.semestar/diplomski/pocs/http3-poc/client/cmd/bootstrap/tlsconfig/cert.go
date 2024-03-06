@@ -1,4 +1,4 @@
-package testdata
+package tlsconfig
 
 import (
 	"crypto/tls"

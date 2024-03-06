@@ -18,7 +18,7 @@ import (
 	"github.com/quic-go/quic-go/logging"
 	"github.com/quic-go/quic-go/qlog"
 
-	"http3-client-poc/internal/testdata"
+	"http3-client-poc/cmd/bootstrap/tlsconfig"
 	"http3-client-poc/internal/utils"
 )
 
@@ -55,7 +55,7 @@ func initilizeRoundTripper() *http3.RoundTripper {
 	if err != nil {
 		log.Fatal(err)
 	}
-	testdata.AddRootCA(pool)
+	tlsconfig.AddRootCA(pool)
 
 	var qconf quic.Config
 	if *enableQlog {
