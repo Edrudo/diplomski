@@ -19,6 +19,7 @@ import (
 	"github.com/quic-go/quic-go/qlog"
 
 	"http3-client-poc/cmd/bootstrap/tlsconfig"
+	"http3-client-poc/cmd/exitcodes"
 	"http3-client-poc/internal/utils"
 )
 
@@ -26,23 +27,20 @@ type Client struct {
 	HashGenerator hash.Hash
 	HttpClient    *http.Client
 	roundTriper   *http3.RoundTripper
-	Logger        utils.Logger
 }
 
 func NewClient() (*Client, *http3.RoundTripper) {
+	utils.DefaultLogger.SetLogLevel(utils.LogLevelError)
+
 	roundTripper := initilizeRoundTripper()
 	httpClient := &http.Client{
 		Transport: roundTripper,
 	}
 
-	logger := utils.DefaultLogger
-	logger.SetLogLevel(utils.LogLevelError)
-
 	return &Client{
 		HashGenerator: sha256.New(),
 		roundTriper:   roundTripper,
 		HttpClient:    httpClient,
-		Logger:        logger,
 	}, roundTripper
 }
 
@@ -53,7 +51,7 @@ func initilizeRoundTripper() *http3.RoundTripper {
 
 	pool, err := x509.SystemCertPool()
 	if err != nil {
-		log.Fatal(err)
+		utils.DefaultLogger.Fatalf(err, exitcodes.ExitFailedInit)
 	}
 	tlsconfig.AddRootCA(pool)
 
@@ -67,7 +65,7 @@ func initilizeRoundTripper() *http3.RoundTripper {
 			filename := fmt.Sprintf("client_%s.qlog", connID)
 			f, err := os.Create(filename)
 			if err != nil {
-				log.Fatal(err)
+				utils.DefaultLogger.Fatalf(err, exitcodes.ExitFailedInit)
 			}
 			log.Printf("Creating qlog file %s.\n", filename)
 			return qlog.NewConnectionTracer(utils.NewBufferedWriteCloser(bufio.NewWriter(f), f), p, connID)

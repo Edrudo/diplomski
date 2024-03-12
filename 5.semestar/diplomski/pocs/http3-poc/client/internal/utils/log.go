@@ -34,6 +34,7 @@ type Logger interface {
 	Errorf(format string, args ...interface{})
 	Infof(format string, args ...interface{})
 	Debugf(format string, args ...interface{})
+	Fatalf(error error, exitcode int)
 }
 
 // DefaultLogger is used by quic-go for logging.
@@ -79,6 +80,15 @@ func (l *defaultLogger) Errorf(format string, args ...interface{}) {
 	if l.logLevel >= LogLevelError {
 		l.logMessage(format, args...)
 	}
+}
+
+// Fatalf logs something
+func (l *defaultLogger) Fatalf(err error, exitcode int) {
+	if l.logLevel >= LogLevelError {
+		l.logMessage("%s", err.Error())
+	}
+
+	os.Exit(exitcode)
 }
 
 func (l *defaultLogger) logMessage(format string, args ...interface{}) {

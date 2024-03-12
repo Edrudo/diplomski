@@ -5,11 +5,12 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"log"
 	"os"
 	"sync"
 
 	"http3-client-poc/cmd/bootstrap"
+	"http3-client-poc/cmd/exitcodes"
+	"http3-client-poc/internal/utils"
 )
 
 type ImagePart struct {
@@ -23,12 +24,12 @@ func main() {
 	// extracting image path from args
 	args := os.Args
 	if len(args) < 3 {
-		log.Fatal(
+		utils.DefaultLogger.Fatalf(
 			errors.New(
-				"arguments needed for the program: " +
-					"\t - url where image will be sent" +
+				"arguments needed for the program: "+
+					"\t - url where image will be sent"+
 					"\t - at least one path to image that needs to be sent",
-			),
+			), exitcodes.ExitBadArguments,
 		)
 	}
 	addr := args[1]
@@ -38,16 +39,17 @@ func main() {
 	// initlize client
 	client, roundTripper := bootstrap.NewClient()
 	defer func() {
+		// this defer is unreachable because os.Exit ignores all defers left
 		err := roundTripper.Close()
 		if err != nil {
-			client.Logger.Errorf("Error closing round tripper: %s", err)
+			utils.DefaultLogger.Errorf("Error closing round tripper: %s", err)
 		}
 	}()
 
 	for _, imagePath := range imagePaths {
 		image, err := os.ReadFile(imagePath)
 		if err != nil {
-			panic(err)
+			utils.DefaultLogger.Fatalf(err, exitcodes.ExitFailedReadingImage)
 		}
 
 		imageParts := make([]ImagePart, 0)
@@ -61,9 +63,6 @@ func main() {
 
 		var wg sync.WaitGroup
 		wg.Add(numImageParts)
-		if err != nil {
-			panic(err)
-		}
 		for i := 0; i < numImageParts; i++ {
 			go func(partNumber int) {
 				bdy, err := json.Marshal(
@@ -75,22 +74,24 @@ func main() {
 					},
 				)
 				if err != nil {
-					panic(err)
+					utils.DefaultLogger.Fatalf(err, exitcodes.ExitFailedProcessingImage)
 				}
 
 				for true {
-					client.Logger.Infof("GET %s", addr)
+					utils.DefaultLogger.Infof("GET %s", addr)
 					rsp, err := client.HttpClient.Post(addr, "application/json", bytes.NewBuffer(bdy))
 					if err == nil {
-						client.Logger.Infof("Got response for %s: %#v", addr, rsp)
+						utils.DefaultLogger.Infof("Got response for %s: %#v", addr, rsp)
 						wg.Done()
 						break
 					}
-					client.Logger.Errorf(err.Error())
+					utils.DefaultLogger.Errorf(err.Error())
 				}
 			}(i)
 		}
 		wg.Wait()
 	}
+
+	os.Exit(exitcodes.ExitSuccess)
 
 }
