@@ -42,8 +42,8 @@ func newHttp3Server(handler http.Handler) http3.Server {
 		Port:      4242,
 		TLSConfig: tlsconfig.GetTLSConfig(),
 		QuicConfig: &quic.Config{
-			HandshakeIdleTimeout: time.Millisecond * time.Duration(config.Cfg.OuicConfig.HandshakeIdleTimeoutMs),
-			MaxIdleTimeout:       time.Millisecond * time.Duration(config.Cfg.OuicConfig.MaxIdleTimeoutMs),
+			HandshakeIdleTimeout: time.Millisecond * time.Duration(config.Cfg.QuicConfig.HandshakeIdleTimeoutMs),
+			MaxIdleTimeout:       time.Millisecond * time.Duration(config.Cfg.QuicConfig.MaxIdleTimeoutMs),
 			RequireAddressValidation: func(addr net.Addr) bool {
 				return false // for now, should whitelist our clients address
 			},
@@ -51,7 +51,7 @@ func newHttp3Server(handler http.Handler) http3.Server {
 			MaxStreamReceiveWindow:         quicvarint.Max,
 			InitialConnectionReceiveWindow: quicvarint.Max,
 			MaxConnectionReceiveWindow:     quicvarint.Max,
-			KeepAlivePeriod:                time.Millisecond * time.Duration(config.Cfg.OuicConfig.KeepAlivePeriod),
+			KeepAlivePeriod:                time.Millisecond * time.Duration(config.Cfg.QuicConfig.KeepAlivePeriod),
 			DisablePathMTUDiscovery:        false,
 		},
 		Handler: handler,
