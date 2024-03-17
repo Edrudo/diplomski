@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: diplomski-pod
+spec:
+  containers:
+    - env:
+      - name: APP_FULL_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: APP_NAMESPACE
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.namespace
+      envFrom:
+      - configMapRef:
+          name: diplomski-config
+      image: edoduras/diplomski-server
+      name: dimplomski-server
+      volumeMounts:
+        - name: images
+          mountPath: /images
+    - image: nginx:alpine
+      name: web-server
+      ports:
+        - containerPort: 4219
+          name: quic
+          protocol: UDP
+  volumes:
+    - name: images
+      emptyDir: {}
