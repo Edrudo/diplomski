@@ -24,6 +24,9 @@ func GenerateRoutingHandler(
 	router := gin.New()
 	router.RedirectTrailingSlash = true
 
+	// Add middleware
+	router.Use(gin.Logger())
+
 	// IMAGE PROCESSING ENDPOINT
 	{
 		router.POST(ImagePartRoute, controller.ProcessImagePart)
