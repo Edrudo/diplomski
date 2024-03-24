@@ -16,7 +16,7 @@ func (i *ImageStore) StoreImage(imageHash string, imgBytes []byte) error {
 	out, err := os.Create(
 		fmt.Sprintf(
 			// TODO change this path to be configurable, remove only .jpg extension
-			"/Users/eduardduras/Desktop/faks/diplomski/5.semestar/diplomski/pocs/http3-poc/server/images/%s.jpg",
+			"./images/%s.jpg",
 			imageHash,
 		),
 	)
