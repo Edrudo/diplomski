@@ -64,6 +64,10 @@ func main() {
 		var wg sync.WaitGroup
 		wg.Add(numImageParts)
 		for i := 0; i < numImageParts; i++ {
+			/*if i == numImageParts/2 {
+				fmt.Println("Sleeping for 10 seconds")
+				time.Sleep(10 * time.Second)
+			}*/
 			go func(partNumber int) {
 				bdy, err := json.Marshal(
 					ImagePart{
